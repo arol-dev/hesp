@@ -1,0 +1,120 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  STAFF
+  TRAINEE
+}
+
+model User {
+  id            Int             @id @default(autoincrement())
+  firstName     String
+  lastName      String
+  role          UserRole        @default(STAFF)
+  Comment       Comment[]
+  WOLcheckpoint WOLcheckpoint[]
+  PDCcheckpoint PDCcheckpoint[]
+  Trainee       Trainee[]
+}
+
+model Comment {
+  id            Int            @id @default(autoincrement())
+  message       String
+  relatedUser   Int
+  User          User?          @relation(fields: [relatedUser], references: [id])
+  WOLcheckpoint WOLcheckpoint?
+}
+
+model WOLcheckpoint {
+  id                  Int      @id @default(autoincrement())
+  health              Int
+  work                Int
+  finances            Int
+  environment         Int
+  love                Int
+  familyFriends       Int
+  personalDevelopment Int
+  fun                 Int
+  relatedUser         Int
+  User                User     @relation(fields: [relatedUser], references: [id])
+  Comment             Comment? @relation(fields: [id], references: [id])
+}
+
+model PDCcheckpoint {
+  id                 String @id @default(uuid())
+  trust              Int
+  willFollow         Int
+  retention          Int
+  commitment         Int
+  cv                 Int
+  readyForInterviews Int
+  advancement        Int
+  userId             Int    @default(autoincrement())
+  user               User?  @relation(fields: [userId], references: [id])
+}
+
+model Trainee {
+  id                 Int                  @id @default(autoincrement())
+  firstName          String
+  lastName           String
+  email              String?
+  phone              String?
+  registerNumber     String?
+  role               UserRole             @default(TRAINEE)
+  TraineeMetaData    TraineeMetaData[]
+  User               User                 @relation(fields: [id], references: [id])
+  ProvidedSoloutions ProvidedSoloutions[]
+}
+
+enum WorkingSituation {
+  WORKING
+  NOT_WORKING
+}
+
+enum HousingSituation {
+  HOMELESS
+  HOUSE
+  APARTMENT
+  OTHER
+}
+
+model TraineeMetaData {
+  traineeId           Int              @id @default(autoincrement())
+  trainee             Trainee          @relation(fields: [traineeId], references: [id])
+  workingSituation    WorkingSituation
+  housingSituation    HousingSituation
+  needWork            Boolean
+  needTraining        Boolean
+  needHousing         Boolean
+  needCommunication   Boolean
+  needLegal           Boolean
+  needTransportation  Boolean
+  needBasicAssistance Boolean
+  needSOS             Boolean
+  helpCandidate       Boolean
+  filledForms         Boolean
+  helpAccepted        Boolean
+}
+
+model ProvidedSoloutions {
+  id         Int          @id @default(autoincrement())
+  code       String
+  Trainee    Trainee?     @relation(fields: [id], references: [id])
+  Soloutions Soloutions[]
+}
+
+model Soloutions {
+  id                 Int                 @id @default(autoincrement())
+  code               String
+  ProvidedSoloutions ProvidedSoloutions? @relation(fields: [id], references: [id])
+}
