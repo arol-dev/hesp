@@ -64,15 +64,16 @@ model PDCcheckpoint {
 }
 
 model Trainee {
-  id              Int               @id @default(autoincrement())
-  firstName       String
-  lastName        String
-  email           String?
-  phone           String?
-  registerNumber  String?
-  role            UserRole          @default(TRAINEE)
-  TraineeMetaData TraineeMetaData[]
-  User            User              @relation(fields: [id], references: [id])
+  id                 Int                  @id @default(autoincrement())
+  firstName          String
+  lastName           String
+  email              String?
+  phone              String?
+  registerNumber     String?
+  role               UserRole             @default(TRAINEE)
+  TraineeMetaData    TraineeMetaData[]
+  User               User                 @relation(fields: [id], references: [id])
+  ProvidedSoloutions ProvidedSoloutions[]
 }
 
 enum WorkingSituation {
@@ -106,11 +107,14 @@ model TraineeMetaData {
 }
 
 model ProvidedSoloutions {
-  id   Int    @id @default(autoincrement())
-  code String
+  id         Int          @id @default(autoincrement())
+  code       String
+  Trainee    Trainee?     @relation(fields: [id], references: [id])
+  Soloutions Soloutions[]
 }
 
 model Soloutions {
-  id   Int    @id @default(autoincrement())
-  code String
+  id                 Int                 @id @default(autoincrement())
+  code               String
+  ProvidedSoloutions ProvidedSoloutions? @relation(fields: [id], references: [id])
 }
