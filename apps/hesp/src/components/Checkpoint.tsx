@@ -1,6 +1,8 @@
+import Dashboard from "./Dashboard";
+
 function Checkpoint() {
   return (
-    <div> hello</div>
+    <Dashboard></Dashboard>
   )
 }
 export default Checkpoint
