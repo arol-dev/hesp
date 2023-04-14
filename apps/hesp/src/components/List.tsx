@@ -1,9 +1,12 @@
+import Link from "next/link"
+
 const people = [
   { id: "1", name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member', checkpoint: '5 days ago', status: 'active' },
   // More people...
 ]
 
-export default function List() {
+export default function List({ people }) {
+  console.log('mapeople', people)
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
@@ -44,10 +47,10 @@ export default function List() {
                 {people.map((person) => (
                   <tr key={person.email}>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                      <a href="/candidates/{person.id}" className="text-indigo-600 hover:text-indigo-900">
+                      <Link href={`/candidates/${person.id}`} className="text-indigo-600 hover:text-indigo-900">
                         {person.name}
                         <p className="whitespace-nowrap  text-sm text-gray-500">{person.email}</p>
-                      </a>
+                      </Link>
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.checkpoint}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.status}</td>
