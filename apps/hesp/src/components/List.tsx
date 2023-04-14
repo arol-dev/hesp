@@ -1,12 +1,11 @@
 import Link from "next/link"
 
 const people = [
-  { id: "1", name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member', checkpoint: '5 days ago', status: 'active' },
+  { id: "1", name: 'Lindsay Walton', email: 'lindsay.walton@example.com', checkpoint: '5 days ago', status: 'active' },
   // More people...
 ]
 
 export default function List({ people }) {
-  console.log('mapeople', people)
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
@@ -37,9 +36,9 @@ export default function List({ people }) {
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                     HE STATUS
                   </th>
-                  <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                  {/* <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
                     <span className="sr-only">New Checkpoint</span>
-                  </th>
+                  </th> */}
 
                 </tr>
               </thead>
@@ -61,7 +60,8 @@ export default function List({ people }) {
                       </a>
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                      <a href="#" className="text-indigo-600 hover:text-indigo-900">
+
+                      <a href={`/candidates/${person.id}/checkpoint`} className="text-indigo-600 hover:text-indigo-900">
                         New Checkpoint<span className="sr-only">, {person.name}</span>
                       </a>
                     </td>
