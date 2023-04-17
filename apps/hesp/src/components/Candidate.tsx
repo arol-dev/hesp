@@ -1,12 +1,12 @@
 import Link from "next/link"
-import Dashboard from "./Dashboard"
+import Navbar from "./Navbar"
 
 // const person =
 //   { id: "1", name: "Lindsay Walton", title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member', checkpoint: '5 days ago', status: 'active', phone: "+3867436876378", reference: "21/0002" }
 function Candidate({ person }) {
   return (
     <div>
-      <Dashboard></Dashboard>
+      <Navbar></Navbar>
       <div className="pl-5 pr-5">
         <div className="lg:flex lg:items-center lg:justify-between " >
           <div className="min-w-0 flex-1 pb-8">

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Dashboard() {
+function Navbar() {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -112,4 +112,4 @@ function Dashboard() {
     </div >
   )
 }
-export default Dashboard
+export default Navbar
