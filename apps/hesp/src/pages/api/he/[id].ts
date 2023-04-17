@@ -13,6 +13,10 @@ export default async function handler(
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
+  } else if (req.method === "GET") {
+    const trainee = await serverToDb("Trainee", "get", req);
+
+    res.status(200).json(trainee);
   } else {
     res.status(405).json({ error: "Method not allowed" });
   }
