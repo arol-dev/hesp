@@ -1,8 +1,8 @@
-import Dashboard from "./Dashboard";
+import Navbar from "./Navbar";
 
 function Checkpoint() {
   return (
-    <Dashboard></Dashboard>
+    <Navbar></Navbar>
   )
 }
 export default Checkpoint

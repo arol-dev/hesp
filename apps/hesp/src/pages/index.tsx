@@ -1,11 +1,11 @@
-import Dashboard from "@/components/Dashboard";
+import Navbar from "@/components/Navbar";
 import List from "@/components/List";
 import { GetServerSideProps } from "next";
 
 function Main({ people }) {
   return (
     <div>
-      <Dashboard></Dashboard>
+      <Navbar></Navbar>
       <List people={people}></List>
     </div>
   );
