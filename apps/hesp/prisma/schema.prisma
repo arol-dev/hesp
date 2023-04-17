@@ -72,7 +72,8 @@ model Trainee {
   registerNumber     String?
   role               UserRole             @default(TRAINEE)
   TraineeMetaData    TraineeMetaData[]
-  User               User                 @relation(fields: [id], references: [id])
+  userId             Int?
+  User               User?                @relation(fields: [userId], references: [id])
   ProvidedSoloutions ProvidedSoloutions[]
 }
 
