@@ -1,8 +1,8 @@
 
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import Dashboard from "./Dashboard";
+import Navbar from "./Navbar";
 import { useState } from 'react';
- 
+
 
 function Checkpoint() {
   const [pd, setPD] = useState('false')
@@ -10,9 +10,9 @@ function Checkpoint() {
 
 
   return (
- 
+
     <div>
-      <Dashboard></Dashboard>
+      <Navbar></Navbar>
       <div className="lg:flex lg:items-center lg:justify-between pl-5 pr-5 pb-10" >
         <div className="min-w-0 flex-1 pb-8">
           <h3 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">New WOL Checkpoint</h3>
@@ -251,7 +251,7 @@ function Checkpoint() {
         </div>
       </div>
     </div >
- 
+
   )
 }
 export default Checkpoint
