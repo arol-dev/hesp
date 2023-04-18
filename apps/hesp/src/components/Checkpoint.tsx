@@ -1,6 +1,8 @@
+
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import Dashboard from "./Dashboard";
 import { useState } from 'react';
+ 
 
 function Checkpoint() {
   const [pd, setPD] = useState('false')
@@ -8,6 +10,7 @@ function Checkpoint() {
 
 
   return (
+ 
     <div>
       <Dashboard></Dashboard>
       <div className="lg:flex lg:items-center lg:justify-between pl-5 pr-5 pb-10" >
@@ -248,6 +251,7 @@ function Checkpoint() {
         </div>
       </div>
     </div >
+ 
   )
 }
 export default Checkpoint
