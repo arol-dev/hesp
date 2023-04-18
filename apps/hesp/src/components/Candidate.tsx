@@ -33,6 +33,8 @@ function Candidate({ person }) {
               </button>
             </span>
 
+            {/* THIS IS NOT USED NOW. CHECK IF WE NEED IT! */}
+
             {/* <!-- Dropdown --> */}
             <div className="relative ml-3 sm:hidden">
               <button type="button" className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:ring-gray-400" id="mobile-menu-button" aria-expanded="false" aria-haspopup="true">
