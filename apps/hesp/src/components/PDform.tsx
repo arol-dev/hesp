@@ -2,24 +2,24 @@ import { useState } from "react"
 
 function PDForm() {
 
-  const [pd, setPD] = useState(false)
-  const [clicked, setClicked] = useState(0)
   const [progress, setProgress] = useState(0)
 
+
   function handleClick(number: number) {
-    setClicked(number)
     setProgress(number)
   }
-  function ProgressBar() {
-  }
+
   return (
     <div>
 
+      {/* //////////////////////////////////
+        Trust
+         ///////////////////////////////// */}
 
       <div className="space-y-10 divide-y divide-gray-900/10 pl-5 pr-5 pb-10">
         <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
           <div className="px-4 sm:px-0">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">Personal</h2>
+            <h2 className="text-base font-semibold leading-7 text-gray-900">Trust</h2>
             <p className="mt-1 text-sm leading-6 text-gray-600 pb-4">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.           </p>
             <div className="h-2 relative max-w-screen-md mx-auto">
@@ -80,7 +80,7 @@ function PDForm() {
                             key={number}
                             onClick={() => handleClick(number)}
                             type="button"
-                            className={`mr-2 inline-flex items-center rounded-md ${clicked === number
+                            className={`mr-2 inline-flex items-center rounded-md ${progress === number
                               ? "bg-blue-500 text-white"
                               : "bg-white text-gray-900"
                               } px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}
@@ -136,9 +136,22 @@ function PDForm() {
         </div> */}
           </form>
         </div>
+
+
+
+
+
+
+
+        {/* //////////////////////////////////
+         WILL FOLLOW
+         ///////////////////////////////// */}
+
+
+
         <div className="grid grid-cols-1 gap-x-8 gap-y-8 pt-10 md:grid-cols-3">
           <div className="px-4 sm:px-0">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">Development</h2>
+            <h2 className="text-base font-semibold leading-7 text-gray-900">Will Follow</h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.           </p>
           </div>
           <form className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
