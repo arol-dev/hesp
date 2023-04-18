@@ -3,22 +3,22 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import serverToDb from "@/serverToDb";
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<any>
+  res: NextApiResponse
 ) {
   if (req.method === "POST") {
     try {
-      const newTrainee = await serverToDb("Trainee", "post", req);
-      res.status(200).json(newTrainee);
+      const newpdc = await serverToDb("PDC", "post", req);
+      res.status(200).json(newpdc);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ error: (error as Error).message });
     }
   }
   if (req.method === "GET") {
     try {
-      const trainees = await serverToDb("Trainee", "get", undefined);
-      res.status(200).json(trainees);
+      const allPDC = await serverToDb("PDC", "get", undefined);
+      res.status(200).json(allPDC);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ error: (error as Error).message });
     }
   }
 }

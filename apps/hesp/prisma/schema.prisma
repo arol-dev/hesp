@@ -47,11 +47,12 @@ model WOLcheckpoint {
   fun                 Int
   relatedUser         Int
   User                User     @relation(fields: [relatedUser], references: [id])
-  Comment             Comment? @relation(fields: [id], references: [id])
+  commentID           Int?     @unique
+  Comment             Comment? @relation(fields: [commentID], references: [id])
 }
 
 model PDCcheckpoint {
-  id                 String @id @default(uuid())
+  id                 Int   @id @default(autoincrement())
   trust              Int
   willFollow         Int
   retention          Int
@@ -59,8 +60,8 @@ model PDCcheckpoint {
   cv                 Int
   readyForInterviews Int
   advancement        Int
-  userId             Int    @default(autoincrement())
-  user               User?  @relation(fields: [userId], references: [id])
+  userId             Int?
+  user               User? @relation(fields: [userId], references: [id])
 }
 
 model Trainee {
@@ -117,5 +118,6 @@ model ProvidedSoloutions {
 model Soloutions {
   id                 Int                 @id @default(autoincrement())
   code               String
-  ProvidedSoloutions ProvidedSoloutions? @relation(fields: [id], references: [id])
+  providedID         Int?
+  ProvidedSoloutions ProvidedSoloutions? @relation(fields: [providedID], references: [id])
 }
