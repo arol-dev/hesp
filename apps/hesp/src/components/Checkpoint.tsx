@@ -32,7 +32,7 @@ function Checkpoint() {
 
 
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: MouseEvent<HTMLFormElement>) {
     event.preventDefault();
     console.log("buttons is clicked", ratings);
 
@@ -120,11 +120,13 @@ function Checkpoint() {
             </button>
           </span>
         </div>
-      </div>}
+      </div>
+      }
 
-      {pd ? <PDForm ratings={ratings} onRatingChange={handleRatingChange} />
+      {
+        pd ? <PDForm ratings={ratings} onRatingChange={handleRatingChange} />
 
-        : <WOLForm></WOLForm>
+          : <WOLForm></WOLForm>
 
 
 

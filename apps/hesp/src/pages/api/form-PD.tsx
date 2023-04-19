@@ -1,4 +1,6 @@
-export default function handler(req, res) {
+import { NextApiRequest, NextApiResponse } from "next"
+
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // Get data submitted in request's body.
   const body = req.body
 
