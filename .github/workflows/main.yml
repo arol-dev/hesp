@@ -38,7 +38,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const url = '${{ steps.deployment.outputs.url }}'
+            const url = '${{ process.env.PREVIEW_URL }}'
             const comment = `🚀 Deployment preview: ${url}`
             await github.issues.createComment({
               issue_number: context.issue.number,
