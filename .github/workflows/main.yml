@@ -26,7 +26,7 @@ jobs:
         id: deployment
         working-directory: apps/hesp
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }} --yes
         run: echo "::set-output name=url::$(vercel --token $VERCEL_TOKEN --yes ls | grep -Eo 'https://[^ ]+')"
 
       - name: Add comment with preview URL
