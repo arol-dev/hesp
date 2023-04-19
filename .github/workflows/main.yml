@@ -1,9 +1,9 @@
 name: hesp deployment
 
 on:
-  push:
+  pull_request:
     branches:
-      - CICD
+      - main
 
 jobs:
   vercel_preview:
