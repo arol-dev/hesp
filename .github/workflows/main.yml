@@ -27,7 +27,7 @@ jobs:
         working-directory: apps/hesp
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }} --yes
-        run: echo "::set-output name=url::$(vercel --token $VERCEL_TOKEN --yes ls | grep -Eo 'https://[^ ]+')"
+        run: echo "::set-output name=url::$(vercel --token $VERCEL_TOKEN --yes ls | grep -Eo 'https://[^ ]+' | head -n 1)"
 
       - name: Add comment with preview URL
         uses: actions/github-script@v3
