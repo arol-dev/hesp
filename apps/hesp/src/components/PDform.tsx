@@ -1,31 +1,130 @@
-import { useState } from "react"
+import { useState } from "react";
 
-function PDForm({ ratings, onRatingChange, onSubmit }) {
+type Rating = {
+  name: string;
+  description: string;
+  value: number;
+};
 
-  const [checked, setChecked] = useState(0)
 
+type PDFormProps = {
+  ratings: Rating[];
+  onRatingChange: (index: number, value: number) => void;
 
-  function handleCheckboxChange(number: number) {
-    setChecked(number);
+};
+
+function PDForm({ ratings, onRatingChange }: PDFormProps) {
+  const [topics, setTopics] = useState(1)
+
+  const addTopic = () => {
+    setTopics(topics + 1)
   }
 
-
-
-
-
-
-
-  function handleRatingChange(index, value) {
+  function handleRatingChange(index: number, value: number) {
     onRatingChange(index, value);
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    onSubmit();
+
+  function SessionNotes() {
+    return (
+      <div className="space-y-10 divide-y divide-gray-900/10 pl-5 pr-5 pb-10">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
+          <div className="px-4 sm:px-0">
+            <h2 className="text-base font-semibold leading-7 text-gray-900">Topics</h2>
+            <p className="mt-1 text-sm leading-6 text-gray-600">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.           </p>
+          </div>
+          <form className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
+            <div className="px-4 py-6 sm:p-8">
+              <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="col-span-full">
+                  <label htmlFor="feel" className="block text-sm font-medium leading-6 text-gray-900">
+                    Topic
+                  </label>
+                  <div className="mt-2">
+                    <textarea
+                      id="feel"
+                      name="feel"
+                      rows={1}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      defaultValue={''}
+                    />
+                  </div>
+
+                </div>
+                <div className="col-span-full">
+                  <label htmlFor="improve" className="block text-sm font-medium leading-6 text-gray-900">
+                    Objective               </label>
+                  <div className="mt-2">
+                    <textarea
+                      id="improve"
+                      name="improve"
+                      rows={1}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      defaultValue={''}
+                    />
+                  </div>
+
+                </div>
+                <div className="col-span-full">
+                  <label htmlFor="feel" className="block text-sm font-medium leading-6 text-gray-900">
+                    Actions
+                  </label>
+                  <div className="mt-2">
+                    <textarea
+                      id="feel"
+                      name="feel"
+                      rows={3}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      defaultValue={''}
+                    />
+                  </div>
+
+                </div>  <div className="col-span-full">
+                  <label htmlFor="feel" className="block text-sm font-medium leading-6 text-gray-900">
+                    Notes
+                  </label>
+                  <div className="mt-2">
+                    <textarea
+                      id="feel"
+                      name="feel"
+                      rows={3}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      defaultValue={''}
+                    />
+                  </div>
+
+                </div>  <div className="col-span-full">
+                  <label htmlFor="feel" className="block text-sm font-medium leading-6 text-gray-900">
+                    Results
+                  </label>
+                  <div className="mt-2">
+                    <textarea
+                      id="feel"
+                      name="feel"
+                      rows={3}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      defaultValue={''}
+                    />
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-end gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8">
+
+              <button
+                type="submit"
+                className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div >
+    )
   }
-
-
-
 
   return (
     <div>
@@ -35,19 +134,24 @@ function PDForm({ ratings, onRatingChange, onSubmit }) {
             <div className="px-4 sm:px-0">
               <h2 className="text-base font-semibold leading-7 text-gray-900">{rating.name}</h2>
               <p className="mt-1 text-sm leading-6 text-gray-600 pb-4">
-                The trainee trust in the established action plan.    </p>
-              <div className="h-2 relative max-w-screen-md mx-auto">
+                {rating.description}    </p>
+              <div className="h-1 relative max-w-screen-md mx-auto">
                 {[...Array(10)].map((_, i) => (
-                  <div key={i} className="h-1/6 w-full bg-gray-300 rounded-full">
+                  <div key={i} className="h-1/6 w-2/4 bg-gray-300 rounded-full ">
                     <div
-                      className=" h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full"
-                      style={{ width: `${(rating.value / 9) * 100}%` }}
+                      className={`h-full rounded-full ${rating.value >= 4
+                        ? "bg-gradient-to-r from-green-400 to-green-600"
+                        : rating.value >= 3
+                          ? "bg-gradient-to-r from-yellow-400 to-yellow-600"
+                          : "bg-gradient-to-r from-red-400 to-red-600"
+                        }`}
+                      style={{ width: `${(rating.value / 5) * 100}%` }}
                     ></div>
                   </div>
                 ))}
               </div>
             </div>
-            <form onSubmit={handleSubmit} action="/api/form-PD" method="post" className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
+            <form className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
               <div className="px-4 py-6 sm:p-8">
                 <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-4">
@@ -57,7 +161,7 @@ function PDForm({ ratings, onRatingChange, onSubmit }) {
                     <div className="mt-2">
                       <div className="flex rounded-md  focus-within:ring-indigo-600 sm:max-w-md">
                         <div className="flex items-center space-x-2">
-                          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
+                          {[1, 2, 3, 4, 5].map((number) => (
                             <label htmlFor={`${rating.name}-${number}`} key={`${index}-${number}`}>
                               <input
                                 type="checkbox"
@@ -79,7 +183,6 @@ function PDForm({ ratings, onRatingChange, onSubmit }) {
                             </label>
                           ))}
                         </div>
-
                       </div>
                     </div>
                   </div>
@@ -89,9 +192,22 @@ function PDForm({ ratings, onRatingChange, onSubmit }) {
             </form>
           </div>
         </div >
-
       ))}
-
+      <div className="lg:flex lg:items-center lg:justify-between pl-5 pr-5 pb-10" >
+        <div className="min-w-0 flex-1 pb-8">
+          <h3 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Session Notes</h3>
+        </div>
+        <div className="mt-5 flex lg:ml-4 lg:mt-0">
+          <span className="sm:ml-3">
+            <button onClick={addTopic} type="submit" className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              + Add Topic
+            </button>
+          </span>
+        </div>
+      </div>
+      {Array(topics)
+        .fill(0)
+        .map((_, i) => <SessionNotes key={i} />)}
     </div >
   )
 }

@@ -15,16 +15,16 @@ function Checkpoint() {
 
 
   const [ratings, setRatings] = useState([
-    { name: "Trust", value: 0 },
-    { name: "Quality", value: 0 },
-    { name: "Communication", value: 0 },
+    { name: "Trust", description: "The trainee trust in the established action plan.", value: 0 },
+    { name: "Plan commitment", description: "HE will follow the action plan.", value: 0 },
+    { name: "Task retention", description: "HE will remember what to do.", value: 0 },
     // Add more rating bars here
   ]);
 
 
 
 
-  function handleRatingChange(index, value) {
+  function handleRatingChange(index: number, value: number) {
     const updatedRatings = [...ratings];
     updatedRatings[index].value = value;
     setRatings(updatedRatings);
@@ -51,7 +51,7 @@ function Checkpoint() {
       }
     }).then(response => {
       if (response.ok) {
-        // handle success
+        window.alert("Checkpoint added")
       } else {
         // handle error
       }
@@ -122,7 +122,7 @@ function Checkpoint() {
         </div>
       </div>}
 
-      {pd ? <PDForm ratings={ratings} onRatingChange={handleRatingChange} onSubmit={handleSubmit} />
+      {pd ? <PDForm ratings={ratings} onRatingChange={handleRatingChange} />
 
         : <WOLForm></WOLForm>
 
