@@ -2,7 +2,17 @@ import Navbar from "@/components/Navbar";
 import List from "@/components/List";
 import { GetServerSideProps } from "next";
 
-function Main({ people }) {
+interface people {
+  id: string;
+  name: string;
+  title: string;
+  email: string;
+  role: string;
+  checkpoint: string;
+  status: string;
+}
+
+function Main({ people }: any) {
   return (
     <div>
       <Navbar></Navbar>

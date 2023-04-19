@@ -1,22 +1,24 @@
 import {
   PrismaClient,
-  TraineeDelegate,
-  UserDelegate,
-  CommentDelegate,
-  WOLCheckpointDelegate,
-  PDCCheckpointDelegate,
+  Trainee,
+  User,
+  Comment,
+  WOLcheckpoint,
+  PDCcheckpoint,
+  Soloutions,
 } from "@prisma/client";
+
 import type { NextApiRequest } from "next";
 
 const prisma = new PrismaClient();
 
 interface ModelMapInterface {
-  Trainee: TraineeDelegate;
-  User: UserDelegate;
-  Comment: CommentDelegate;
-  WOL: WOLCheckpointDelegate;
-  PDC: PDCCheckpointDelegate;
-  Solutions: any;
+  Trainee: typeof prisma.trainee;
+  User: typeof prisma.user;
+  Comment: typeof prisma.comment;
+  WOL: typeof prisma.wOLcheckpoint;
+  PDC: typeof prisma.pDCcheckpoint;
+  Solutions: typeof prisma.soloutions;
 }
 
 const modelMap: ModelMapInterface = {
@@ -27,12 +29,13 @@ const modelMap: ModelMapInterface = {
   PDC: prisma.pDCcheckpoint,
   Solutions: prisma.soloutions,
 };
+
 export default async function serverToDb(
   modelName: keyof ModelMapInterface,
   action: string,
   req: NextApiRequest | undefined
 ): Promise<ModelMapInterface> {
-  const Model = modelMap[modelName];
+  const Model: any = modelMap[modelName];
 
   if (!Model) {
     throw new Error("Invalid model name");
