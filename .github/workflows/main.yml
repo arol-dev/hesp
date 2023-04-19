@@ -3,7 +3,7 @@ name: hesp deployment
 on:
   push:
     branches:
-      - CIDD
+      - CICD
 
 jobs:
   vercel_preview:
