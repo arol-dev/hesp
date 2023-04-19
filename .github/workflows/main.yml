@@ -1,0 +1,42 @@
+name: Vercel Deployment Preview
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  vercel_preview:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install Vercel CLI
+      run: npm i -g vercel
+
+    - name: Deploy to Vercel
+      env:
+        VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      run: vercel --token $VERCEL_TOKEN --confirm
+
+    - name: Get deployment preview URL
+      id: deployment
+      run: echo "::set-output name=url::$(vercel --token $VERCEL_TOKEN --confirm ls | grep -Eo 'https://[^ ]+')"
+
+    - name: Add comment with preview URL
+      uses: actions/github-script@v3
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const url = '${{ steps.deployment.outputs.url }}'
+          const comment = `🚀 Deployment preview: ${url}`
+          await github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          })
