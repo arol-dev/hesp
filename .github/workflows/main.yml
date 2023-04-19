@@ -27,9 +27,7 @@ jobs:
         working-directory: apps/hesp
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: |
-          preview_url=$(vercel ls --token $VERCEL_TOKEN | grep -Eo 'https://[^ ]+')
-          echo "PREVIEW_URL=$preview_url" >> $GITHUB_ENV
+        run: echo "::set-output name=url::$(vercel --token $VERCEL_TOKEN --yes ls | grep -Eo 'https://[^ ]+')"
 
       - name: Add comment with preview URL
         uses: actions/github-script@v3
@@ -38,7 +36,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const url = '${{ process.env.PREVIEW_URL }}'
+            const url = '${{ steps.deployment.outputs.url }}'
             const comment = `🚀 Deployment preview: ${url}`
             await github.issues.createComment({
               issue_number: context.issue.number,
