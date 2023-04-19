@@ -37,7 +37,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const url = '${{ steps.deployment.outputs.url }}'
-            const comment = `🚀 Deployment preview: ${url}`
+            const comment = `🚀 Deployment preview: https://hesp-gosvig123.vercel.app/`
             await github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
