@@ -3,10 +3,15 @@ import { useState } from "react"
 function PDForm() {
 
   const [progress, setProgress] = useState(0)
+  const [checked, setChecked] = useState(0)
 
 
   function handleClick(number: number) {
     setProgress(number)
+
+  }
+  function handleCheckboxChange(number: number) {
+    setChecked(number);
   }
 
   return (
@@ -27,7 +32,7 @@ function PDForm() {
                 <div className="h-1/6 w-full bg-gray-300 rounded-full">
                   <div
                     className=" h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full"
-                    style={{ width: `${(progress / 9) * 100}%` }}
+                    style={{ width: `${(checked / 9) * 100}%` }}
                   ></div>
                 </div>
               ))}
@@ -77,14 +82,16 @@ function PDForm() {
 
 
                       {/* {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
-                        <label htmlFor="progress" key="progress">
+                        <label htmlFor="number" key={number}>
                           <button
-                            id="progress"
-                            name="progress"
-                            key={number}
-                            value={progress}
-                            onClick={() => handleClick(number)}
-                            type="button"
+                            id={`number-${number}`}
+
+                            name="number"
+                            value={number}
+
+
+                            onClick={(e) => handleClick(e, number)}
+                            type="submit"
                             className={`mr-2 inline-flex items-center rounded-md ${progress === number
                               ? "bg-blue-500 text-white"
                               : "bg-white text-gray-900"
@@ -93,32 +100,54 @@ function PDForm() {
                             {number}
                           </button>
                         </label>
-
-
                       ))} */}
 
-                      <div className="flex items-center space-x-2">
-                        <label htmlFor="rating" className="sr-only">
-                          Rate this item:
-                        </label>
-                        <input type="hidden" name="rating" id="rating" className="hidden" />
+                      {/* <div className="flex items-center space-x-2">
+                        <input type="hidden" key="number" name="progress" id="progress" className="hidden" />
                         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
-                          <label htmlFor={`rating-${number}`} key={`rating-${number}`}>
+                          <label htmlFor={`progress-${number}`} key={number}>
                             <input
                               type="radio"
-                              name="rating"
-                              id={`rating-${number}`}
-                              value={number}
+                              name="progress"
+                              id={`progress-${number}`}
+                              value={progress}
                               onClick={() => handleClick(number)}
                               className="hidden"
                             />
-                            <button
-                              type="button"
-                              className={`inline-flex items-center px-3 py-2 text-sm font-semibold rounded-md shadow-sm ring-1 ring-inset ring-gray-300 ${progress === number ? 'bg-blue-500 text-white' : 'bg-white text-gray-900'
-                                } hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+                            <button key="number"
+                              type="button" onClick={(e) => handleButton(e)}
+                              className={`mr-2 inline-flex items-center rounded-md ${progress === number
+                                ? "bg-blue-500 text-white"
+                                : "bg-white text-gray-900"
+                                } px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}
                             >
                               {number}
                             </button>
+                          </label>
+                        ))}
+                      </div> */}
+
+
+                      <div className="flex items-center space-x-2">
+                        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
+                          <label htmlFor={`progress-${number}`} key={number}>
+                            <input
+                              type="checkbox"
+                              name="progress"
+                              id={`progress-${number}`}
+                              value={checked}
+                              onChange={() => { handleCheckboxChange(number) }}
+                              className="hidden"
+                            />
+                            <span
+                              key={`checkbox-${number}`}
+                              className={`${checked === number
+                                ? "bg-blue-500 text-white"
+                                : "bg-white text-gray-900"
+                                } inline-flex items-center justify-center rounded-md w-6 h-6 border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50`}
+                            >
+                              {number}
+                            </span>
                           </label>
                         ))}
                       </div>
@@ -130,8 +159,8 @@ function PDForm() {
 
 
 
-                      {/* 
-                      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
+
+                      {/* {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
                         <label htmlFor="number" key={number}>
                           <input
                             id={`number-${number}`}
@@ -309,8 +338,8 @@ function PDForm() {
         </div> */}
           </form>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   )
 }
 
