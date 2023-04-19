@@ -13,7 +13,7 @@ function PDForm() {
     <div>
 
       {/* //////////////////////////////////
-        Trust
+        TRUST
          ///////////////////////////////// */}
 
       <div className="space-y-10 divide-y divide-gray-900/10 pl-5 pr-5 pb-10">
@@ -34,11 +34,11 @@ function PDForm() {
             </div>
 
           </div>
-          <form className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
+          <form action="/api/form" method="post" className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
             <div className="px-4 py-6 sm:p-8">
               <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="sm:col-span-4">
-                  <label htmlFor="website" className="block text-sm font-medium leading-6 text-gray-900">
+                  <label className="block text-sm font-medium leading-6 text-gray-900">
                     Satisfaction level
                   </label>
                   <div className="mt-2">
@@ -74,10 +74,15 @@ function PDForm() {
                       </button>
                     </span> */}
 
-                      <span className="hidden sm:block">
-                        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
+
+
+                      {/* {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
+                        <label htmlFor="progress" key="progress">
                           <button
+                            id="progress"
+                            name="progress"
                             key={number}
+                            value={progress}
                             onClick={() => handleClick(number)}
                             type="button"
                             className={`mr-2 inline-flex items-center rounded-md ${progress === number
@@ -87,53 +92,118 @@ function PDForm() {
                           >
                             {number}
                           </button>
+                        </label>
+
+
+                      ))} */}
+
+                      <div className="flex items-center space-x-2">
+                        <label htmlFor="rating" className="sr-only">
+                          Rate this item:
+                        </label>
+                        <input type="hidden" name="rating" id="rating" className="hidden" />
+                        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
+                          <label htmlFor={`rating-${number}`} key={`rating-${number}`}>
+                            <input
+                              type="radio"
+                              name="rating"
+                              id={`rating-${number}`}
+                              value={number}
+                              onClick={() => handleClick(number)}
+                              className="hidden"
+                            />
+                            <button
+                              type="button"
+                              className={`inline-flex items-center px-3 py-2 text-sm font-semibold rounded-md shadow-sm ring-1 ring-inset ring-gray-300 ${progress === number ? 'bg-blue-500 text-white' : 'bg-white text-gray-900'
+                                } hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+                            >
+                              {number}
+                            </button>
+                          </label>
                         ))}
-                      </span>
+                      </div>
+
+
+
+
+
+
+
+
+                      {/* 
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
+                        <label htmlFor="number" key={number}>
+                          <input
+                            id={`number-${number}`}
+                            type="radio"
+                            name="number"
+                            value={number}
+                            checked={progress === number}
+                            onChange={() => handleClick(number)}
+                            className={`mr-2 inline-flex items-center rounded-md ${progress === number
+                              ? "bg-blue-500 text-white"
+                              : "bg-white text-gray-900"
+                              } px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300`}
+                          />
+                          {number}
+                        </label>
+                      ))} */}
+
+
+
+
+
+
+
                     </div>
                   </div>
                 </div>
                 <div className="col-span-full">
-                  <label htmlFor="feel" className="block text-sm font-medium leading-6 text-gray-900">
+                  <label className="block text-sm font-medium leading-6 text-gray-900">
                     What makes you feel this way?
                   </label>
                   <div className="mt-2">
-                    <textarea
-                      id="feel"
-                      name="feel"
-                      rows={3}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      defaultValue={''}
-                    />
+                    <label htmlFor="trust">
+                      <textarea
+                        id="trust"
+                        name="trust"
+                        rows={3}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        defaultValue={''}
+                      />
+                    </label>
                   </div>
                   <p className="mt-3 text-sm leading-6 text-gray-400">Brief description for your profile. URLs are hyperlinked.</p>
                 </div>
                 <div className="col-span-full">
-                  <label htmlFor="improve" className="block text-sm font-medium leading-6 text-gray-900">
+                  <label className="block text-sm font-medium leading-6 text-gray-900">
                     What can you do to improve your satisfaction level?                  </label>
                   <div className="mt-2">
-                    <textarea
-                      id="improve"
-                      name="improve"
-                      rows={3}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      defaultValue={''}
-                    />
+                    <label htmlFor="improve">
+                      <textarea
+                        id="improve"
+                        name="improve"
+                        rows={3}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        defaultValue={''}
+                      />
+                    </label>
                   </div>
                   <p className="mt-3 text-sm leading-6 text-gray-400">Brief description for your profile. URLs are hyperlinked.</p>
                 </div>
               </div>
             </div>
-            {/* <div className="flex items-center justify-end gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8">
-          <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Save
-          </button>
-        </div> */}
+            <div className="flex items-center justify-end gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8">
+              <button type="submit" className="text-sm font-semibold leading-6 text-gray-900">
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Save
+              </button>
+            </div>
           </form>
         </div>
 
