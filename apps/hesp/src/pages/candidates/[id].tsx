@@ -1,6 +1,5 @@
 import Candidate from "@/components/Candidate";
 import { GetServerSideProps } from "next";
-import serverToDb from "../../../lib/serverToDb";
 
 export function Profile({ person }: any) {
   return <Candidate person={person}></Candidate>;

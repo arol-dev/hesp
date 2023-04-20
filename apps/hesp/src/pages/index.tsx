@@ -1,7 +1,6 @@
 import Navbar from "@/components/Navbar";
 import List from "@/components/List";
 import { GetServerSideProps } from "next";
-import serverToDb from "../../lib/serverToDb";
 function Main({ people }: any) {
   return (
     <div>
@@ -12,7 +11,10 @@ function Main({ people }: any) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const people = await serverToDb("Trainee", "get", undefined) || []
+  const people = await fetch(`http://localhost:3000/api/he/he`).then((res) =>
+    res.json()
+  );
+
   return {
     props: {
       people,
