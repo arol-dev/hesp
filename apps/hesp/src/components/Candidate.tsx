@@ -1,8 +1,7 @@
 import Link from "next/link";
 import Navbar from "./Navbar";
+import { useState, useEffect } from "react";
 
-// const person =
-//   { id: "1", name: "Lindsay Walton", title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member', checkpoint: '5 days ago', status: 'active', phone: "+3867436876378", reference: "21/0002" }
 function Candidate({ person }: any) {
   return (
     <div>

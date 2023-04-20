@@ -12,7 +12,7 @@ function Main({ people }: any) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const people = await serverToDb("Trainee", "get", undefined);
+  const people = await serverToDb("Trainee", "get", undefined) || []
   return {
     props: {
       people,
