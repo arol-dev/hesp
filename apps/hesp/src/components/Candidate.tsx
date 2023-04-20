@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Navbar from "./Navbar";
-import { useState, useEffect } from "react";
 
 function Candidate({ person }: any) {
   return (

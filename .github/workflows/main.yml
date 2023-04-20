@@ -13,20 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 18
-
-      - name: Start Database
-        run: docker-compose up -d
-
-      - name: Install Prisma CLI
-        run: npm install -g prisma
-
-      - name: Run Prisma generate
-        run: prisma generate
-
       - name: Install Vercel CLI
         run: npm i -g vercel
 
@@ -35,9 +21,6 @@ jobs:
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: vercel --token $VERCEL_TOKEN --yes
-
-      - name: Regenerate Prisma Client locally
-        run: prisma generate
 
       - name: Install jq
         run: sudo apt-get install -y jq
