@@ -25,21 +25,26 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
   }
 
 
+
   function SessionNotes() {
     return (
       <div className="space-y-10 divide-y divide-gray-900/10 pl-5 pr-5 pb-10">
         <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
           <div className="px-4 sm:px-0">
+
             <h2 className="text-base font-semibold leading-7 text-gray-900">Topics</h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.           </p>
+
           </div>
           <form action="/api/PDnotes" method="post" className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
             <div className="px-4 py-6 sm:p-8">
               <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+
                 <div className="col-span-full">
                   <label className="block text-sm font-medium leading-6 text-gray-900">
                     Topic
+
                   </label>
                   <div className="mt-2">
                     <label htmlFor="topic">
@@ -53,10 +58,12 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
                     </label>
                   </div>
 
+
                 </div>
                 <div className="col-span-full">
                   <label className="block text-sm font-medium leading-6 text-gray-900">
                     Objective               </label>
+
                   <div className="mt-2">
                     <label htmlFor="objective" >
                       <textarea
@@ -68,6 +75,7 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
                       />
                     </label>
                   </div>
+
 
                 </div>
                 <div className="col-span-full">
@@ -89,6 +97,7 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
                 </div>  <div className="col-span-full">
                   <label className="block text-sm font-medium leading-6 text-gray-900">
                     Notes
+
                   </label>
                   <div className="mt-2">
                     <label htmlFor="notes">
@@ -102,9 +111,11 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
                     </label>
                   </div>
 
+
                 </div>  <div className="col-span-full">
                   <label className="block text-sm font-medium leading-6 text-gray-900">
                     Results
+
                   </label>
                   <div className="mt-2">
                     <label htmlFor="results">
@@ -117,6 +128,8 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
                       />
                     </label>
                   </div>
+
+
 
                 </div>
               </div>
@@ -222,4 +235,4 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
   )
 }
 
-export default PDForm
+export default PDForm;

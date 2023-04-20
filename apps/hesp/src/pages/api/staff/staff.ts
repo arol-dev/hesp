@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import serverToDb from "@/serverToDb";
+import serverToDb from "../../../../lib/serverToDb";
 
 export default async function handler(
   req: NextApiRequest,
@@ -17,6 +17,6 @@ export default async function handler(
       res.status(200).json(users);
     }
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: (error as Error).message });
   }
 }
