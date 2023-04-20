@@ -6,6 +6,7 @@ import {
   WOLcheckpoint,
   PDCcheckpoint,
   Soloutions,
+  ProvidedSoloutions,
 } from "@prisma/client";
 
 import type { NextApiRequest } from "next";
@@ -19,6 +20,7 @@ interface ModelMapInterface {
   WOL: typeof prisma.wOLcheckpoint;
   PDC: typeof prisma.pDCcheckpoint;
   Solutions: typeof prisma.soloutions;
+  ProvidedSoloutions: typeof prisma.providedSoloutions;
 }
 
 const modelMap: ModelMapInterface = {
@@ -28,6 +30,7 @@ const modelMap: ModelMapInterface = {
   WOL: prisma.wOLcheckpoint,
   PDC: prisma.pDCcheckpoint,
   Solutions: prisma.soloutions,
+  ProvidedSoloutions: prisma.providedSoloutions,
 };
 
 export default async function serverToDb(
