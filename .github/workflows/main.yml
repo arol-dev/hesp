@@ -21,9 +21,6 @@ jobs:
       - name: Start Database
         run: docker-compose up -d
 
-      - name: Install dependencies
-        run: npm ci
-
       - name: Install Prisma CLI
         run: npm install -g prisma
 
