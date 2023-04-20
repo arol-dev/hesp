@@ -16,6 +16,9 @@ jobs:
       - name: Install Vercel CLI
         run: npm i -g vercel
 
+      - name: Generate the prisma Client
+        run: npx prisma Generate
+
       - name: deploy to vercel
         working-directory: apps/hesp
         env:
