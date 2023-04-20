@@ -11,8 +11,26 @@ function Main({ people }: any) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const people = await fetch(`http://localhost:3000/api/he/he`).then((res) =>
-    res.json()
+  const people = await fetch(`http://localhost:3000/api/he/he`).then(
+    (res) =>
+      res.json() || [
+        {
+          id: 1,
+          firstName: "John",
+          lastName: "Doe",
+          email: "test",
+          phone: "1234567890",
+          reference: "1234567890",
+        },
+        {
+          id: 2,
+          firstName: "John",
+          lastName: "Doe",
+          email: "test",
+          phone: "1234567890",
+          reference: "1234567890",
+        },
+      ]
   );
 
   return {
