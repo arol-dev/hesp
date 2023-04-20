@@ -32,7 +32,7 @@ function Checkpoint() {
 
 
 
-  function handleSubmit(event: MouseEvent<HTMLFormElement>) {
+  function handleSubmit(event: any) {
     event.preventDefault();
     console.log("buttons is clicked", ratings);
 
