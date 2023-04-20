@@ -34,78 +34,88 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
             <p className="mt-1 text-sm leading-6 text-gray-600">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.           </p>
           </div>
-          <form className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
+          <form action="/api/PDnotes" method="post" className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
             <div className="px-4 py-6 sm:p-8">
               <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="col-span-full">
-                  <label htmlFor="feel" className="block text-sm font-medium leading-6 text-gray-900">
+                  <label className="block text-sm font-medium leading-6 text-gray-900">
                     Topic
                   </label>
                   <div className="mt-2">
-                    <textarea
-                      id="feel"
-                      name="feel"
-                      rows={1}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      defaultValue={''}
-                    />
+                    <label htmlFor="topic">
+                      <textarea
+                        id="topic"
+                        name="topic"
+                        rows={1}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        defaultValue={''}
+                      />
+                    </label>
                   </div>
 
                 </div>
                 <div className="col-span-full">
-                  <label htmlFor="improve" className="block text-sm font-medium leading-6 text-gray-900">
+                  <label className="block text-sm font-medium leading-6 text-gray-900">
                     Objective               </label>
                   <div className="mt-2">
-                    <textarea
-                      id="improve"
-                      name="improve"
-                      rows={1}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      defaultValue={''}
-                    />
+                    <label htmlFor="objective" >
+                      <textarea
+                        id="objective"
+                        name="objective"
+                        rows={1}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        defaultValue={''}
+                      />
+                    </label>
                   </div>
 
                 </div>
                 <div className="col-span-full">
-                  <label htmlFor="feel" className="block text-sm font-medium leading-6 text-gray-900">
+                  <label className="block text-sm font-medium leading-6 text-gray-900">
                     Actions
                   </label>
                   <div className="mt-2">
-                    <textarea
-                      id="feel"
-                      name="feel"
-                      rows={3}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      defaultValue={''}
-                    />
+                    <label htmlFor="actions">
+                      <textarea
+                        id="actions"
+                        name="actions"
+                        rows={3}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        defaultValue={''}
+                      />
+                    </label>
                   </div>
 
                 </div>  <div className="col-span-full">
-                  <label htmlFor="feel" className="block text-sm font-medium leading-6 text-gray-900">
+                  <label className="block text-sm font-medium leading-6 text-gray-900">
                     Notes
                   </label>
                   <div className="mt-2">
-                    <textarea
-                      id="feel"
-                      name="feel"
-                      rows={3}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      defaultValue={''}
-                    />
+                    <label htmlFor="notes">
+                      <textarea
+                        id="notes"
+                        name="notes"
+                        rows={3}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        defaultValue={''}
+                      />
+                    </label>
                   </div>
 
                 </div>  <div className="col-span-full">
-                  <label htmlFor="feel" className="block text-sm font-medium leading-6 text-gray-900">
+                  <label className="block text-sm font-medium leading-6 text-gray-900">
                     Results
                   </label>
                   <div className="mt-2">
-                    <textarea
-                      id="feel"
-                      name="feel"
-                      rows={3}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      defaultValue={''}
-                    />
+                    <label htmlFor="results">
+                      <textarea
+                        id="results"
+                        name="results"
+                        rows={3}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        defaultValue={''}
+                      />
+                    </label>
                   </div>
 
                 </div>
