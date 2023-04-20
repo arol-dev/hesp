@@ -1,3 +1,45 @@
+import {
+  PrismaClient,
+  Trainee,
+  User,
+  Comment,
+  WOLcheckpoint,
+  PDCcheckpoint,
+  Soloutions,
+} from "@prisma/client";
+
+
+const prisma = new PrismaClient();
+
+export const modelRelations: any = {
+  User: ["Comment", "WOLcheckpoint", "PDCcheckpoint", "Trainee"],
+  Comment: ["User", "WOLcheckpoint"],
+  WOLcheckpoint: ["User", "Comment"],
+  PDCcheckpoint: ["user"],
+  Trainee: ["User", "TraineeMetaData", "ProvidedSoloutions"],
+  TraineeMetaData: ["trainee"],
+  ProvidedSoloutions: ["Trainee", "Soloutions"],
+  Soloutions: ["ProvidedSoloutions"],
+};
+
+export interface ModelMapInterface {
+  Trainee: typeof prisma.trainee;
+  User: typeof prisma.user;
+  Comment: typeof prisma.comment;
+  WOL: typeof prisma.wOLcheckpoint;
+  PDC: typeof prisma.pDCcheckpoint;
+  Solutions: typeof prisma.soloutions;
+}
+
+export const modelMap: ModelMapInterface = {
+  Trainee: prisma.trainee,
+  User: prisma.user,
+  Comment: prisma.comment,
+  WOL: prisma.wOLcheckpoint,
+  PDC: prisma.pDCcheckpoint,
+  Solutions: prisma.soloutions,
+};
+
 export interface IUserRole {
   ADMIN: "ADMIN";
   STAFF: "STAFF";
