@@ -6,45 +6,45 @@ type Rating = {
   value: number;
 };
 
-
 type PDFormProps = {
   ratings: Rating[];
   onRatingChange: (index: number, value: number) => void;
-
 };
 
 function PDForm({ ratings, onRatingChange }: PDFormProps) {
-  const [topics, setTopics] = useState(1)
+  const [topics, setTopics] = useState(1);
 
   const addTopic = () => {
-    setTopics(topics + 1)
-  }
+    setTopics(topics + 1);
+  };
 
   function handleRatingChange(index: number, value: number) {
     onRatingChange(index, value);
   }
-
-
 
   function SessionNotes() {
     return (
       <div className="space-y-10 divide-y divide-gray-900/10 pl-5 pr-5 pb-10">
         <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
           <div className="px-4 sm:px-0">
-
-            <h2 className="text-base font-semibold leading-7 text-gray-900">Topics</h2>
+            <h2 className="text-base font-semibold leading-7 text-gray-900">
+              Topics
+            </h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.           </p>
-
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
+            </p>
           </div>
-          <form action="/api/PDnotes" method="post" className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
+          <form
+            action="/api/PDnotes"
+            method="post"
+            className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2"
+          >
             <div className="px-4 py-6 sm:p-8">
               <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-
                 <div className="col-span-full">
                   <label className="block text-sm font-medium leading-6 text-gray-900">
                     Topic
-
                   </label>
                   <div className="mt-2">
                     <label htmlFor="topic">
@@ -53,30 +53,27 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
                         name="topic"
                         rows={1}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        defaultValue={''}
+                        defaultValue={""}
                       />
                     </label>
                   </div>
-
-
                 </div>
                 <div className="col-span-full">
                   <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Objective               </label>
+                    Objective{" "}
+                  </label>
 
                   <div className="mt-2">
-                    <label htmlFor="objective" >
+                    <label htmlFor="objective">
                       <textarea
                         id="objective"
                         name="objective"
                         rows={1}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        defaultValue={''}
+                        defaultValue={""}
                       />
                     </label>
                   </div>
-
-
                 </div>
                 <div className="col-span-full">
                   <label className="block text-sm font-medium leading-6 text-gray-900">
@@ -89,15 +86,14 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
                         name="actions"
                         rows={3}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        defaultValue={''}
+                        defaultValue={""}
                       />
                     </label>
                   </div>
-
-                </div>  <div className="col-span-full">
+                </div>{" "}
+                <div className="col-span-full">
                   <label className="block text-sm font-medium leading-6 text-gray-900">
                     Notes
-
                   </label>
                   <div className="mt-2">
                     <label htmlFor="notes">
@@ -106,16 +102,14 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
                         name="notes"
                         rows={3}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        defaultValue={''}
+                        defaultValue={""}
                       />
                     </label>
                   </div>
-
-
-                </div>  <div className="col-span-full">
+                </div>{" "}
+                <div className="col-span-full">
                   <label className="block text-sm font-medium leading-6 text-gray-900">
                     Results
-
                   </label>
                   <div className="mt-2">
                     <label htmlFor="results">
@@ -124,18 +118,14 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
                         name="results"
                         rows={3}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        defaultValue={''}
+                        defaultValue={""}
                       />
                     </label>
                   </div>
-
-
-
                 </div>
               </div>
             </div>
             <div className="flex items-center justify-end gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8">
-
               <button
                 type="submit"
                 className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -145,29 +135,39 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
             </div>
           </form>
         </div>
-      </div >
-    )
+      </div>
+    );
   }
 
   return (
     <div>
       {ratings.map((rating, index) => (
-        <div key={index} className="space-y-10 divide-y divide-gray-900/10 pl-5 pr-5 pb-10">
+        <div
+          key={index}
+          className="space-y-10 divide-y divide-gray-900/10 pl-5 pr-5 pb-10"
+        >
           <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
             <div className="px-4 sm:px-0">
-              <h2 className="text-base font-semibold leading-7 text-gray-900">{rating.name}</h2>
+              <h2 className="text-base font-semibold leading-7 text-gray-900">
+                {rating.name}
+              </h2>
               <p className="mt-1 text-sm leading-6 text-gray-600 pb-4">
-                {rating.description}    </p>
+                {rating.description}{" "}
+              </p>
               <div className="h-1 relative max-w-screen-md mx-auto">
                 {[...Array(10)].map((_, i) => (
-                  <div key={i} className="h-1/6 w-2/4 bg-gray-300 rounded-full ">
+                  <div
+                    key={i}
+                    className="h-1/6 w-2/4 bg-gray-300 rounded-full "
+                  >
                     <div
-                      className={`h-full rounded-full ${rating.value >= 4
-                        ? "bg-gradient-to-r from-green-400 to-green-600"
-                        : rating.value >= 3
+                      className={`h-full rounded-full ${
+                        rating.value >= 4
+                          ? "bg-gradient-to-r from-green-400 to-green-600"
+                          : rating.value >= 3
                           ? "bg-gradient-to-r from-yellow-400 to-yellow-600"
                           : "bg-gradient-to-r from-red-400 to-red-600"
-                        }`}
+                      }`}
                       style={{ width: `${(rating.value / 5) * 100}%` }}
                     ></div>
                   </div>
@@ -185,21 +185,27 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
                       <div className="flex rounded-md  focus-within:ring-indigo-600 sm:max-w-md">
                         <div className="flex items-center space-x-2">
                           {[1, 2, 3, 4, 5].map((number) => (
-                            <label htmlFor={`${rating.name}-${number}`} key={`${index}-${number}`}>
+                            <label
+                              htmlFor={`${rating.name}-${number}`}
+                              key={`${index}-${number}`}
+                            >
                               <input
                                 type="checkbox"
                                 name={`${rating.name}`}
                                 id={`${rating.name}-${number}`}
                                 value={`${number}`}
                                 checked={rating.value === number}
-                                onChange={() => handleRatingChange(index, number)}
+                                onChange={() =>
+                                  handleRatingChange(index, number)
+                                }
                                 className="hidden"
                               />
                               <span
-                                className={`${rating.value === number
-                                  ? "bg-blue-500 text-white"
-                                  : "bg-white text-gray-900"
-                                  } inline-flex items-center justify-center rounded-md px-3 py-1.5 border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50`}
+                                className={`${
+                                  rating.value === number
+                                    ? "bg-blue-500 text-white"
+                                    : "bg-white text-gray-900"
+                                } inline-flex items-center justify-center rounded-md px-3 py-1.5 border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50`}
                               >
                                 {number}
                               </span>
@@ -211,18 +217,23 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
                   </div>
                 </div>
               </div>
-
             </form>
           </div>
-        </div >
+        </div>
       ))}
-      <div className="lg:flex lg:items-center lg:justify-between pl-5 pr-5 pb-10" >
+      <div className="lg:flex lg:items-center lg:justify-between pl-5 pr-5 pb-10">
         <div className="min-w-0 flex-1 pb-8">
-          <h3 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Session Notes</h3>
+          <h3 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+            Session Notes
+          </h3>
         </div>
         <div className="mt-5 flex lg:ml-4 lg:mt-0">
           <span className="sm:ml-3">
-            <button onClick={addTopic} type="submit" className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            <button
+              onClick={addTopic}
+              type="submit"
+              className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
               + Add Topic
             </button>
           </span>
@@ -230,9 +241,11 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
       </div>
       {Array(topics)
         .fill(0)
-        .map((_, i) => <SessionNotes key={i} />)}
-    </div >
-  )
+        .map((_, i) => (
+          <SessionNotes key={i} />
+        ))}
+    </div>
+  );
 }
 
 export default PDForm;
