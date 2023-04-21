@@ -55,8 +55,8 @@ export default function List({ people }: any) {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {people.map((person: any) => (
-                  <tr key={person.email}>
+                {people.map((person: any, index: number) => (
+                  <tr key={index}>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                       <Link
                         href={`/candidates/${person.id}`}
