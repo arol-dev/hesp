@@ -74,7 +74,7 @@ function Checkpoint() {
       <Navbar></Navbar>
       {pd ? <div className="lg:flex lg:items-center lg:justify-between pl-5 pr-5 pb-10" >
         <div className="min-w-0 flex-1 pb-8">
-          <h3 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">New Personal Development Checkpoint</h3>
+          <h3 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">New Professional Development Checkpoint</h3>
         </div>
         <div className="mt-5 flex lg:ml-4 lg:mt-0">
           <span className="hidden sm:block">
@@ -106,7 +106,7 @@ function Checkpoint() {
               <svg className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z" />
               </svg>
-              Switch to Personal Development
+              Switch to Professional Development
             </button>
           </span>
           <span className="sm:ml-3">
