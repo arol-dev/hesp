@@ -17,10 +17,9 @@ function Main({ people }: any) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const protocol = context.req.headers["x-forwarded-proto"] || "http";
   const domainName = context.req.headers.host;
-  const people = await fetch(`${protocol}://${domainName}/api/he/he`).then(
-    (res) => res.json()
+  const people = await fetch(`http://${domainName}/api/he/he`).then((res) =>
+    res.json()
   );
 
   return {
