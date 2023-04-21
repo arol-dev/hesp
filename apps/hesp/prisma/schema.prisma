@@ -111,8 +111,8 @@ model TraineeMetaData {
 model ProvidedSoloutions {
   id         Int          @id @default(autoincrement())
   code       String
-  traineeId  Int
-  Trainee    Trainee      @relation(fields: [traineeId], references: [id])
+  traineeId  Int?
+  Trainee    Trainee?     @relation(fields: [traineeId], references: [id])
   Soloutions Soloutions[]
 }
 
