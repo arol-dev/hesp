@@ -62,7 +62,7 @@ export default function List({ people }: any) {
                         href={`/candidates/${person.id}`}
                         className="text-indigo-600 hover:text-indigo-900"
                       >
-                        {person.name}
+                        {person.firstName + " " + person.lastName}
                         <p className="whitespace-nowrap  text-sm text-gray-500">
                           {person.email}
                         </p>
