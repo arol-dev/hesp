@@ -101,6 +101,8 @@ model Trainee {
   ProvidedSoloutions ProvidedSoloutions[]
   User               User?                @relation(fields: [userId], references: [id])
   TraineeMetaData    TraineeMetaData?
+  reference          String?
+  about              String?
 }
 
 model TraineeMetaData {

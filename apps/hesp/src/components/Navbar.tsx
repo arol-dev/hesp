@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Image from "next/image";
+import logo_he_negativo_v1 from "../assets/logo_he_negativo_v1.png";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

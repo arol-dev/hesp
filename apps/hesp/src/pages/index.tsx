@@ -32,7 +32,6 @@ export async function getServerSideProps(context: any) {
       cookie: context.req.headers.cookie,
     },
   }).then((res) => res.json());
-
   return {
     props: {
       user: user.user,

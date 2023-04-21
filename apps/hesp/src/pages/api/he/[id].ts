@@ -5,8 +5,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
+
   if (req.method === "PUT") {
-    try {
+    try { 
       const newTrainee = await serverToDb("Trainee", "put", req);
 
       res.status(200).json(newTrainee);
@@ -15,7 +16,8 @@ export default async function handler(
     }
   } else if (req.method === "GET") {
     const trainee = await serverToDb("Trainee", "get", req);
-
+    console.log( 'esitc a ID API ---->', trainee )
+    
     res.status(200).json(trainee);
   } else {
     res.status(405).json({ error: "Method not allowed" });
