@@ -17,10 +17,7 @@ function Main({ people }: any) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const domainName = context.req.headers.host;
-  const people = await fetch(`http://${domainName}/api/he/he`).then((res) =>
-    res.json()
-  );
+  const people = await serverToDb("Trainee", "get", undefined);
 
   return {
     props: {

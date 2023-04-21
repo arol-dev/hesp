@@ -8,10 +8,9 @@ export default Candidate;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id }: any = context.query;
-  const protocol = context.req.headers["x-forwarded-proto"] || "http";
   const domainName = context.req.headers.host;
-  const person = await fetch(`${protocol}://${domainName}/api/he/${id}`).then(
-    (res) => res.json()
+  const person = await fetch(`http://${domainName}/api/he/${id}`).then((res) =>
+    res.json()
   );
 
   return {
