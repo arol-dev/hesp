@@ -34,7 +34,7 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run:
           vercel env add DATABASE_URL "$DATABASE_URL" --token $VERCEL_TOKEN --yes
-          vercel --token $VERCEL_TOKEN --prod --yes
+          vercel --token $VERCEL_TOKEN --yes
 
       - name: Install jq
         run: sudo apt-get install -y jq
