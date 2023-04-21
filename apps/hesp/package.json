@@ -6,11 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate",
+    "migrate": "prisma migrate deploy"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.17",
     "@prisma/client": "^4.12.0",
+    "prisma": "^4.12.0",
+    "@supabase/supabase-js": "^2.21.0",
     "@tailwindcss/forms": "^0.5.3",
     "@types/node": "18.15.11",
     "@types/react": "18.0.34",
@@ -25,7 +29,5 @@
     "turbo": "latest",
     "typescript": "5.0.4"
   },
-  "devDependencies": {
-    "prisma": "^4.12.0"
-  }
+  "devDependencies": {}
 }
