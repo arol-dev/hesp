@@ -1,12 +1,11 @@
 import Navbar from "@/components/Navbar";
 import List from "@/components/List";
 import { GetServerSideProps } from "next";
-import { useEffect } from "react";
+import serverToDb from "../../lib/serverToDb";
+
 function Main({ people }: any) {
-  useEffect(() => {
-    console.log("people", people);
-    console.log("env", process.env.DATABASE_URL);
-  }, []);
+  const database = process.env.NEXT_PUBLIC_DB_URL;
+
   return (
     <div>
       <Navbar></Navbar>
