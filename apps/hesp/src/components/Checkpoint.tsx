@@ -15,10 +15,14 @@ function Checkpoint() {
 
 
   const [ratings, setRatings] = useState([
-    { name: "Trust", description: "The trainee trust in the established action plan.", value: 0 },
-    { name: "Plan commitment", description: "HE will follow the action plan.", value: 0 },
-    { name: "Task retention", description: "HE will remember what to do.", value: 0 },
-    // Add more rating bars here
+    { name: "Trust", body: "trust", description: "The trainee trust in the established action plan.", value: 0 },
+    { name: "willfollow", body: "willFollow", description: "HE will remember what to do.", value: 0 },
+    { name: "Task retention", body: "retention", description: "HE will remember what to do.", value: 0 },
+    { name: "Plan commitment", body: "commitment", description: "HE will follow the action plan.", value: 0 },
+    { name: "cv", body: "cv", description: "HE will follow the action plan.", value: 0 },
+    { name: "readyForInterviews", body: "readyForInterviews", description: "HE will follow the action plan.", value: 0 },
+    { name: "advancement", body: "advancement", description: "HE will follow the action plan.", value: 0 },
+
   ]);
 
 
@@ -39,7 +43,7 @@ function Checkpoint() {
     // Convert ratings array into URLSearchParams object
     const params = new URLSearchParams();
     ratings.forEach((rating) => {
-      params.append(rating.name, rating.value.toString());
+      params.append(rating.body, rating.value.toString());
     });
 
     // POST request to your API endpoint

@@ -2,6 +2,7 @@ import { useState } from "react";
 
 type Rating = {
   name: string;
+  body: string,
   description: string;
   value: number;
 };
