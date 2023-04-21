@@ -31,9 +31,7 @@ jobs:
         working-directory: apps/hesp
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
-          echo "env.DATABASE_URL=$DATABASE_URL" > .env
           vercel --token $VERCEL_TOKEN --prod --yes
 
       - name: Install jq
