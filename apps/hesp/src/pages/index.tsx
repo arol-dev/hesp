@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import List from "@/components/List";
 import { GetServerSideProps } from "next";
-import serverToDb from "../../lib/serverToDb";
+import serverToDb from "../../lib/helperFuntions/serverToDb";
 
 function Main({ people }: any) {
   const database = process.env.NEXT_PUBLIC_DB_URL;
