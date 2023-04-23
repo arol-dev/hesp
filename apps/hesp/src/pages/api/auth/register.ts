@@ -24,9 +24,13 @@ export default async function handler(
           role,
         },
       });
+      const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30); // Set the cookie to expire in 24 hours
 
       const token = generateJWTToken(newUser);
-      res.setHeader("Set-Cookie", [`token=${token}`]);
+      res.setHeader(
+        "Set-Cookie",
+        `token=${token}; Path=/; Expires=${expires.toUTCString()}; HttpOnly; SameSite=Lax`
+      );
       res.status(201).json({ user: newUser });
     }
   } catch (error) {

@@ -23,7 +23,13 @@ export default async function handler(
 
     const token = generateJWTToken(user);
 
-    res.setHeader("Set-Cookie", [`token=${token}`]);
+    const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30); // Set the cookie to expire in 24 hours
+
+    res.setHeader(
+      "Set-Cookie",
+      `token=${token}; Path=/; Expires=${expires.toUTCString()}; HttpOnly; SameSite=Lax`
+    );
+
     res.status(200).json({ user, token });
   } else {
     res.status(405).json({ message: "Method not allowed" });
