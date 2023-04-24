@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import serverToDb from "../../../../lib/serverToDb";
+import serverToDb from "../../../../lib/helperFuntions/serverToDb";
 
 export default async function handler(
   req: NextApiRequest,

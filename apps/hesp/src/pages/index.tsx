@@ -1,11 +1,9 @@
 import Navbar from "@/components/Navbar";
 import List from "@/components/List";
 import { GetServerSideProps } from "next";
-import serverToDb from "../../lib/serverToDb";
+import serverToDb from "../../lib/helperFuntions/serverToDb";
 
 function Main({ people }: any) {
-  const database = process.env.NEXT_PUBLIC_DB_URL;
-
   return (
     <div>
       <Navbar></Navbar>
@@ -15,7 +13,7 @@ function Main({ people }: any) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const people = await serverToDb("Trainee", "get", undefined);
 
   return {

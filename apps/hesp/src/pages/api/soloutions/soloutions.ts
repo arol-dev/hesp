@@ -1,4 +1,4 @@
-import serverToDb from "../../../../lib/serverToDb";
+import serverToDb from "../../../../lib/helperFuntions/serverToDb";
 
 import { NextApiRequest, NextApiResponse } from "next";
 

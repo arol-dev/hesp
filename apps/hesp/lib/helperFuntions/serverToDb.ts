@@ -1,4 +1,4 @@
-import { ModelMapInterface, modelMap, modelRelations } from "../types";
+import { ModelMapInterface, modelMap, modelRelations } from "../../types";
 import { NextApiRequest } from "next";
 export default async function serverToDb(
   modelName: keyof ModelMapInterface,
