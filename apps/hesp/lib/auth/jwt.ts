@@ -1,10 +1,11 @@
 import jwt from "jsonwebtoken";
 import { config } from "dotenv";
 import { IUser } from "../../types";
+import { User } from "@prisma/client";
 
 config();
 
-export const generateJWTToken = (user: IUser) => {
+export const generateJWTToken = (user: User) => {
   const { id, firstName, lastName, password, role } = user;
   return jwt.sign(
     {

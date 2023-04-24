@@ -124,3 +124,10 @@ model Soloutions {
   providedID         Int?
   ProvidedSoloutions ProvidedSoloutions? @relation(fields: [providedID], references: [id])
 }
+
+model InviteLink {
+  id        Int      @id @default(autoincrement())
+  code      String
+  used      Boolean  @default(false)
+  expiresAt DateTime
+}
