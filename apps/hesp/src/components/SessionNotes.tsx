@@ -266,7 +266,7 @@ function SessionNotes({ onTopicsListChange }: SessionNotesProps) {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center justify-start gap-x-6 border-gray-900/10 px-4 py-4 sm:px-8">
+                <div className="flex items-center gap-x-6 border-gray-900/10 px-4 py-4 sm:px-8">
                   <button
                     type="submit"
                     className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
