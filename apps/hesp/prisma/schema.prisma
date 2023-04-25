@@ -20,6 +20,8 @@ model User {
   id            Int             @id @default(autoincrement())
   firstName     String
   lastName      String
+  email         String          @unique
+  password      String
   role          UserRole        @default(STAFF)
   Comment       Comment[]
   WOLcheckpoint WOLcheckpoint[]
@@ -123,8 +125,8 @@ model TraineeMetaData {
 model ProvidedSoloutions {
   id         Int          @id @default(autoincrement())
   code       String
-  traineeId  Int
-  Trainee    Trainee      @relation(fields: [traineeId], references: [id])
+  traineeId  Int?
+  Trainee    Trainee?     @relation(fields: [traineeId], references: [id])
   Soloutions Soloutions[]
 }
 
@@ -133,4 +135,11 @@ model Soloutions {
   code               String
   providedID         Int?
   ProvidedSoloutions ProvidedSoloutions? @relation(fields: [providedID], references: [id])
+}
+
+model InviteLink {
+  id        Int      @id @default(autoincrement())
+  code      String
+  used      Boolean  @default(false)
+  expiresAt DateTime
 }

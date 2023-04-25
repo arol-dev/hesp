@@ -55,14 +55,14 @@ export default function List({ people }: any) {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {people.map((person: any) => (
-                  <tr key={person.email}>
+                {people.map((person: any, index: number) => (
+                  <tr key={index}>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                       <Link
                         href={`/candidates/${person.id}`}
                         className="text-indigo-600 hover:text-indigo-900"
                       >
-                        {person.name}
+                        {person.firstName + " " + person.lastName}
                         <p className="whitespace-nowrap  text-sm text-gray-500">
                           {person.email}
                         </p>
@@ -80,7 +80,10 @@ export default function List({ people }: any) {
                         href="#"
                         className="text-indigo-600 hover:text-indigo-900"
                       >
-                        Edit<span className="sr-only">, {person.name}</span>
+                        Edit
+                        <span className="sr-only">
+                          , {person.firstName + " " + person.lastName}
+                        </span>
                       </a>
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
@@ -89,7 +92,9 @@ export default function List({ people }: any) {
                         className="text-indigo-600 hover:text-indigo-900"
                       >
                         New Checkpoint
-                        <span className="sr-only">, {person.name}</span>
+                        <span className="sr-only">
+                          , {person.firstName + " " + person.lastName}
+                        </span>
                       </a>
                     </td>
                   </tr>

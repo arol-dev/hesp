@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import serverToDb from "../../../../lib/serverToDb";
+import serverToDb from "../../../../lib/helperFuntions/serverToDb";
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
