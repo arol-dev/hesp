@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "migrate": "prisma migrate deploy"
+    "migrate": "prisma migrate deploy",
+    "test": "cypress open"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.17",
@@ -48,6 +49,8 @@
     "@types/uuid": "^9.0.1"
   },
   "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "ts-node prisma/seed.ts",
+    "@types/uuid": "^9.0.1",
+    "cypress": "^12.10.0"
   }
 }
