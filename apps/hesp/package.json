@@ -9,7 +9,7 @@
     "lint": "next lint",
     "postinstall": "prisma generate",
     "migrate": "prisma migrate deploy",
-    "test": "cypress open"
+    "test": "cypress open --config viewportWidth=1280,viewportHeight=720"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.17",
