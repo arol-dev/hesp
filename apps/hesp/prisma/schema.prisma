@@ -60,10 +60,22 @@ model PDCcheckpoint {
   cv                 Int
   readyForInterviews Int
   advancement        Int
+  SessionNotes       SessionNotes[]
   userId             Int?
   user               User? @relation(fields: [userId], references: [id])
 }
 
+model SessionNotes {
+  id BigInt @unique
+  topic String
+  objective String
+  actions String
+  notes String
+  results String
+  evaluation String
+  checkpointId Int?
+  PDCcheckpoint PDCcheckpoint? @relation(fields: [checkpointId], references: [id])
+}
 model Trainee {
   id                 Int                  @id @default(autoincrement())
   firstName          String
