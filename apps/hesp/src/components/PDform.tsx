@@ -39,15 +39,6 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
 
 
   function SessionNotes() {
-
-
-
-
-
-
-
-
-
     const [topicsList, setTopicsList] = useState<TopicProps[]>([{
       id: Date.now(),
       edit: true,
@@ -113,7 +104,7 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
 
 
 
-    const handleSubmit = async (topic: TopicProps, event) => {
+    const handleSubmit = async (topic: TopicProps, event: any) => {
 
       event.preventDefault();
       console.log('save button is clicked')
@@ -144,7 +135,7 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
 
 
 
-    const handleChange = (event, topic: TopicProps) => {
+    const handleChange = (event: any, topic: TopicProps) => {
       setTopicsList((prevTopicsList) =>
         prevTopicsList.map((note) => {
           if (note.id === topic.id) {
@@ -184,8 +175,6 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
 
 
     }
-
-
     return (
       <div className="space-y-10 divide-y divide-gray-900/10 pl-5 pr-5 pb-10">
         <div className="lg:flex lg:items-center lg:justify-between pl-5 pr-5 pb-10" >
@@ -207,7 +196,6 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
             <p className="mt-1 text-sm leading-6 text-gray-600">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.           </p>
           </div>
-
           {topicsList.map((topic) =>
             topic.edit === true ?
               <form onSubmit={() => handleSubmit(topic, event)} action="/api/PDnotes" method="post" className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
@@ -309,7 +297,7 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
                     Save
                   </button>
                 </div>
-              </form> : <div onSubmit={handleSubmit} className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
+              </form> : <div className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
                 <div className="px-4 py-6 sm:p-8">
                   <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div className="col-span-full">
@@ -337,7 +325,6 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
 
                             className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 
-                            onChange={handleChange}
                           >
                             {topic.objective} </div>
                         </label>
@@ -357,7 +344,6 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
 
                             className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 
-                            onChange={handleChange}
                           >
                             {topic.actions}</div>
                         </label>
@@ -376,7 +362,6 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
 
                             className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 
-                            onChange={handleChange}
                           >
                             {topic.notes}</div>
                         </label>
@@ -395,7 +380,6 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
 
 
                             className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            onChange={handleChange}
                           >
                             {topic.results}</div>
                         </label>
