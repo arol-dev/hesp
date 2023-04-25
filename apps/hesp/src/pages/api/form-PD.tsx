@@ -6,6 +6,8 @@ const prisma = new PrismaClient()
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const body = req.body
+    const topicsList = JSON.parse(body.topicsList)
+    console.log('body from api', topicsList)
     const checkpoint = await prisma.pDCcheckpoint.create({
       data: {
         trust: parseInt(body.trust),

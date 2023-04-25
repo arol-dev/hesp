@@ -4,12 +4,28 @@ import Navbar from "./Navbar";
 import { useState } from 'react';
 import PDForm from './PDform';
 import WOLForm from './WOLform';
+import SessionNotes from './SessionNotes';
 
+type TopicProps = {
+  id: number,
+  edit: boolean,
+  topic: string,
+  objective: string,
+  actions: string,
+  notes: string,
+  results: string
 
+}
 function Checkpoint() {
   const [pd, setPD] = useState(false)
   const [clicked, setClicked] = useState(0)
   const [progress, setProgress] = useState(0)
+
+  const [topicsList, setTopicsList] = useState([]);
+
+  const handleTopicsList = (list: any) => {
+    setTopicsList(list);
+  };
 
 
 
@@ -42,9 +58,16 @@ function Checkpoint() {
 
     // Convert ratings array into URLSearchParams object
     const params = new URLSearchParams();
+
+
+
     ratings.forEach((rating) => {
       params.append(rating.body, rating.value.toString());
     });
+    const topicsListString = JSON.stringify(topicsList);
+    params.append('topicsList', topicsListString);
+
+
 
     // POST request to your API endpoint
     fetch("/api/form-PD", {
@@ -61,11 +84,6 @@ function Checkpoint() {
       }
     });
   }
-
-
-
-
-
 
   function handleClick(number: number) {
     setClicked(number)
@@ -128,8 +146,10 @@ function Checkpoint() {
       }
 
       {
-        pd ? <PDForm ratings={ratings} onRatingChange={handleRatingChange} />
-
+        pd ? <>
+          <PDForm ratings={ratings} onRatingChange={handleRatingChange} />
+          <SessionNotes onTopicsListChange={handleTopicsList} ></SessionNotes>
+        </>
           : <WOLForm></WOLForm>
 
 
