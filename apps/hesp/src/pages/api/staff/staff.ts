@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import serverToDb from "../../../../lib/serverToDb";
+import serverToDb from "../../../../lib/helperFuntions/serverToDb";
+import { Prisma, InviteLink } from "@prisma/client";
 
 export default async function handler(
   req: NextApiRequest,
@@ -7,10 +8,12 @@ export default async function handler(
 ) {
   try {
     if (req.method === "POST") {
-      const newUser = await serverToDb("User", "post", req);
+      const incomingLinkToCheck: string | undefined = req.headers.referer;
 
-      console.log(newUser);
-      res.status(200).json(newUser);
+      if (incomingLinkToCheck) {
+        const newUser = await serverToDb("User", "post", req);
+        res.status(201).json(newUser);
+      }
     }
     if (req.method === "GET") {
       const users = await serverToDb("User", "get", undefined);
