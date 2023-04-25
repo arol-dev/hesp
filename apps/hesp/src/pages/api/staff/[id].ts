@@ -1,4 +1,4 @@
-import serverToDb from "../../../../lib/serverToDb";
+import serverToDb from "../../../../lib/helperFuntions/serverToDb";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(

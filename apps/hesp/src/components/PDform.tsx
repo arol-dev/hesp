@@ -7,6 +7,7 @@ type Rating = {
   value: number;
 };
 
+ 
 
 type TopicProps = {
   id: number,
@@ -19,25 +20,21 @@ type TopicProps = {
 
 }
 
+ 
 type PDFormProps = {
   ratings: Rating[];
   onRatingChange: (index: number, value: number) => void;
-
 };
 
 function PDForm({ ratings, onRatingChange }: PDFormProps) {
-  const [topics, setTopics] = useState(1)
+  const [topics, setTopics] = useState(1);
 
-
+ 
 
   function handleRatingChange(index: number, value: number) {
     onRatingChange(index, value);
   }
-
-
-
-
-
+ 
   function SessionNotes() {
     const [topicsList, setTopicsList] = useState<TopicProps[]>([{
       id: Date.now(),
@@ -191,9 +188,11 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
         </div>
         <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
           <div className="px-4 sm:px-0">
-
-            <h2 className="text-base font-semibold leading-7 text-gray-900">Topics</h2>
+            <h2 className="text-base font-semibold leading-7 text-gray-900">
+              Topics
+            </h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">
+ 
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.           </p>
           </div>
           {topicsList.map((topic) =>
@@ -402,28 +401,39 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
 
       </div>
     )
+ 
   }
 
 
   return (
     <div>
       {ratings.map((rating, index) => (
-        <div key={index} className="space-y-10 divide-y divide-gray-900/10 pl-5 pr-5 pb-10">
+        <div
+          key={index}
+          className="space-y-10 divide-y divide-gray-900/10 pl-5 pr-5 pb-10"
+        >
           <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
             <div className="px-4 sm:px-0">
-              <h2 className="text-base font-semibold leading-7 text-gray-900">{rating.name}</h2>
+              <h2 className="text-base font-semibold leading-7 text-gray-900">
+                {rating.name}
+              </h2>
               <p className="mt-1 text-sm leading-6 text-gray-600 pb-4">
-                {rating.description}    </p>
+                {rating.description}{" "}
+              </p>
               <div className="h-1 relative max-w-screen-md mx-auto">
                 {[...Array(10)].map((_, i) => (
-                  <div key={i} className="h-1/6 w-2/4 bg-gray-300 rounded-full ">
+                  <div
+                    key={i}
+                    className="h-1/6 w-2/4 bg-gray-300 rounded-full "
+                  >
                     <div
-                      className={`h-full rounded-full ${rating.value >= 4
-                        ? "bg-gradient-to-r from-green-400 to-green-600"
-                        : rating.value >= 3
+                      className={`h-full rounded-full ${
+                        rating.value >= 4
+                          ? "bg-gradient-to-r from-green-400 to-green-600"
+                          : rating.value >= 3
                           ? "bg-gradient-to-r from-yellow-400 to-yellow-600"
                           : "bg-gradient-to-r from-red-400 to-red-600"
-                        }`}
+                      }`}
                       style={{ width: `${(rating.value / 5) * 100}%` }}
                     ></div>
                   </div>
@@ -441,21 +451,27 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
                       <div className="flex rounded-md  focus-within:ring-indigo-600 sm:max-w-md">
                         <div className="flex items-center space-x-2">
                           {[1, 2, 3, 4, 5].map((number) => (
-                            <label htmlFor={`${rating.name}-${number}`} key={`${index}-${number}`}>
+                            <label
+                              htmlFor={`${rating.name}-${number}`}
+                              key={`${index}-${number}`}
+                            >
                               <input
                                 type="checkbox"
                                 name={`${rating.name}`}
                                 id={`${rating.name}-${number}`}
                                 value={`${number}`}
                                 checked={rating.value === number}
-                                onChange={() => handleRatingChange(index, number)}
+                                onChange={() =>
+                                  handleRatingChange(index, number)
+                                }
                                 className="hidden"
                               />
                               <span
-                                className={`${rating.value === number
-                                  ? "bg-blue-500 text-white"
-                                  : "bg-white text-gray-900"
-                                  } inline-flex items-center justify-center rounded-md px-3 py-1.5 border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50`}
+                                className={`${
+                                  rating.value === number
+                                    ? "bg-blue-500 text-white"
+                                    : "bg-white text-gray-900"
+                                } inline-flex items-center justify-center rounded-md px-3 py-1.5 border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50`}
                               >
                                 {number}
                               </span>
@@ -467,15 +483,16 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
                   </div>
                 </div>
               </div>
-
             </form>
           </div>
-        </div >
+        </div>
       ))}
+ 
 
       <SessionNotes></SessionNotes>
     </div >
   )
+
 }
 
 export default PDForm;
