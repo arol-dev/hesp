@@ -1,6 +1,7 @@
 import React from 'react'
 import Candidate from '../Candidate'
 import { IUser } from '../../../types'
+import Navbar from '../Navbar'
 
 const SAMPLE_USER: IUser = {
   id: 1,
@@ -19,6 +20,6 @@ const SAMPLE_USER: IUser = {
 describe('<Candidate />', () => {
   it('renders', () => {
     // see: https://on.cypress.io/mounting-react
-    cy.mount(<Candidate person={SAMPLE_USER} />)
+    cy.mount(<Navbar />)
   })
 })
