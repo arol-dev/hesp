@@ -1,7 +1,6 @@
-// pages/signup/[dynamicID].js
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -11,12 +10,32 @@ export default function SignupPage() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent<HTMLElement>) => {
     e.preventDefault();
 
-    // Perform your signup logic here, sending the data to your API or database
+    const res = await fetch("http://localhost:3001/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        email,
+        password,
+      }),
+    });
+
+    const data = await res.json();
+
+    console.log(data);
+
+    if (data.user.role) {
+      router.push("/");
+    } else {
+      console.error("Error:", data.error);
+    }
   };
 
   return (
@@ -96,22 +115,6 @@ export default function SignupPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-              />
-            </div>
-
-            {/* Phone */}
-            <div className="mb-4">
-              <label htmlFor="phone" className="block text-sm font-medium mb-2">
-                Phone (Optional)
-              </label>
-              <input
-                type="tel"
-                id="phone"
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                placeholder="123-45-678"
               />
             </div>
 

@@ -6,6 +6,8 @@ import {
   WOLcheckpoint,
   PDCcheckpoint,
   Soloutions,
+  ProvidedSoloutions,
+  InviteLink,
 } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -22,6 +24,7 @@ export const modelRelations: any = {
 };
 
 export interface ModelMapInterface {
+  [x: string]: any;
   Trainee: typeof prisma.trainee;
   User: typeof prisma.user;
   Comment: typeof prisma.comment;
@@ -29,6 +32,7 @@ export interface ModelMapInterface {
   PDC: typeof prisma.pDCcheckpoint;
   Solutions: typeof prisma.soloutions;
   ProvidedSoloutions: typeof prisma.providedSoloutions;
+  InviteLink: typeof prisma.inviteLink;
 }
 
 export const modelMap: ModelMapInterface = {
@@ -39,6 +43,7 @@ export const modelMap: ModelMapInterface = {
   PDC: prisma.pDCcheckpoint,
   Solutions: prisma.soloutions,
   ProvidedSoloutions: prisma.providedSoloutions,
+  InviteLink: prisma.inviteLink,
 };
 
 export interface IUserRole {
@@ -63,8 +68,8 @@ export interface IUser {
   id: number;
   firstName: string;
   lastName: string;
-  email?: string;
-  password?: string;
+  email: string;
+  password: string;
   role: keyof IUserRole;
   Comment: IComment[];
   WOLcheckpoint: IWOLcheckpoint[];

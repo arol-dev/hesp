@@ -12,9 +12,10 @@ export default async function serverToDb(
   }
 
   const include = buildIncludeObject(modelRelations[modelName]);
+  const includeParam = Object.keys(include).length > 0 ? { include } : {};
 
   if (req === undefined && action === "get") {
-    return await Model.findMany({ include });
+    return await Model.findMany(includeParam);
   }
 
   if (req === undefined) {
@@ -23,29 +24,36 @@ export default async function serverToDb(
 
   if (action === "get") {
     const id = parseInt(req.query.id as string);
-    const result = await Model.findUnique({ where: { id }, include });
+    const result = await Model.findUnique({ where: { id }, ...includeParam });
     return result;
   }
 
   const data = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 
   if (action === "post") {
-    const result = await Model.create({ data, include });
+    console.log(data);
+    const result = await Model.create({ data, ...includeParam });
     return result;
   } else if (action === "put") {
     const id = parseInt(req.query.id as string);
-    const result = await Model.update({ where: { id }, data, include });
+    const result = await Model.update({ where: { id }, data, ...includeParam });
     return result;
   } else {
     throw new Error("Invalid action");
   }
 }
 
-function buildIncludeObject(relations: string[]) {
+function buildIncludeObject(relations: string[] | undefined) {
   const include: Record<string, boolean> = {};
 
+  if (!relations || !Array.isArray(relations)) {
+    return include;
+  }
+
   for (const relation of relations) {
-    include[relation] = true;
+    if (typeof relation === "string") {
+      include[relation] = true;
+    }
   }
 
   return include;
