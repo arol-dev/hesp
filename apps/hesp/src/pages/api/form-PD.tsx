@@ -10,7 +10,7 @@ interface UpdatePDCcheckpointInput extends Prisma.PDCcheckpointUpdateInput {
       actions: string;
       notes: string;
       results: string;
-
+      evaluation: string
     }>
   };
 }
