@@ -8,6 +8,7 @@ function Checkpoint() {
   const [pd, setPD] = useState(false);
   const [clicked, setClicked] = useState(0);
   const [progress, setProgress] = useState(0);
+  console.log("random change");
 
   const [ratings, setRatings] = useState([
     {
