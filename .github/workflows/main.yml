@@ -25,7 +25,21 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           prisma generate
-          prisma migrate deploy
+          echo "Running migrations..."
+          set +e
+          OUTPUT=$(prisma migrate deploy 2>&1)
+          EXIT_CODE=$?
+          set -e
+          if [ $EXIT_CODE -ne 0 ]; then
+            echo "Migration failed. Rolling back..."
+            LAST_MIGRATION=$(prisma migrate status | grep -oP 'migrations/\K[^"]+')
+            echo "Last migration: $LAST_MIGRATION"
+            prisma migrate rollback --migration $LAST_MIGRATION
+            echo "Migration rolled back. Exiting with error."
+            echo $OUTPUT
+            exit $EXIT_CODE
+          fi
+          echo "Migrations successfully applied."
 
       - name: Deploy to Vercel
         working-directory: apps/hesp
