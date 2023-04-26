@@ -7,11 +7,11 @@ type Rating = {
   value: number;
 };
 
- 
 
 
 
- 
+
+
 type PDFormProps = {
   ratings: Rating[];
   onRatingChange: (index: number, value: number) => void;
@@ -20,12 +20,12 @@ type PDFormProps = {
 function PDForm({ ratings, onRatingChange }: PDFormProps) {
   const [topics, setTopics] = useState(1);
 
- 
+
 
   function handleRatingChange(index: number, value: number) {
     onRatingChange(index, value);
   }
- 
+
 
   return (
     <div>
@@ -49,13 +49,12 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
                     className="h-1/6 w-2/4 bg-gray-300 rounded-full "
                   >
                     <div
-                      className={`h-full rounded-full ${
-                        rating.value >= 4
+                      className={`h-full rounded-full ${rating.value >= 4
                           ? "bg-gradient-to-r from-green-400 to-green-600"
                           : rating.value >= 3
-                          ? "bg-gradient-to-r from-yellow-400 to-yellow-600"
-                          : "bg-gradient-to-r from-red-400 to-red-600"
-                      }`}
+                            ? "bg-gradient-to-r from-yellow-400 to-yellow-600"
+                            : "bg-gradient-to-r from-red-400 to-red-600"
+                        }`}
                       style={{ width: `${(rating.value / 5) * 100}%` }}
                     ></div>
                   </div>
@@ -89,11 +88,10 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
                                 className="hidden"
                               />
                               <span
-                                className={`${
-                                  rating.value === number
+                                className={`${rating.value === number
                                     ? "bg-blue-500 text-white"
                                     : "bg-white text-gray-900"
-                                } inline-flex items-center justify-center rounded-md px-3 py-1.5 border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50`}
+                                  } inline-flex items-center justify-center rounded-md px-3 py-1.5 border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50`}
                               >
                                 {number}
                               </span>
@@ -109,7 +107,7 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
           </div>
         </div>
       ))}
- 
+
 
 
     </div >

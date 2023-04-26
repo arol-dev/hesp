@@ -66,9 +66,7 @@ function SessionNotes({ onTopicsListChange }: SessionNotesProps) {
   const handleSubmit = async (topic: TopicProps, event: any) => {
 
     event.preventDefault();
-    console.log('save button is clicked')
-    console.log('id', topic.id)
-    console.log('this is the list', topicsList)
+
 
     const updatedTopicsList = topicsList.map((note) => {
       if (note.id === topic.id) {
@@ -83,7 +81,7 @@ function SessionNotes({ onTopicsListChange }: SessionNotesProps) {
           evaluation: topic.evaluation
         };
       }
-      console.log('note', note)
+
       return note;
     });
 
