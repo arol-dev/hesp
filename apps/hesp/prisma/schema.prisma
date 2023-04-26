@@ -29,35 +29,35 @@ model User {
 // }
 
 model WOLcheckpoint {
-  id                  Int      @id @default(autoincrement())
-  health              Int
-  healthFeel String
-  healthImprove String
-  work                Int
-   workFeel String
-  workImprove String
-  finances            Int
-   financesthFeel String
-  financesthImprove String
-  environment         Int
-   environmentFeel String
-  environmentImprove String
-  love                Int
-   loveFeel String
-  loveImprove String
-  familyFriends       Int
-   familyFriendsFeel String
-  familyFriendsImprove String
-  personalDevelopment Int
-   personalDevelopmentFeel String
+  id                         Int    @id @default(autoincrement())
+  health                     Int
+  healthFeel                 String
+  healthImprove              String
+  work                       Int
+  workFeel                   String
+  workImprove                String
+  finances                   Int
+  financesthFeel             String
+  financesthImprove          String
+  environment                Int
+  environmentFeel            String
+  environmentImprove         String
+  love                       Int
+  loveFeel                   String
+  loveImprove                String
+  familyFriends              Int
+  familyFriendsFeel          String
+  familyFriendsImprove       String
+  personalDevelopment        Int
+  personalDevelopmentFeel    String
   personalDevelopmentImprove String
-  fun                 Int
-   funFeel String
-  funImprove String
-  relatedUser         Int?
+  fun                        Int
+  funFeel                    String
+  funImprove                 String
+  relatedUser                Int?
   // commentID           Int?     @unique
   // Comment             Comment? @relation(fields: [commentID], references: [id])
-  User                User?    @relation(fields: [relatedUser], references: [id])
+  User                       User?  @relation(fields: [relatedUser], references: [id])
 }
 
 model PDCcheckpoint {

@@ -71,7 +71,7 @@ export interface IUser {
   email: string;
   password: string;
   role: keyof IUserRole;
-  Comment: IComment[];
+  // Comment: IComment[];
   WOLcheckpoint: IWOLcheckpoint[];
   PDCcheckpoint: IPDCcheckpoint[];
   Trainee: ITrainee[];
