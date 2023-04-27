@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function List({ people }: any) {
+export default function List({ user }: any) {
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
@@ -15,7 +15,7 @@ export default function List({ people }: any) {
         </div>
       </div>
       <div className="mt-8 flow-root">
-        {people.length > 0 ? (
+        {user && user.Trainee && user.Trainee.length > 0 ? (
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
               <table className="min-w-full divide-y divide-gray-300">
@@ -45,7 +45,7 @@ export default function List({ people }: any) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {people.map((person: any, index: number) => (
+                  {user.Trainee.map((person: any, index: number) => (
                     <tr key={index}>
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                         <Link
