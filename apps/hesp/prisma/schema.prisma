@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,30 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum UserRole {
-  ADMIN
-  STAFF
-  TRAINEE
-}
-
 model User {
   id            Int             @id @default(autoincrement())
   firstName     String
   lastName      String
+  role          UserRole        @default(STAFF)
   email         String          @unique
   password      String
-  role          UserRole        @default(STAFF)
   Comment       Comment[]
-  WOLcheckpoint WOLcheckpoint[]
   PDCcheckpoint PDCcheckpoint[]
   Trainee       Trainee[]
+  WOLcheckpoint WOLcheckpoint[]
 }
 
 model Comment {
   id            Int            @id @default(autoincrement())
   message       String
   relatedUser   Int
-  User          User?          @relation(fields: [relatedUser], references: [id])
+  User          User           @relation(fields: [relatedUser], references: [id])
   WOLcheckpoint WOLcheckpoint?
 }
 
@@ -48,13 +39,12 @@ model WOLcheckpoint {
   personalDevelopment Int
   fun                 Int
   relatedUser         Int
-  User                User     @relation(fields: [relatedUser], references: [id])
   commentID           Int?     @unique
   Comment             Comment? @relation(fields: [commentID], references: [id])
+  User                User     @relation(fields: [relatedUser], references: [id])
 }
 
 model PDCcheckpoint {
-  id                 Int   @id @default(autoincrement())
   trust              Int
   willFollow         Int
   retention          Int
@@ -63,7 +53,21 @@ model PDCcheckpoint {
   readyForInterviews Int
   advancement        Int
   userId             Int?
-  user               User? @relation(fields: [userId], references: [id])
+  id                 Int            @id @default(autoincrement())
+  user               User?          @relation(fields: [userId], references: [id])
+  SessionNotes       SessionNotes[]
+}
+
+model SessionNotes {
+  id            BigInt         @unique
+  topic         String
+  objective     String
+  actions       String
+  notes         String
+  results       String
+  evaluation    String
+  checkpointId  Int?
+  PDCcheckpoint PDCcheckpoint? @relation(fields: [checkpointId], references: [id])
 }
 
 model Trainee {
@@ -74,27 +78,14 @@ model Trainee {
   phone              String?
   registerNumber     String?
   role               UserRole             @default(TRAINEE)
-  TraineeMetaData    TraineeMetaData[]
   userId             Int?
-  User               User?                @relation(fields: [userId], references: [id])
   ProvidedSoloutions ProvidedSoloutions[]
-}
-
-enum WorkingSituation {
-  WORKING
-  NOT_WORKING
-}
-
-enum HousingSituation {
-  HOMELESS
-  HOUSE
-  APARTMENT
-  OTHER
+  User               User?                @relation(fields: [userId], references: [id])
+  TraineeMetaData    TraineeMetaData?
 }
 
 model TraineeMetaData {
   traineeId           Int              @id @default(autoincrement())
-  trainee             Trainee          @relation(fields: [traineeId], references: [id])
   workingSituation    WorkingSituation
   housingSituation    HousingSituation
   needWork            Boolean
@@ -108,6 +99,7 @@ model TraineeMetaData {
   helpCandidate       Boolean
   filledForms         Boolean
   helpAccepted        Boolean
+  trainee             Trainee          @relation(fields: [traineeId], references: [id])
 }
 
 model ProvidedSoloutions {
@@ -130,4 +122,22 @@ model InviteLink {
   code      String
   used      Boolean  @default(false)
   expiresAt DateTime
+}
+
+enum UserRole {
+  ADMIN
+  STAFF
+  TRAINEE
+}
+
+enum WorkingSituation {
+  WORKING
+  NOT_WORKING
+}
+
+enum HousingSituation {
+  HOMELESS
+  HOUSE
+  APARTMENT
+  OTHER
 }

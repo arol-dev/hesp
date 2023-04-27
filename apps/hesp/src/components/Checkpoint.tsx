@@ -1,13 +1,56 @@
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import Navbar from "./Navbar";
-import { useState } from "react";
-import PDForm from "./PDform";
-import WOLForm from "./WOLform";
+
+import { useState } from 'react';
+import PDForm from './PDform';
+import WOLForm from './WOLform';
+import SessionNotes from './SessionNotes';
+
+type TopicProps = {
+  id: number,
+  edit: boolean,
+  topic: string,
+  objective: string,
+  actions: string,
+  notes: string,
+  results: string,
+  evaluation: string
+}
+
+
+
+type Topic = {
+  name: string
+  body: string,
+  value: number,
+  feel: string,
+  improve: string
+};
+
+type Topics = Topic[]
+
+
+
 
 function Checkpoint() {
-  const [pd, setPD] = useState(false);
-  const [clicked, setClicked] = useState(0);
-  const [progress, setProgress] = useState(0);
+
+  const [pd, setPD] = useState(false)
+  const [clicked, setClicked] = useState(0)
+  const [progress, setProgress] = useState(0)
+
+  const [topicsList, setTopicsList] = useState([]);
+
+  const handleTopicsList = (list: any) => {
+    setTopicsList(list);
+  };
+
+
+  const [WOLdata, setWOLdata] = useState([]);
+  const handleDataChange = (data: any) => {
+    setWOLdata(data)
+  }
+
+
 
   const [ratings, setRatings] = useState([
     {
@@ -54,21 +97,48 @@ function Checkpoint() {
     },
   ]);
 
+
+
+
+
+
+
+
+
+
+
+
   function handleRatingChange(index: number, value: number) {
     const updatedRatings = [...ratings];
     updatedRatings[index].value = value;
     setRatings(updatedRatings);
   }
 
+
+
+  // function handleRatingChangeWOL(index: number, value: number) {
+  //   const updatedRatings = [...WOLformdata];
+  //   updatedRatings[index].value = value;
+  //   setWOLformdata(updatedRatings);
+
+  // }
+
+
   function handleSubmit(event: any) {
     event.preventDefault();
-    console.log("buttons is clicked", ratings);
 
     // Convert ratings array into URLSearchParams object
     const params = new URLSearchParams();
+
+
+
     ratings.forEach((rating) => {
       params.append(rating.body, rating.value.toString());
     });
+    const topicsListString = JSON.stringify(topicsList);
+    params.append('topicsList', topicsListString);
+
+
 
     // POST request to your API endpoint
     fetch("/api/form-PD", {
@@ -86,11 +156,35 @@ function Checkpoint() {
     });
   }
 
+
+  function handleSubmitWol(event: any) {
+    event.preventDefault();
+
+
+
+    // POST request to your API endpoint
+    fetch("/api/form-WOL", {
+      method: "POST",
+      body: JSON.stringify(WOLdata),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    }).then((response) => {
+      if (response.ok) {
+        window.alert("Checkpoint added");
+      } else {
+        // handle error
+      }
+
+    })
+  }
+
+
   function handleClick(number: number) {
     setClicked(number);
     setProgress(number);
   }
-  function ProgressBar() {}
+
   return (
     <div>
       <Navbar></Navbar>
@@ -148,7 +242,7 @@ function Checkpoint() {
             </span>
           </div>
         </div>
-      ) : (
+      ) :
         <div className="lg:flex lg:items-center lg:justify-between pl-5 pr-5 pb-10">
           <div className="min-w-0 flex-1 pb-8">
             <h3 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
@@ -177,6 +271,9 @@ function Checkpoint() {
             </span>
             <span className="sm:ml-3">
               <button
+                onClick={(event) => {
+                  handleSubmitWol(event);
+                }}
                 type="button"
                 className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
@@ -199,14 +296,21 @@ function Checkpoint() {
             </span>
           </div>
         </div>
-      )}
+      }
 
-      {pd ? (
-        <PDForm ratings={ratings} onRatingChange={handleRatingChange} />
-      ) : (
-        <WOLForm></WOLForm>
-      )}
-    </div>
-  );
+      {
+        pd ? <>
+          <PDForm ratings={ratings} onRatingChange={handleRatingChange} />
+          <SessionNotes onTopicsListChange={handleTopicsList} ></SessionNotes>
+        </>
+          : <WOLForm onDataChange={handleDataChange}></WOLForm>
+
+
+
+
+      }
+    </div >
+  )
+
 }
 export default Checkpoint;
