@@ -2,7 +2,7 @@ import {
   PrismaClient,
   Trainee,
   User,
-  Comment,
+  // Comment,
   WOLcheckpoint,
   PDCcheckpoint,
   Soloutions,
@@ -27,7 +27,7 @@ export interface ModelMapInterface {
   [x: string]: any;
   Trainee: typeof prisma.trainee;
   User: typeof prisma.user;
-  Comment: typeof prisma.comment;
+  // Comment: typeof prisma.comment;
   WOL: typeof prisma.wOLcheckpoint;
   PDC: typeof prisma.pDCcheckpoint;
   Solutions: typeof prisma.soloutions;
@@ -38,7 +38,7 @@ export interface ModelMapInterface {
 export const modelMap: ModelMapInterface = {
   Trainee: prisma.trainee,
   User: prisma.user,
-  Comment: prisma.comment,
+  // Comment: prisma.comment,
   WOL: prisma.wOLcheckpoint,
   PDC: prisma.pDCcheckpoint,
   Solutions: prisma.soloutions,
@@ -71,7 +71,7 @@ export interface IUser {
   email: string;
   password: string;
   role: keyof IUserRole;
-  Comment: IComment[];
+  // Comment: IComment[];
   WOLcheckpoint: IWOLcheckpoint[];
   PDCcheckpoint: IPDCcheckpoint[];
   Trainee: ITrainee[];

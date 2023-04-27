@@ -45,7 +45,7 @@ function Checkpoint() {
   };
 
 
-  const [WOLdata, setWOLdata] = useState([]);
+  const [WOLdata, setWOLdata] = useState<Topics>([]);
   const handleDataChange = (data: any) => {
     setWOLdata(data)
   }
@@ -161,11 +161,23 @@ function Checkpoint() {
     event.preventDefault();
 
 
+    const data = WOLdata.map(topic => ({
+      [topic.body]: topic.value,
+      [`${topic.body}Feel`]: topic.feel,
+      [`${topic.body}Improve`]: topic.improve,
+    }));
+
+    const params = new URLSearchParams();
+    data.forEach((item) => {
+      Object.entries(item).forEach(([key, value]) => {
+        params.append(key, value.toString());
+      });
+    });
 
     // POST request to your API endpoint
     fetch("/api/form-WOL", {
       method: "POST",
-      body: JSON.stringify(WOLdata),
+      body: params,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },

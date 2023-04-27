@@ -45,6 +45,47 @@ function WOLForm({ onDataChange }: CheckpointProps) {
       value: 0,
       feel: "",
       improve: ""
+    },
+    {
+      name: "Finances",
+      body: "finances",
+      value: 0,
+      feel: "",
+      improve: ""
+    },
+    {
+      name: "Environment",
+      body: "environment",
+      value: 0,
+      feel: "",
+      improve: ""
+    },
+    {
+      name: "Love",
+      body: "love",
+      value: 0,
+      feel: "",
+      improve: ""
+    }, {
+      name: "Family and Friends",
+      body: "familyfriends",
+      value: 0,
+      feel: "",
+      improve: ""
+    },
+    {
+      name: "Personal Development",
+      body: "personaldevelopment",
+      value: 0,
+      feel: "",
+      improve: ""
+    },
+    {
+      name: "Fun",
+      body: "fun",
+      value: 0,
+      feel: "",
+      improve: ""
     }
   ])
 
@@ -86,9 +127,7 @@ function WOLForm({ onDataChange }: CheckpointProps) {
                 <h2 className="text-base font-semibold leading-7 text-gray-900">
                   {topic.name}
                 </h2>
-                {/* <p className="mt-1 text-sm leading-6 text-gray-600 pb-4">
-                    {rating.description}{" "}
-                  </p> */}
+
                 <div className="h-1 relative max-w-screen-md mx-auto">
                   {[...Array(10)].map((_, i) => (
                     <div
