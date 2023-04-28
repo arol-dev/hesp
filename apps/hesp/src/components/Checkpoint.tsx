@@ -60,7 +60,7 @@ function Checkpoint() {
       value: 0,
     },
     {
-      name: "willfollow",
+      name: "Follow",
       body: "willFollow",
       description: "He will follow the action plan",
       value: 0,
@@ -78,19 +78,19 @@ function Checkpoint() {
       value: 0,
     },
     {
-      name: "cv",
+      name: "CV",
       body: "cv",
       description: "His CV (resume) is done",
       value: 0,
     },
     {
-      name: "readyForInterviews",
+      name: "Interviews",
       body: "readyForInterviews",
       description: "He is ready to job interviews",
       value: 0,
     },
     {
-      name: "advancement",
+      name: "Advancement",
       body: "advancement",
       description: "He is advancing well",
       value: 0,
