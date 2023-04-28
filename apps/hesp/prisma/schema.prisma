@@ -29,8 +29,8 @@ model User {
 // }
 
 model WOLcheckpoint {
-  id                         Int    @id @default(autoincrement())
-  createdAt                  DateTime   @default(now())
+  id                         Int      @id @default(autoincrement())
+  createdAt                  DateTime @default(now())
   health                     Int
   healthFeel                 String
   healthImprove              String
@@ -58,13 +58,13 @@ model WOLcheckpoint {
   // relatedUser                Int?
   // commentID           Int?     @unique
   // Comment             Comment? @relation(fields: [commentID], references: [id])
-   userId             Int?
-   user               User?          @relation(fields: [userId], references: [id])
+  userId                     Int?
+  user                       User?    @relation(fields: [userId], references: [id])
 }
 
 model PDCcheckpoint {
   id                 Int            @id @default(autoincrement())
-  createdAt                  DateTime   @default(now())
+  createdAt          DateTime       @default(now())
   trust              Int
   willFollow         Int
   retention          Int
