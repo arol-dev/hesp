@@ -7,6 +7,7 @@ import WOLForm from './WOLform';
 import SessionNotes from './SessionNotes';
 import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/router";
+import { IUser } from "../../types";
 
 type TopicProps = {
   id: number,
@@ -31,10 +32,12 @@ type Topic = {
 
 type Topics = Topic[]
 
+type Id = {
+  id: number
+}
 
 
-
-function Checkpoint({ id }) {
+function Checkpoint({ id }: Id) {
   const router = useRouter()
 
   const [pd, setPD] = useState(false)

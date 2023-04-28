@@ -1,6 +1,11 @@
 import Checkpoint from "@/components/Checkpoint"
+import { GetServerSideProps } from "next"
 
-function NewCheckpoint({ id }: number) {
+type Id = {
+  id: number
+}
+
+function NewCheckpoint({ id }: Id) {
   return (
     <Checkpoint id={id}></Checkpoint>
   )
