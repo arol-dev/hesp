@@ -127,24 +127,16 @@ function WOLForm({ onDataChange }: CheckpointProps) {
                 <h2 className="text-base font-semibold leading-7 text-gray-900">
                   {topic.name}
                 </h2>
-
-                <div className="h-1 relative max-w-screen-md mx-auto">
-                  {[...Array(10)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="h-1/6 w-2/4 bg-gray-300 rounded-full "
-                    >
-                      <div
-                        className={`h-full rounded-full ${topic.value >= 4
-                          ? "bg-gradient-to-r from-green-400 to-green-600"
-                          : topic.value >= 3
-                            ? "bg-gradient-to-r from-yellow-400 to-yellow-600"
-                            : "bg-gradient-to-r from-red-400 to-red-600"
-                          }`}
-                        style={{ width: `${(topic.value / 5) * 100}%` }}
-                      ></div>
-                    </div>
-                  ))}
+                <div className="h-2 rounded-full bg-gray-300 max-w-screen-md mx-auto">
+                  <div
+                    className={`h-full rounded-full ${topic.value >= 7
+                      ? "bg-gradient-to-r from-green-400 to-green-600"
+                      : topic.value >= 4
+                        ? "bg-gradient-to-r from-yellow-400 to-yellow-600"
+                        : "bg-gradient-to-r from-red-400 to-red-600"
+                      }`}
+                    style={{ width: `${(topic.value / 9) * 100}%` }}
+                  ></div>
                 </div>
               </div>
               <form className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
