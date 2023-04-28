@@ -42,13 +42,13 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
               <p className="mt-1 text-sm leading-6 text-gray-600 pb-4">
                 {rating.description}{" "}
               </p>
-              <div className="h-2 rounded-full bg-gray-300 max-w-screen-md mx-auto">
+              <div className="h-2 rounded-full bg-gray-300 w-1/2">
                 <div
                   className={`h-full rounded-full ${rating.value >= 4
                     ? "bg-gradient-to-r from-green-400 to-green-600"
                     : rating.value >= 3
                       ? "bg-gradient-to-r from-yellow-400 to-yellow-600"
-                      : "bg-gradient-to-r from-red-400 to-red-600"
+                      : "bg-gradient-to-r from-red-400 to-red-600 "
                     }`}
                   style={{ width: `${(rating.value / 5) * 100}%` }}
                 ></div>

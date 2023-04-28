@@ -127,7 +127,7 @@ function WOLForm({ onDataChange }: CheckpointProps) {
                 <h2 className="text-base font-semibold leading-7 text-gray-900">
                   {topic.name}
                 </h2>
-                <div className="h-2 rounded-full bg-gray-300 max-w-screen-md mx-auto">
+                <div className="h-2 rounded-full bg-gray-300 w-1/2">
                   <div
                     className={`h-full rounded-full ${topic.value >= 7
                       ? "bg-gradient-to-r from-green-400 to-green-600"
