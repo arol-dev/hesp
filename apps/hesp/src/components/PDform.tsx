@@ -42,23 +42,16 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
               <p className="mt-1 text-sm leading-6 text-gray-600 pb-4">
                 {rating.description}{" "}
               </p>
-              <div className="h-1 relative max-w-screen-md mx-auto">
-                {[...Array(10)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="h-1/6 w-2/4 bg-gray-300 rounded-full "
-                  >
-                    <div
-                      className={`h-full rounded-full ${rating.value >= 4
-                          ? "bg-gradient-to-r from-green-400 to-green-600"
-                          : rating.value >= 3
-                            ? "bg-gradient-to-r from-yellow-400 to-yellow-600"
-                            : "bg-gradient-to-r from-red-400 to-red-600"
-                        }`}
-                      style={{ width: `${(rating.value / 5) * 100}%` }}
-                    ></div>
-                  </div>
-                ))}
+              <div className="h-2 rounded-full bg-gray-300 max-w-screen-md mx-auto">
+                <div
+                  className={`h-full rounded-full ${rating.value >= 4
+                    ? "bg-gradient-to-r from-green-400 to-green-600"
+                    : rating.value >= 3
+                      ? "bg-gradient-to-r from-yellow-400 to-yellow-600"
+                      : "bg-gradient-to-r from-red-400 to-red-600"
+                    }`}
+                  style={{ width: `${(rating.value / 5) * 100}%` }}
+                ></div>
               </div>
             </div>
             <form className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
@@ -89,8 +82,8 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
                               />
                               <span
                                 className={`${rating.value === number
-                                    ? "bg-blue-500 text-white"
-                                    : "bg-white text-gray-900"
+                                  ? "bg-blue-500 text-white"
+                                  : "bg-white text-gray-900"
                                   } inline-flex items-center justify-center rounded-md px-3 py-1.5 border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50`}
                               >
                                 {number}
