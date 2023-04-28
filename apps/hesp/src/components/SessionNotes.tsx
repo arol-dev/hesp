@@ -159,101 +159,101 @@ function SessionNotes({ onTopicsListChange }: SessionNotesProps) {
             topic.edit === true ?
               <form onSubmit={() => handleSubmit(topic, event)} action="/api/PDnotes" method="post" className="mb-5 grid justify-self-end bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
                 <div className="px-4 py-4 sm:p-8">
-                  <div className="col-span-full">
+                  <div className="">
                     <label className="block text-sm font-medium leading-6 text-gray-900">
                       Topic
                     </label>
-                    <div className="mt-2">
+                    <div className=" ">
                       <label htmlFor="topic">
                         <textarea
                           id="topic"
                           name="topic"
                           rows={1}
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full mb-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           value={topic.topic}
                           onChange={() => handleChange(event, topic)}
                         />
                       </label>
                     </div>
                   </div>
-                  <div className="col-span-full">
+                  <div className="">
                     <label className="block text-sm font-medium leading-6 text-gray-900">
                       Objective               </label>
-                    <div className="mt-2">
+                    <div className="">
                       <label htmlFor="objective" >
                         <textarea
                           id="objective"
                           name="objective"
                           rows={1}
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full mb-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           value={topic.objective}
                           onChange={() => handleChange(event, topic)}
                         />
                       </label>
                     </div>
                   </div>
-                  <div className="col-span-full">
+                  <div className="">
                     <label className="block text-sm font-medium leading-6 text-gray-900">
                       Actions
                     </label>
-                    <div className="mt-2">
+                    <div className="">
                       <label htmlFor="actions">
                         <textarea
                           id="actions"
                           name="actions"
                           rows={3}
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full mb-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           value={topic.actions}
                           onChange={() => handleChange(event, topic)}
                         />
                       </label>
                     </div>
 
-                  </div>  <div className="col-span-full">
+                  </div>  <div className="">
                     <label className="block text-sm font-medium leading-6 text-gray-900">
                       Notes
 
                     </label>
-                    <div className="mt-2">
+                    <div className="">
                       <label htmlFor="notes">
                         <textarea
                           id="notes"
                           name="notes"
                           rows={3}
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full mb-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           value={topic.notes}
                           onChange={() => handleChange(event, topic)}
                         />
                       </label>
                     </div>
                   </div>
-                  <div className="col-span-full">
+                  <div className="">
                     <label className="block text-sm font-medium leading-6 text-gray-900">
                       Results
                     </label>
-                    <div className="mt-2">
+                    <div className="">
                       <label htmlFor="results">
                         <textarea
                           id="results"
                           name="results"
                           rows={3}
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full mb-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           value={topic.results}
                           onChange={() => handleChange(event, topic)}
                         />
                       </label>
                     </div>
-                    <div className="col-span-full">
+                    <div className="">
                       <label className="block text-sm font-medium leading-6 text-gray-900">
                         Evaluation
                       </label>
-                      <div className="mt-2">
+                      <div className="">
                         <label htmlFor="evaluation">
                           <textarea
                             id="evaluation"
                             name="evaluation"
                             rows={3}
-                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            className="block w-full mb-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             value={topic.evaluation}
                             onChange={() => handleChange(event, topic)}
                           />
@@ -273,31 +273,31 @@ function SessionNotes({ onTopicsListChange }: SessionNotesProps) {
               </form> :
               <div className="grid justify-self-end bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl  mb-5">
                 <div className="px-4 py-6 sm:p-8">
-                  <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <div className="col-span-full">
+                  <div className="">
+                    <div className="">
                       <label className="block text-sm font-medium leading-6 text-gray-900">
                         Topic
                       </label>
-                      <div className="mt-2">
+                      <div className="">
                         <label htmlFor="topic">
                           <div
                             id="topic"
-                            className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            className="block w-full mb-4 pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           > {topic.topic} </div>
                         </label>
                       </div>
 
                     </div>
-                    <div className="col-span-full">
+                    <div className="">
                       <label className="block text-sm font-medium leading-6 text-gray-900">
                         Objective               </label>
 
-                      <div className="mt-2">
+                      <div className="">
                         <label htmlFor="objective" >
                           <div
                             id="objective"
 
-                            className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            className="block w-full mb-4 pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 
                           >
                             {topic.objective} </div>
@@ -306,35 +306,35 @@ function SessionNotes({ onTopicsListChange }: SessionNotesProps) {
 
 
                     </div>
-                    <div className="col-span-full">
+                    <div className="">
                       <label className="block text-sm font-medium leading-6 text-gray-900">
                         Actions
                       </label>
-                      <div className="mt-2">
+                      <div className="">
                         <label htmlFor="actions">
                           <div
                             id="actions"
 
 
-                            className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            className="block w-full mb-4 pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 
                           >
                             {topic.actions}</div>
                         </label>
                       </div>
 
-                    </div>  <div className="col-span-full">
+                    </div>  <div className="">
                       <label className="block text-sm font-medium leading-6 text-gray-900">
                         Notes
 
                       </label>
-                      <div className="mt-2">
+                      <div className="">
                         <label htmlFor="notes">
                           <div
                             id="notes"
 
 
-                            className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            className="block w-full mb-4 pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 
                           >
                             {topic.notes}</div>
@@ -343,36 +343,36 @@ function SessionNotes({ onTopicsListChange }: SessionNotesProps) {
 
 
                     </div>
-                    <div className="col-span-full">
+                    <div className="">
                       <label className="block text-sm font-medium leading-6 text-gray-900">
                         Results
 
                       </label>
-                      <div className="mt-2">
+                      <div className="">
                         <label htmlFor="results">
                           <div
                             id="results"
 
 
-                            className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            className="block w-full mb-4 pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           >
                             {topic.results}</div>
                         </label>
                       </div>
                     </div>
 
-                    <div className="col-span-full">
+                    <div className="">
                       <label className="block text-sm font-medium leading-6 text-gray-900">
                         Evaluation
 
                       </label>
-                      <div className="mt-2">
+                      <div className="">
                         <label htmlFor="evaluation">
                           <div
                             id="evaluation"
 
 
-                            className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            className="block w-full mb-4 pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           >
                             {topic.evaluation}</div>
                         </label>
