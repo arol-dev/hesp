@@ -5,6 +5,8 @@ import { useState } from 'react';
 import PDForm from './PDform';
 import WOLForm from './WOLform';
 import SessionNotes from './SessionNotes';
+import { redirect } from "next/dist/server/api-utils";
+import { useRouter } from "next/router";
 
 type TopicProps = {
   id: number,
@@ -32,7 +34,8 @@ type Topics = Topic[]
 
 
 
-function Checkpoint() {
+function Checkpoint({ id }) {
+  const router = useRouter()
 
   const [pd, setPD] = useState(false)
   const [clicked, setClicked] = useState(0)
@@ -154,6 +157,9 @@ function Checkpoint() {
         // handle error
       }
     });
+
+    router.push(`/candidates/${id}`)
+
   }
 
 
@@ -187,7 +193,7 @@ function Checkpoint() {
       } else {
         // handle error
       }
-
+      router.push(`/candidates/${id}`)
     })
   }
 
@@ -316,9 +322,6 @@ function Checkpoint() {
           <SessionNotes onTopicsListChange={handleTopicsList} ></SessionNotes>
         </>
           : <WOLForm onDataChange={handleDataChange}></WOLForm>
-
-
-
 
       }
     </div >

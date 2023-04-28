@@ -1,8 +1,21 @@
 import Checkpoint from "@/components/Checkpoint"
 
-function NewCheckpoint() {
+function NewCheckpoint({ id }: number) {
   return (
-    <Checkpoint></Checkpoint>
+    <Checkpoint id={id}></Checkpoint>
   )
 }
 export default NewCheckpoint
+
+
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id }: any = context.query;
+
+
+  return {
+    props: {
+      id,
+    },
+  };
+};
