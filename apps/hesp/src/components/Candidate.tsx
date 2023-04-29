@@ -1,7 +1,12 @@
 import Link from "next/link";
 import Navbar from "./Navbar";
+import Chart from "./RadarChart";
+
+
+
 
 function Candidate({ person }: any) {
+
   return (
     <div>
       <Navbar></Navbar>
@@ -172,6 +177,10 @@ function Candidate({ person }: any) {
               </div>
             </dl>
           </div>
+        </div>
+        <div className="w-96">
+
+          <Chart person={person}></Chart>
         </div>
       </div>
     </div>
