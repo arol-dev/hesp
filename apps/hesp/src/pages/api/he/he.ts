@@ -7,8 +7,6 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     try {
-
-      console.log ('I arrive here to post he he heman')
       const newTrainee = await serverToDb("Trainee", "post", req);
       res.status(200).json(newTrainee);
     } catch (error) {
