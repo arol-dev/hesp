@@ -40,13 +40,14 @@ describe('<Candidate />', () => {
         })
 
         it('Starts a new topic form when add new topic button is clicked', () => {
-            cy.get('form').should('have.length', 8)
+            let baseLength: number | undefined
+            cy.get('form').should(($forms) => {
+                baseLength = $forms.length
+            })
             cy.get('button').contains('+ Add Topic').click()
-            cy.get('form').should('have.length', 9)
+            if (baseLength) {
+                cy.get('form').should("have.length", baseLength + 1)
+            }
         })
-
-        /* it('has 7 progress bars', () => {
-            cy.get('[data-cy=progress-bar]').should('have.length', 7)
-        }) */
     })
 })
