@@ -69,7 +69,7 @@ export default async function serverToDb(
 
     const id = parseInt(req.query.id as string);
     const result = await Model.update({ where: { id }, data, ...includeParam });
-  return result;
+    return result;
   } else {
     throw new Error("Invalid action");
   }
