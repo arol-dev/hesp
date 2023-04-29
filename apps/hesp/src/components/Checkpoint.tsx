@@ -1,13 +1,10 @@
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import Navbar from "./Navbar";
-
 import { useState } from 'react';
 import PDForm from './PDform';
 import WOLForm from './WOLform';
 import SessionNotes from './SessionNotes';
-import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/router";
-import { IUser } from "../../types";
+
 
 type TopicProps = {
   id: number,
@@ -41,9 +38,6 @@ function Checkpoint({ id }: Id) {
   const router = useRouter()
 
   const [pd, setPD] = useState(false)
-  const [clicked, setClicked] = useState(0)
-  const [progress, setProgress] = useState(0)
-
   const [topicsList, setTopicsList] = useState([]);
 
   const handleTopicsList = (list: any) => {
@@ -105,15 +99,6 @@ function Checkpoint({ id }: Id) {
 
 
 
-
-
-
-
-
-
-
-
-
   function handleRatingChange(index: number, value: number) {
     const updatedRatings = [...ratings];
     updatedRatings[index].value = value;
@@ -122,12 +107,8 @@ function Checkpoint({ id }: Id) {
 
 
 
-  // function handleRatingChangeWOL(index: number, value: number) {
-  //   const updatedRatings = [...WOLformdata];
-  //   updatedRatings[index].value = value;
-  //   setWOLformdata(updatedRatings);
-
-  // }
+  const [PDSaved, setPDSaved] = useState(false)
+  const [WOLSaved, setWOLSaved] = useState(false)
 
 
   function handleSubmit(event: any) {
@@ -136,7 +117,8 @@ function Checkpoint({ id }: Id) {
     // Convert ratings array into URLSearchParams object
     const params = new URLSearchParams();
 
-
+    console.log('id', id)
+    params.append('userId', id.toString());
 
     ratings.forEach((rating) => {
       params.append(rating.body, rating.value.toString());
@@ -160,8 +142,8 @@ function Checkpoint({ id }: Id) {
         // handle error
       }
     });
-
-    router.push(`/candidates/${id}`)
+    setPDSaved(!PDSaved)
+    // router.push(`/candidates/${id}`)
 
   }
 
@@ -177,6 +159,8 @@ function Checkpoint({ id }: Id) {
     }));
 
     const params = new URLSearchParams();
+    params.append('userId', id.toString());
+
     data.forEach((item) => {
       Object.entries(item).forEach(([key, value]) => {
         params.append(key, value.toString());
@@ -196,15 +180,13 @@ function Checkpoint({ id }: Id) {
       } else {
         // handle error
       }
-      router.push(`/candidates/${id}`)
+      setWOLSaved(!WOLSaved)
+      // router.push(`/candidates/${id}`)
     })
   }
 
 
-  function handleClick(number: number) {
-    setClicked(number);
-    setProgress(number);
-  }
+
 
   return (
     <div>
@@ -244,7 +226,6 @@ function Checkpoint({ id }: Id) {
                 type="submit"
                 className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                {/* <a href={`/candidates/${person.id}/checkpoint`} className="inline-flex items-center"> */}
                 <svg
                   className="-ml-0.5 mr-1.5 h-5 w-5"
                   viewBox="0 0 20 20"
@@ -258,7 +239,6 @@ function Checkpoint({ id }: Id) {
                   />
                 </svg>
                 Save
-                {/* </a> */}
               </button>
             </span>
           </div>
@@ -298,7 +278,6 @@ function Checkpoint({ id }: Id) {
                 type="button"
                 className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                {/* <a href={`/candidates/${person.id}/checkpoint`} className="inline-flex items-center"> */}
                 <svg
                   className="-ml-0.5 mr-1.5 h-5 w-5"
                   viewBox="0 0 20 20"
@@ -312,7 +291,6 @@ function Checkpoint({ id }: Id) {
                   />
                 </svg>
                 Save
-                {/* </a> */}
               </button>
             </span>
           </div>
