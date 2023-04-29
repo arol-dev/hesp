@@ -28,10 +28,16 @@ export default async function serverToDb(
     return result;
   }
 
+  else if (action === "getAll") {
+    const id = parseInt(req.query.id as string);
+    const result = await Model.findMany({ where: { userId: id }, ...includeParam });
+    return result;
+  }
+
+
   const data = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 
   if (action === "post") {
-    console.log(data);
     const result = await Model.create({ data, ...includeParam });
     return result;
   } else if (action === "put") {

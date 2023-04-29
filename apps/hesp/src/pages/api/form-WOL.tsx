@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const wolCheckpoint = await prisma.wOLcheckpoint.create({
       data: {
-        relatedUser: Number(body.userId),
+        userId: Number(body.userId),
         health: Number(body.health),
         healthFeel: body.healthFeel,
         healthImprove: body.healthImprove,
@@ -40,7 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       }
     })
-    res.status(200).json({ data: body });
+    res.status(200).json({ data: wolCheckpoint });
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: 'Something went wrong' })

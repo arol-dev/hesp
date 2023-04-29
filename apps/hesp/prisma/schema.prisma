@@ -54,13 +54,15 @@ model WOLcheckpoint {
   fun                        Int
   funFeel                    String
   funImprove                 String
-  relatedUser                Int?
+  // relatedUser                Int?
   // commentID           Int?     @unique
   // Comment             Comment? @relation(fields: [commentID], references: [id])
-  User                       User?  @relation(fields: [relatedUser], references: [id])
+   userId             Int?
+   user               User?          @relation(fields: [userId], references: [id])
 }
 
 model PDCcheckpoint {
+  id                 Int            @id @default(autoincrement())
   trust              Int
   willFollow         Int
   retention          Int
@@ -69,7 +71,6 @@ model PDCcheckpoint {
   readyForInterviews Int
   advancement        Int
   userId             Int?
-  id                 Int            @id @default(autoincrement())
   user               User?          @relation(fields: [userId], references: [id])
   SessionNotes       SessionNotes[]
 }

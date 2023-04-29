@@ -5,8 +5,11 @@ import Chart from "./RadarChart";
 
 
 
-function Candidate({ person }: any) {
+function Candidate({ person, WOLs, PDs }: any) {
 
+
+  console.log('wols', WOLs)
+  console.log('pds', PDs)
   return (
     <div>
       <Navbar></Navbar>
@@ -180,7 +183,7 @@ function Candidate({ person }: any) {
         </div>
         <div className="w-96">
 
-          <Chart person={person}></Chart>
+          <Chart person={person} PDs={PDs} WOLs={WOLs}></Chart>
         </div>
       </div>
     </div>
