@@ -5,6 +5,9 @@ import { useState } from 'react';
 import PDForm from './PDform';
 import WOLForm from './WOLform';
 import SessionNotes from './SessionNotes';
+import { redirect } from "next/dist/server/api-utils";
+import { useRouter } from "next/router";
+import { IUser } from "../../types";
 
 type TopicProps = {
   id: number,
@@ -29,10 +32,13 @@ type Topic = {
 
 type Topics = Topic[]
 
+type Id = {
+  id: number
+}
 
 
-
-function Checkpoint() {
+function Checkpoint({ id }: Id) {
+  const router = useRouter()
 
   const [pd, setPD] = useState(false)
   const [clicked, setClicked] = useState(0)
@@ -56,43 +62,43 @@ function Checkpoint() {
     {
       name: "Trust",
       body: "trust",
-      description: "The trainee trust in the established action plan.",
+      description: "The trainee trust in the established action plan",
       value: 0,
     },
     {
-      name: "willfollow",
+      name: "Follow",
       body: "willFollow",
-      description: "HE will remember what to do.",
+      description: "He will follow the action plan",
       value: 0,
     },
     {
       name: "Task retention",
       body: "retention",
-      description: "HE will remember what to do.",
+      description: "He will remember what he should do",
       value: 0,
     },
     {
       name: "Plan commitment",
       body: "commitment",
-      description: "HE will follow the action plan.",
+      description: "He is committed with the formation",
       value: 0,
     },
     {
-      name: "cv",
+      name: "CV",
       body: "cv",
-      description: "HE will follow the action plan.",
+      description: "His CV (resume) is done",
       value: 0,
     },
     {
-      name: "readyForInterviews",
+      name: "Interviews",
       body: "readyForInterviews",
-      description: "HE will follow the action plan.",
+      description: "He is ready to job interviews",
       value: 0,
     },
     {
-      name: "advancement",
+      name: "Advancement",
       body: "advancement",
-      description: "HE will follow the action plan.",
+      description: "He is advancing well",
       value: 0,
     },
   ]);
@@ -154,6 +160,9 @@ function Checkpoint() {
         // handle error
       }
     });
+
+    router.push(`/candidates/${id}`)
+
   }
 
 
@@ -187,7 +196,7 @@ function Checkpoint() {
       } else {
         // handle error
       }
-
+      router.push(`/candidates/${id}`)
     })
   }
 
@@ -316,9 +325,6 @@ function Checkpoint() {
           <SessionNotes onTopicsListChange={handleTopicsList} ></SessionNotes>
         </>
           : <WOLForm onDataChange={handleDataChange}></WOLForm>
-
-
-
 
       }
     </div >
