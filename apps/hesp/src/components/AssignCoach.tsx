@@ -1,36 +1,30 @@
 import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
 import "tailwindcss/tailwind.css";
 import { IUser } from "../../types";
-import { hostname } from "os";
 
-const fetchPeople = async () => {
-  try {
-    const response = await fetch(`http://${host}/api/staff/staff`);
-    if (response.ok) {
-      return await response.json();
-    } else {
-      throw new Error("Failed to fetch data");
-    }
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const host = window.location.host;
 const AssignPerson = () => {
   const [people, setPeople] = useState<IUser[]>([]);
   const [showSelect, setShowSelect] = useState(false);
   const [selectedPerson, setSelectedPerson] = useState<IUser | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  const fetchData = useCallback(async () => {
-    const data = await fetchPeople();
-    setPeople(data);
-  }, []);
-
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    const fetchPeople = async () => {
+      const host = window.location.host;
+      try {
+        const response = await fetch(`http://${host}/api/staff/staff`);
+        if (response.ok) {
+          const data = await response.json();
+          setPeople(data);
+        } else {
+          throw new Error("Failed to fetch data");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchPeople();
+  }, []);
 
   const handleClick = () => {
     setShowSelect(!showSelect);
@@ -53,6 +47,7 @@ const AssignPerson = () => {
       // get the last part of the path
       const path = window.location.pathname;
       const id = path.split("/").pop();
+      const host = window.location.host;
 
       // send the data to the api
       const response = await fetch(`http://${host}/api/he/${id}`, {
