@@ -3,8 +3,7 @@ import Navbar from "./Navbar";
 import Chart from "./RadarChart";
 import { useRouter } from "next/router";
 
-
-
+import AssignPerson from "./AssignCoach";
 
 function Candidate({ person, WOLs, PDs }: any) {
   const router = useRouter()
@@ -44,6 +43,7 @@ function Candidate({ person, WOLs, PDs }: any) {
             </h3>
           </div>
           <div className="mt-5 flex lg:ml-4 lg:mt-0">
+            <AssignPerson />
             <span className="hidden sm:block">
               <button
                 type="button"
@@ -168,13 +168,17 @@ function Candidate({ person, WOLs, PDs }: any) {
               <div className="border-t border-gray-200">
                 <dl>
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt className="text-sm font-medium text-gray-500">Full name</dt>
+                    <dt className="text-sm font-medium text-gray-500">
+                      Full name
+                    </dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                       {person.firstName + " " + person.lastName}
                     </dd>
                   </div>
                   <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt className="text-sm font-medium text-gray-500">Telephone</dt>
+                    <dt className="text-sm font-medium text-gray-500">
+                      Telephone
+                    </dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                       {person.phone}
                     </dd>
@@ -188,7 +192,9 @@ function Candidate({ person, WOLs, PDs }: any) {
                     </dd>
                   </div>
                   <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt className="text-sm font-medium text-gray-500">Reference</dt>
+                    <dt className="text-sm font-medium text-gray-500">
+                      Reference
+                    </dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                       {person.reference}
                     </dd>
@@ -196,11 +202,11 @@ function Candidate({ person, WOLs, PDs }: any) {
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt className="text-sm font-medium text-gray-500">About</dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim
-                      incididunt cillum culpa consequat. Excepteur qui ipsum aliquip
-                      consequat sint. Sit id mollit nulla mollit nostrud in ea
-                      officia proident. Irure nostrud pariatur mollit ad adipisicing
-                      reprehenderit deserunt qui eu.
+                      Fugiat ipsum ipsum deserunt culpa aute sint do nostrud
+                      anim incididunt cillum culpa consequat. Excepteur qui
+                      ipsum aliquip consequat sint. Sit id mollit nulla mollit
+                      nostrud in ea officia proident. Irure nostrud pariatur
+                      mollit ad adipisicing reprehenderit deserunt qui eu.
                     </dd>
                   </div>
                 </dl>
@@ -208,10 +214,9 @@ function Candidate({ person, WOLs, PDs }: any) {
             </div>
           </div>
           <img src="/profile_pic.png" className="pl-5" />
-
         </div>
 
-        <div className="px-5 py-5" >
+        <div className="px-5 py-5">
           <Chart person={person} PDs={PDs} WOLs={WOLs}></Chart>
         </div>
       </div>

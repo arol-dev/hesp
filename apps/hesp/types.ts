@@ -85,7 +85,7 @@ export interface IComment {
   WOLcheckpoint?: IWOLcheckpoint;
 }
 
-interface IWOLcheckpoint {
+export interface IWOLcheckpoint {
   id: number;
   health: number;
   healthFeel: string;
@@ -115,7 +115,7 @@ interface IWOLcheckpoint {
   User: IUser;
 }
 
-interface IPDCcheckpoint {
+export interface IPDCcheckpoint {
   id: number;
   trust: number;
   willFollow: number;
