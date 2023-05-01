@@ -3,15 +3,22 @@ import {
   Chart as chartjs,
   LineElement, PointElement, Tooltip, Legend, RadialLinearScale, Filler, ChartDataset, ChartDataCustomTypesPerDataset, ChartDatasetProperties
 } from "chart.js"
+import { IWOLcheckpoint } from "../../types";
+import { PDCcheckpoint } from "@prisma/client";
+import { IUser } from "../../types";
 
 
-import { ChartData } from "chart.js";
-import { DeepPartial } from "utility-types";
+
+
+interface ChartProps {
+  person: IUser;
+  PDs: PDCcheckpoint[];
+  WOLs: IWOLcheckpoint[];
+}
 
 
 
-
-function Chart({ person, PDs, WOLs }) {
+function Chart({ person, PDs, WOLs }: ChartProps) {
 
   chartjs.register(LineElement, PointElement, Tooltip, Legend, RadialLinearScale, Filler)
 
