@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 function Candidate({ person, WOLs, PDs }: any) {
   const router = useRouter()
 
-  function handleCheckLastCreated(event) {
+  function handleCheckLastCreated(event: React.MouseEvent) {
     event.preventDefault();
 
     const params = new URLSearchParams();
