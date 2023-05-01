@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
 import "tailwindcss/tailwind.css";
 import { IUser } from "../../types";
+import { hostname } from "os";
 
 const fetchPeople = async () => {
   try {
-    const response = await fetch("http://localhost:3000/api/staff/staff");
+    const response = await fetch(`http://${host}/api/staff/staff`);
     if (response.ok) {
       return await response.json();
     } else {
@@ -15,6 +16,7 @@ const fetchPeople = async () => {
   }
 };
 
+const host = window.location.host;
 const AssignPerson = () => {
   const [people, setPeople] = useState<IUser[]>([]);
   const [showSelect, setShowSelect] = useState(false);
@@ -53,7 +55,7 @@ const AssignPerson = () => {
       const id = path.split("/").pop();
 
       // send the data to the api
-      const response = await fetch(`http://localhost:3000/api/he/${id}`, {
+      const response = await fetch(`http://${host}/api/he/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
