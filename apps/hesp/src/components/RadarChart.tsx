@@ -167,25 +167,24 @@ function Chart({ person, PDs, WOLs }) {
 
 
   return (
-    <>
-      <div>
-        <h3 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+    <div className="flex flex-row justify-center">
+      <div className="mr-10 bg-white w-96" >
+        <h3 className="px-5 py-5 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
           PD CHECKPOINTS
         </h3>
 
         <Radar data={dataPD} options={optionsPD} ></Radar>
 
-      </div>
-
-      <div>
-        <h3 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+      </div >
+      <div className="ml-10 bg-white  w-96" >
+        <h3 className="px-5 py-5 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
           WOL CHECKPOINTS
         </h3>
 
         <Radar data={dataWOL} options={optionsWOL} ></Radar>
 
       </div>
-    </>
+    </div>
 
   )
 
