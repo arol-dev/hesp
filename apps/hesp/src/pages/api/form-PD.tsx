@@ -34,8 +34,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const body = req.body
     const topicsList = JSON.parse(body.topicsList)
 
+
+
     const checkpoint = await prisma.pDCcheckpoint.create({
       data: {
+        userId: parseInt(body.userId),
         trust: parseInt(body.trust),
         willFollow: parseInt(body.willFollow),
         retention: parseInt(body.retention),

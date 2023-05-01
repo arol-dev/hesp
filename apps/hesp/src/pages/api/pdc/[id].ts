@@ -13,8 +13,8 @@ export default async function handler(
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
-  } else if (req.method === "GET") {
-    const PDC = await serverToDb("PDC", "get", req);
+  } if (req.method === "GET") {
+    const PDC = await serverToDb("PDC", "getAll", req);
 
     res.status(200).json(PDC);
   } else {

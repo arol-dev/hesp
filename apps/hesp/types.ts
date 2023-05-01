@@ -85,23 +85,37 @@ export interface IComment {
   WOLcheckpoint?: IWOLcheckpoint;
 }
 
-interface IWOLcheckpoint {
+export interface IWOLcheckpoint {
   id: number;
   health: number;
+  healthFeel: string;
+  healthImprove: string;
   work: number;
+  workFeel: string;
+  workImprove: string;
   finances: number;
+  financesthFeel: string;
+  financesthImprove: string;
   environment: number;
+  environmentFeel: string;
+  environmentImprove: string;
   love: number;
+  loveFeel: string;
+  loveImprove: string;
   familyFriends: number;
+  familyFriendsFeel: string;
+  familyFriendsImprove: string;
   personalDevelopment: number;
+  personalDevelopmentFeel: string;
+  personalDevelopmentImprove: string;
   fun: number;
-  relatedUser: number;
+  funFeel: string;
+  funImprove: string;
+  userId?: number;
   User: IUser;
-  commentID?: number;
-  Comment?: IComment;
 }
 
-interface IPDCcheckpoint {
+export interface IPDCcheckpoint {
   id: number;
   trust: number;
   willFollow: number;

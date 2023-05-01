@@ -15,10 +15,13 @@ export default async function handler(
     }
   }
   if (req.method === "GET") {
-    const allWOLS = await serverToDb("WOL", "get", req);
+    const WOL = await serverToDb("WOL", "getAll", req);
 
-    res.status(200).json(allWOLS);
-  } else {
+    res.status(200).json(WOL);
+  }
+
+
+  else {
     res.status(405).json({ error: "Method not allowed" });
   }
 }

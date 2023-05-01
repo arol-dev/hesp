@@ -115,7 +115,6 @@ function SessionNotes({ onTopicsListChange }: SessionNotesProps) {
 
 
   const handleEditClick = async (topic: TopicProps) => {
-    console.log('button edit is clicked')
 
     const updatedTopicsList = topicsList.map((note) => {
       if (note.id === topic.id) {
