@@ -1,11 +1,37 @@
 import Link from "next/link";
 import Navbar from "./Navbar";
 import Chart from "./RadarChart";
+import { useRouter } from "next/router";
 
 
 
 
 function Candidate({ person, WOLs, PDs }: any) {
+  const router = useRouter()
+
+  function handleCheckLastCreated(event) {
+    event.preventDefault();
+
+    const params = new URLSearchParams();
+
+
+    params.append('userId', person.id.toString());
+
+    fetch("/api/form-PD", {
+      method: "POST",
+      body: params,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    }).then((response) => {
+      console.log('my response', response)
+      if (response.ok) {
+        router.push(`/candidates/${person.id}/checkpoint`)
+      } else {
+        window.alert(`A checkpoint was already created for trainee ${person.firstName + " " + person.lastName} within the last month.`)
+      }
+    });
+  }
 
   return (
     <div>
@@ -37,6 +63,7 @@ function Candidate({ person, WOLs, PDs }: any) {
 
             <span className="sm:ml-3">
               <button
+                onClick={(event) => handleCheckLastCreated(event)}
                 type="button"
                 className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
