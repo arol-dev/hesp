@@ -11,16 +11,16 @@ import {
 } from "@prisma/client";
 
 const prisma = new PrismaClient();
-
 export const modelRelations: any = {
-  User: ["Comment", "WOLcheckpoint", "PDCcheckpoint", "Trainee"],
-  Comment: ["User", "WOLcheckpoint"],
-  WOLcheckpoint: ["User", "Comment"],
-  PDCcheckpoint: ["user"],
+  User: ["PDCcheckpoint", "Trainee", "WOLcheckpoint"],
+  WOLcheckpoint: ["User"],
+  PDCcheckpoint: ["User", "SessionNotes"],
+  SessionNotes: ["PDCcheckpoint"],
   Trainee: ["User", "TraineeMetaData", "ProvidedSoloutions"],
-  TraineeMetaData: ["trainee"],
+  TraineeMetaData: ["Trainee"],
   ProvidedSoloutions: ["Trainee", "Soloutions"],
   Soloutions: ["ProvidedSoloutions"],
+  InviteLink: [],
 };
 
 export interface ModelMapInterface {
