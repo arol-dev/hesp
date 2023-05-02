@@ -14,6 +14,19 @@ async function main() {
     }
   })
 
+  const mike = await prisma.user.upsert({
+    where: { email: "mike@prisma.io" },
+    update: {},
+    create: {
+      firstName: "Mike",
+      lastName: "Wazowski",
+      role: "ADMIN",
+      email: "mike@prisma.io",
+      password: "12345"
+
+    }
+  })
+
   const bob = await prisma.trainee.create({
     data: {
       firstName: "Bob",
@@ -23,8 +36,6 @@ async function main() {
       registerNumber: "023/1234",
     }
   })
-
-  console.log('bob id', `${bob.id}`)
 
   const PDCcheckpoint = await prisma.PDCcheckpoint.create({
     data: {
