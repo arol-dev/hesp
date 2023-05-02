@@ -84,8 +84,8 @@ model Trainee {
   registerNumber     String?
   PDCcheckpoint      PDCcheckpoint[]
   WOLcheckpoint      WOLcheckpoint[]
-  coachId            Int?
   ProvidedSoloutions ProvidedSoloutions[]
+  coachId            Int?
   User               User?                @relation(fields: [coachId], references: [id])
   TraineeMetaData    TraineeMetaData?
 }

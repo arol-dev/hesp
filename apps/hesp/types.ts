@@ -70,7 +70,6 @@ export interface IUser {
   email: string;
   password: string;
   role: keyof IUserRole;
-  // Comment: IComment[];
   WOLcheckpoint: IWOLcheckpoint[];
   PDCcheckpoint: IPDCcheckpoint[];
   Trainee: ITrainee[];
@@ -134,7 +133,6 @@ export interface ITrainee {
   email?: string;
   phone?: string;
   registerNumber?: string;
-  role: keyof IUserRole;
   TraineeMetaData: ITraineeMetaData[];
   userId?: number;
   User?: IUser;
