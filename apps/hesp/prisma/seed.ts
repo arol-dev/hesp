@@ -14,19 +14,17 @@ async function main() {
     }
   })
 
-  const bob = await prisma.user.upsert({
-    where: { email: "bob@prisma.io" },
-    update: {},
-    create: {
+  const bob = await prisma.trainee.create({
+    data: {
       firstName: "Bob",
       lastName: "Potter",
-      role: "ADMIN",
       email: "bob@prisma.io",
-      password: "12345"
+      phone: "+3497867853",
+      registerNumber: "023/1234",
     }
   })
+  console.log('alice and bob', alice, bob)
 }
-
 main()
   .then(async () => {
     await prisma.$disconnect()

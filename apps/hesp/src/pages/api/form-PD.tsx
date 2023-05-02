@@ -36,9 +36,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const oneMonthAgo = new Date()
   oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1)
 
+
   const lastCheckpoint = await prisma.pDCcheckpoint.findFirst({
     where: {
-      userId: parseInt(body.userId),
+      traineeId: parseInt(body.userId),
       createdAt: {
         gte: oneMonthAgo
       }
@@ -48,15 +49,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   })
 
-  if (lastCheckpoint) {
-    res.status(500).json({ error: `A checkpoint was already created for trainee ${body.userId} within the last month.` })
-  } else {
-    try {
 
+  if (lastCheckpoint === null) {
+    try {
       const topicsList = JSON.parse(body.topicsList)
       const checkpoint = await prisma.pDCcheckpoint.create({
         data: {
-          userId: parseInt(body.userId),
+          traineeId: parseInt(body.userId),
           trust: parseInt(body.trust),
           willFollow: parseInt(body.willFollow),
           retention: parseInt(body.retention),
@@ -90,5 +89,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     } finally {
       await prisma.$disconnect()
     }
+
+  } else {
+    res.status(500).json({ error: `A checkpoint was already created for trainee ${body.userId} within the last month.` })
+
   }
 }

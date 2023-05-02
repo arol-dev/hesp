@@ -198,7 +198,7 @@ function Candidate({ person, WOLs, PDs }: any) {
                       Reference
                     </dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      {person.reference}
+                      {person.registerNumber}
                     </dd>
                   </div>
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -217,7 +217,6 @@ function Candidate({ person, WOLs, PDs }: any) {
           </div>
           <img src="/profile_pic.png" className="pl-5" />
         </div>
-
         <div className="px-5 py-5">
           <Chart person={person} PDs={PDs} WOLs={WOLs}></Chart>
         </div>

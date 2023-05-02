@@ -32,7 +32,7 @@ export default async function serverToDb(
 
   else if (action === "getAll") {
     const id = parseInt(req.query.id as string);
-    const result = await Model.findMany({ where: { userId: id }, ...includeParam });
+    const result = await Model.findMany({ where: { traineeId: id }, ...includeParam });
     return result;
   }
 
