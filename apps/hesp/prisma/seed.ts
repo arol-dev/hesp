@@ -69,6 +69,20 @@ async function main() {
     }
   })
 
+  const sessionNotes = await prisma.SessionNotes.create({
+    data: {
+      id: Date.now(),
+      topic: "Trust issues",
+      objective: "He wants to trust people",
+      actions: "Start communicating with people actively",
+      notes: "He is afraid of close contact with people",
+      results: "Not yet",
+      evaluation: "Let's see how it goes",
+      checkpointId: Number(`${PDCcheckpoint.id}`)
+
+    }
+  })
+
 }
 main()
   .then(async () => {
