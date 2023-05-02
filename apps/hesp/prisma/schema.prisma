@@ -64,7 +64,7 @@ model PDCcheckpoint {
 }
 
 model SessionNotes {
-  id            BigInt         @unique
+  id            String         @unique
   topic         String
   objective     String
   actions       String

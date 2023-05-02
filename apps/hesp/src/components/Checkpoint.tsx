@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 
 
 type TopicProps = {
-  id: number,
+  id: string,
   edit: boolean,
   topic: string,
   objective: string,

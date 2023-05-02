@@ -11,6 +11,7 @@ function Candidate({ person, WOLs, PDs }: any) {
   const router = useRouter()
 
   function handleCheckLastCreated(event: React.MouseEvent) {
+    console.log('my response')
     event.preventDefault();
 
     const params = new URLSearchParams();
@@ -18,14 +19,13 @@ function Candidate({ person, WOLs, PDs }: any) {
 
     params.append('userId', person.id.toString());
 
-    fetch("/api/form-PD", {
+    fetch("/api/monthValidator", {
       method: "POST",
       body: params,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     }).then((response) => {
-      console.log('my response', response)
       if (response.ok) {
         router.push(`/candidates/${person.id}/checkpoint`)
       } else {
