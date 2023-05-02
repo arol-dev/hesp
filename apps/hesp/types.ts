@@ -49,7 +49,6 @@ export const modelMap: ModelMapInterface = {
 export interface IUserRole {
   ADMIN: "ADMIN";
   STAFF: "STAFF";
-  TRAINEE: "TRAINEE";
 }
 
 export interface IWorkingSituation {

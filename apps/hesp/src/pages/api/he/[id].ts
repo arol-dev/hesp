@@ -15,6 +15,7 @@ export default async function handler(
     }
   } else if (req.method === "GET") {
     const trainee = await serverToDb("Trainee", "get", req);
+    console.log('trainee', trainee)
 
     res.status(200).json(trainee);
   } else {

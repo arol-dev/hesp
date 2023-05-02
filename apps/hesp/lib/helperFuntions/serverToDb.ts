@@ -24,7 +24,9 @@ export default async function serverToDb(
 
   if (action === "get") {
     const id = parseInt(req.query.id as string);
+    console.log('if od request', id)
     const result = await Model.findUnique({ where: { id }, ...includeParam });
+    console.log('result with this id', result)
     return result;
   }
 
