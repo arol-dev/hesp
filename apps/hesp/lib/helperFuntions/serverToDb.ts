@@ -1,3 +1,5 @@
+import bcrypt from "bcrypt";
+
 import { ModelMapInterface, modelMap, modelRelations } from "../../types";
 import { NextApiRequest } from "next";
 export default async function serverToDb(
@@ -27,6 +29,7 @@ export default async function serverToDb(
     const id = parseInt(req.query.id as string);
     const result = await Model.findUnique({ where: { id }, ...includeParam });
     return result;
+ 
   }
 
   if (action === "getAll" && modelName === "PDC") {
@@ -38,9 +41,9 @@ export default async function serverToDb(
   else if (action === "getAll") {
     const id = parseInt(req.query.id as string);
     const result = await Model.findMany({ where: { traineeId: id }, ...includeParam });
+ 
     return result;
   }
-
 
   const data = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 
@@ -48,6 +51,10 @@ export default async function serverToDb(
     const result = await Model.create({ data, ...includeParam });
     return result;
   } else if (action === "put") {
+    if (data.password) {
+      data.password = await bcrypt.hash(data.password, 10);
+    }
+
     const id = parseInt(req.query.id as string);
     const result = await Model.update({ where: { id }, data, ...includeParam });
     return result;
