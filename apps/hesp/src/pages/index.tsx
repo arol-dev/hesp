@@ -1,7 +1,6 @@
+import { authenticateAndGetToken } from "../../lib/auth/authUtils";
 import Navbar from "@/components/Navbar";
 import List from "@/components/List";
-import { GetServerSideProps } from "next";
-import serverToDb from "../../lib/helperFuntions/serverToDb";
 
 function Main({ user }: any) {
   return (
@@ -13,10 +12,19 @@ function Main({ user }: any) {
   );
 }
 
-export async function getServerSideProps(context: {
-  req: { headers: { host: string; cookie: string } };
-}) {
+export async function getServerSideProps(context: any) {
+  const decodedToken = await authenticateAndGetToken(context);
+  const cookies = context.req.headers.cookie;
   const host = context.req.headers.host;
+
+  if (!cookies) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
 
   const user = await fetch(`http://${host}/api/auth/authenticate`, {
     method: "GET",
@@ -28,6 +36,7 @@ export async function getServerSideProps(context: {
   return {
     props: {
       user: user.user,
+      jwt: decodedToken, // Pass the decoded token as a prop
     },
   };
 }
