@@ -30,6 +30,7 @@ model User {
 
 model WOLcheckpoint {
   id                         Int    @id @default(autoincrement())
+  createdAt                  DateTime   @default(now())
   health                     Int
   healthFeel                 String
   healthImprove              String
@@ -63,6 +64,7 @@ model WOLcheckpoint {
 
 model PDCcheckpoint {
   id                 Int            @id @default(autoincrement())
+  createdAt                  DateTime   @default(now())
   trust              Int
   willFollow         Int
   retention          Int
