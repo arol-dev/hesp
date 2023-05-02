@@ -7,7 +7,6 @@ type ICheckpointsProps = {
   PDs: PDCcheckpoint[]
 }
 function Checkpoints({ id, WOLs, PDs }: ICheckpointsProps) {
-  console.log('wols and pds', WOLs, PDs)
 
   return (
     <div> hello</div>

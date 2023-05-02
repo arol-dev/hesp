@@ -25,15 +25,13 @@ export default async function serverToDb(
 
   if (action === "get") {
     const id = parseInt(req.query.id as string);
-    console.log('if od request', id)
     const result = await Model.findUnique({ where: { id }, ...includeParam });
     return result;
   }
 
   if (action === "getAll" && modelName === "PDC") {
     const id = parseInt(req.query.id as string);
-    const result = await Model.findMany({ where: { traineeId: id }, include: { SessionNotes: true }, ...includeParam })
-    console.log('result', result.SessionNotes)
+    const result = await Model.findMany({ where: { traineeId: id }, include: { SessionNotes: true }, ...includeParam });
     return result;
   }
 

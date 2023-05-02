@@ -21,7 +21,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     res.json()
   );
 
-  console.log('PDs from id', PDs)
 
   return {
     props: {

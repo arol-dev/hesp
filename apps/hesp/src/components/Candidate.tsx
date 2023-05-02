@@ -11,7 +11,6 @@ function Candidate({ person, WOLs, PDs }: any) {
   const router = useRouter()
 
   function handleCheckLastCreated(event: React.MouseEvent) {
-    console.log('my response')
     event.preventDefault();
 
     const params = new URLSearchParams();

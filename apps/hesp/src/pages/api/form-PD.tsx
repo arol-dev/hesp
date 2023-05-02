@@ -1,20 +1,6 @@
 import { Prisma, PrismaClient } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from "next"
 
-interface UpdatePDCcheckpointInput extends Prisma.PDCcheckpointUpdateInput {
-  SessionNotes?: {
-    create: Array<{
-      id: number;
-      topic: string;
-      objective: string;
-      actions: string;
-      notes: string;
-      results: string;
-      evaluation: string
-    }>
-  };
-}
-
 type TopicProps = {
   id: number,
   edit: boolean,
@@ -63,10 +49,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             actions: topic.actions,
             notes: topic.notes,
             results: topic.results,
-            evaluation: topic.evaluation
+            evaluation: topic.evaluation,
           }))
         }
-      } as UpdatePDCcheckpointInput
+      }
     })
     res.status(200).json({ data: updatedCheckpoit });
   } catch (error) {
