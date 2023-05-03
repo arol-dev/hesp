@@ -1,17 +1,25 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import serverToDb from "../../../../lib/helperFuntions/serverToDb";
-import { Prisma, InviteLink } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import { hash } from "bcrypt";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<any>
-) {
+interface UserRequest extends NextApiRequest {
+  body: any;
+}
+
+export default async function handler(req: UserRequest, res: NextApiResponse) {
   try {
     if (req.method === "POST") {
       const incomingLinkToCheck: string | undefined = req.headers.referer;
 
       if (incomingLinkToCheck) {
-        const newUser = await serverToDb("User", "post", req);
+        const hashedPassword = await hash(req.body.password, 10);
+
+        // Update the req.body.password with the hashed password
+        req.body.password = hashedPassword;
+
+        // Pass the req.body directly to the serverToDb function
+        const newUser = await serverToDb("User", "post", req.body);
         res.status(201).json(newUser);
       }
     }
