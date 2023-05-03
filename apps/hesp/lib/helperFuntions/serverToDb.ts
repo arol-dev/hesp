@@ -9,6 +9,9 @@ export default async function serverToDb(
 ): Promise<ModelMapInterface> {
   const Model: any = modelMap[modelName];
 
+  console.log('action', action)
+  console.log('model', modelName)
+
 
   if (!Model) {
     throw new Error("Invalid model name");
@@ -62,6 +65,7 @@ export default async function serverToDb(
     }
 
     const id = parseInt(req.query.id as string);
+    console.log('data', data)
     const result = await Model.update({ where: { id }, data, ...includeParam });
     return result;
   } else {

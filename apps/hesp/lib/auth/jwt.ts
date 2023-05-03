@@ -5,8 +5,10 @@ import { User } from "@prisma/client";
 
 config();
 
+
 const secret: string | undefined = process.env.JWT_SECRET;
 if (!secret) {
+  console.log('secret no found', process.env.JWT_SECRET)
   throw new Error("JWT_SECRET is not defined");
 }
 
