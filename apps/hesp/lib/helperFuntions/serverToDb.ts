@@ -29,7 +29,7 @@ export default async function serverToDb(
     const id = parseInt(req.query.id as string);
     const result = await Model.findUnique({ where: { id }, ...includeParam });
     return result;
- 
+
   }
 
   if (action === "getAll" && modelName === "PDC") {
@@ -41,7 +41,7 @@ export default async function serverToDb(
   else if (action === "getAll") {
     const id = parseInt(req.query.id as string);
     const result = await Model.findMany({ where: { traineeId: id }, ...includeParam });
- 
+
     return result;
   }
 
