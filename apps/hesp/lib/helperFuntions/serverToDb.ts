@@ -65,7 +65,6 @@ export default async function serverToDb(
     }
 
     const id = parseInt(req.query.id as string);
-    console.log('data', data)
     const result = await Model.update({ where: { id }, data, ...includeParam });
     return result;
   } else {
