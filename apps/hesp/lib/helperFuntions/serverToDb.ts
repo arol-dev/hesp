@@ -38,10 +38,16 @@ export default async function serverToDb(
     return result;
   }
 
+
+  if (action === "getAll" && modelName === "User") {
+    const result = await Model.findMany();
+    const staffUsers = result.filter((user: { role: string; }) => user.role === "STAFF");
+    return staffUsers
+  }
+
   else if (action === "getAll") {
     const id = parseInt(req.query.id as string);
     const result = await Model.findMany({ where: { traineeId: id }, ...includeParam });
-
     return result;
   }
 

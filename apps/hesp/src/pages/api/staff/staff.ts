@@ -16,7 +16,7 @@ export default async function handler(
       }
     }
     if (req.method === "GET") {
-      const users = await serverToDb("User", "get", undefined);
+      const users = await serverToDb("User", "getAll", req);
       res.status(200).json(users);
     }
   } catch (error) {

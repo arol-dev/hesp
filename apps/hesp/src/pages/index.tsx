@@ -6,7 +6,6 @@ function Main({ user }: any) {
   return (
     <div>
       <Navbar></Navbar>
-
       <List user={user}></List>
     </div>
   );
