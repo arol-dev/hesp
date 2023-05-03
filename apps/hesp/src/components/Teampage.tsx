@@ -1,10 +1,20 @@
 import Link from "next/link";
 import Navbar from "./Navbar";
+import AddCoach from './FormAddCoach';
+import { useState } from "react";
+import Modal from "./Modal";
 
 function Teampage({ coaches }) {
 
-  function handleAddNewCoach() {
+  const [showAddCoachForm, setShowAddCoachForm] = useState(false);
 
+
+  function handleAddNewCoach() {
+    setShowAddCoachForm(true);
+  }
+
+  function handleAddCoachFormClose() {
+    setShowAddCoachForm(false);
   }
 
   return (
@@ -12,7 +22,8 @@ function Teampage({ coaches }) {
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto"></div>
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <button onClick={handleAddNewCoach}
+          <button
+            onClick={handleAddNewCoach}
             type="button"
             className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
@@ -20,6 +31,7 @@ function Teampage({ coaches }) {
           </button>
         </div>
       </div>
+      <AddCoach showForm={showAddCoachForm} closeForm={handleAddCoachFormClose} />
       <div className="mt-8 flow-root">
         {coaches && coaches.length > 0 ? (
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -33,27 +45,17 @@ function Teampage({ coaches }) {
                     >
                       NAME
                     </th>
-                    {/* <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      LAST CHECKPOINT
-                    </th> */}
                     <th
                       scope="col"
                       className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
                       ASSIGNED HES
                     </th>
-                    {/* <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                  <span className="sr-only">New Checkpoint</span>
-                </th> */}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {coaches.map((person: any, index: number) => (
+                  {coaches.map((person, index) => (
                     <tr key={index}>
-
                       <td className="flex whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                         <div className="flex-shrink-0 mr-5">
                           <img
@@ -67,7 +69,7 @@ function Teampage({ coaches }) {
                           className="text-black hover:text-indigo-900"
                         >
                           {person.firstName + " " + person.lastName}
-                          <p className="whitespace-nowrap  text-sm text-gray-500">
+                          <p className="whitespace-nowrap text-sm text-gray-500">
                             {person.email}
                           </p>
                         </Link>
@@ -120,7 +122,7 @@ function Teampage({ coaches }) {
       </div>
     </div>
 
+
   )
 }
-
 export default Teampage
