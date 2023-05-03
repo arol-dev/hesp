@@ -70,7 +70,6 @@ export interface IUser {
   id: number;
   firstName: string;
   lastName: string;
-  email: string;
   password: string;
   role: keyof IUserRole;
   WOLcheckpoint: IWOLcheckpoint[];

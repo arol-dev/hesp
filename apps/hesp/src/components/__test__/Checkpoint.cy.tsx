@@ -1,18 +1,32 @@
 import Checkpoint from "../Checkpoint"
 
+import * as Router from "next/router"
+
 const PD_HEADER = 'New Professional Development Checkpoint'
 const WOL_HEADER = 'New WOL Checkpoint'
 const TO_PD_BUTTON = 'Switch to Professional Development'
 const TO_WOL_BUTTON = 'Switch to WOL'
+const TEST_ID = 12
+
+let router
 
 describe('<Candidate />', () => {
+
+    beforeEach(() => {
+        router = {
+            back: cy.stub().as('routerBack')
+        }
+
+        cy.stub(Router, 'useRouter').returns(router)
+    })
+
     it('renders', () => {
-        cy.mount(<Checkpoint />)
+        cy.mount(<Checkpoint id={TEST_ID} />)
     })
     describe('tabs', () => {
 
         beforeEach(() => {
-            cy.mount(<Checkpoint />)
+            cy.mount(<Checkpoint id={TEST_ID} />)
         })
 
         it('starts in WOL', () => {
@@ -31,7 +45,7 @@ describe('<Candidate />', () => {
 
     describe('PD form', () => {
         beforeEach(() => {
-            cy.mount(<Checkpoint />)
+            cy.mount(<Checkpoint id={12} />)
             cy.get('button').contains(TO_PD_BUTTON).click()
         })
 
