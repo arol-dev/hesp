@@ -46,6 +46,7 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
     if (response.ok) {
       console.log('Form submitted successfully:', result);
       closeForm();
+      window.location.reload()
     } else {
       console.error('Error submitting form:', result);
     }
