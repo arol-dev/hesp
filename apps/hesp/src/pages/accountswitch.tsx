@@ -12,7 +12,7 @@ interface props {
   reviewToken: string;
 }
 
-const UserSwitcher: React.FC = () => {
+const UserSwitcher: React.FC<any> = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [users, setUsers] = useState<User[]>([
     { id: 1, email: "Admin", password: "Admin" },
@@ -68,7 +68,7 @@ const UserSwitcher: React.FC = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.VERCEL_ENV === "production") {
     return {
       redirect: {
         destination: "/",
