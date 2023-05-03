@@ -16,7 +16,6 @@ export async function getServerSideProps(context: any) {
   const cookies = context.req.headers.cookie;
   const host = context.req.headers.host;
 
-  console.log('cookies', cookies)
 
   if (!cookies) {
     return {
@@ -35,7 +34,6 @@ export async function getServerSideProps(context: any) {
   }).then((res) => res.json());
 
 
-  console.log('user', user)
 
   return {
     props: {

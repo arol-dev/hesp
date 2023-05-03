@@ -103,14 +103,12 @@ function WOLForm({ onDataChange }: CheckpointProps) {
     const newFormData = [...WOLformdata];
     newFormData[index].feel = event.target.value;
     setWOLformdata(newFormData);
-    console.log(WOLformdata)
   }
 
   function handleImproveChange(index: number, event: any) {
     const newFormData = [...WOLformdata];
     newFormData[index].improve = event.target.value;
     setWOLformdata(newFormData);
-    console.log(WOLformdata)
   }
 
 

@@ -117,7 +117,6 @@ function Checkpoint({ id }: Id) {
     // Convert ratings array into URLSearchParams object
     const params = new URLSearchParams();
 
-    console.log('id', id)
     params.append('userId', id.toString());
 
     ratings.forEach((rating) => {

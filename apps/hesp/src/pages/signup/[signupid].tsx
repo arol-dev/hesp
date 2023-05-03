@@ -29,7 +29,6 @@ export default function SignupPage() {
 
     const data = await res.json();
 
-    console.log(data);
 
     if (data.user.role) {
       router.push("/");
