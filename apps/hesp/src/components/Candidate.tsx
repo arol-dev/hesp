@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import AssignPerson from "./AssignCoach";
 
 function Candidate({ person, WOLs, PDs }: any) {
+
+
   const router = useRouter()
 
   function handleCheckLastCreated(event: React.MouseEvent) {
@@ -16,14 +18,13 @@ function Candidate({ person, WOLs, PDs }: any) {
 
     params.append('userId', person.id.toString());
 
-    fetch("/api/form-PD", {
+    fetch("/api/monthValidator", {
       method: "POST",
       body: params,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     }).then((response) => {
-      console.log('my response', response)
       if (response.ok) {
         router.push(`/candidates/${person.id}/checkpoint`)
       } else {
@@ -196,7 +197,7 @@ function Candidate({ person, WOLs, PDs }: any) {
                       Reference
                     </dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      {person.reference}
+                      {person.registerNumber}
                     </dd>
                   </div>
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -215,10 +216,33 @@ function Candidate({ person, WOLs, PDs }: any) {
           </div>
           <img src="/profile_pic.png" className="pl-5" />
         </div>
-
         <div className="px-5 py-5">
           <Chart person={person} PDs={PDs} WOLs={WOLs}></Chart>
         </div>
+        <span className="sm:ml-3">
+          <button
+            type="button"
+            className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            <a
+              href={`/candidates/${person.id}/checkpoints`}
+              className="inline-flex items-center"
+            >
+              <svg
+                className="-ml-0.5 mr-1.5 h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              See All Checkpoints                </a>
+          </button>
+        </span>
       </div>
     </div>
   );

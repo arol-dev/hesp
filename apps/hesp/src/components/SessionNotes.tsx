@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
+import { v4 as uuidv4 } from 'uuid'
 
 type SessionNotesProps = {
   onTopicsListChange: (list: any) => void;
 };
 
 type TopicProps = {
-  id: number,
+  id: string,
   edit: boolean,
   topic: string,
   objective: string,
@@ -19,7 +20,7 @@ function SessionNotes({ onTopicsListChange }: SessionNotesProps) {
 
 
   const [topicsList, setTopicsList] = useState<TopicProps[]>([{
-    id: Date.now(),
+    id: uuidv4(),
     edit: true,
     topic: "",
     objective: "",
@@ -29,7 +30,6 @@ function SessionNotes({ onTopicsListChange }: SessionNotesProps) {
     evaluation: ""
   }])
 
-  console.log(topicsList)
 
 
   useEffect(() => {
@@ -48,7 +48,7 @@ function SessionNotes({ onTopicsListChange }: SessionNotesProps) {
     }
     else {
       const newTopic = {
-        id: Date.now(),
+        id: uuidv4(),
         edit: true,
         topic: "",
         objective: "",

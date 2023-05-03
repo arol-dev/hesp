@@ -15,7 +15,6 @@ export default async function handler(
     }
   } if (req.method === "GET") {
     const PDC = await serverToDb("PDC", "getAll", req);
-
     res.status(200).json(PDC);
   } else {
     res.status(405).json({ error: "Method not allowed" });

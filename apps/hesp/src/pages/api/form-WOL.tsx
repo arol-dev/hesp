@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const wolCheckpoint = await prisma.wOLcheckpoint.create({
       data: {
-        userId: Number(body.userId),
+        traineeId: Number(body.userId),
         health: Number(body.health),
         healthFeel: body.healthFeel,
         healthImprove: body.healthImprove,

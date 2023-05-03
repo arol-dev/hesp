@@ -21,6 +21,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     res.json()
   );
 
+
   return {
     props: {
       person,

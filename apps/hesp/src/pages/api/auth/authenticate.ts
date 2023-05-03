@@ -28,10 +28,10 @@ export default async function handler(
       userData = await prisma.user.findUnique({
         where: { id: parseInt(id) },
         include: {
-          WOLcheckpoint: true,
-          PDCcheckpoint: true,
           Trainee: {
             include: {
+              WOLcheckpoint: true,
+              PDCcheckpoint: true,
               TraineeMetaData: true,
               ProvidedSoloutions: {
                 include: {
@@ -46,8 +46,8 @@ export default async function handler(
       userData = await prisma.user.findUnique({
         where: { id: parseInt(id) },
         include: {
-          WOLcheckpoint: true,
-          PDCcheckpoint: true,
+          // WOLcheckpoint: true,
+          // PDCcheckpoint: true,
           Trainee: true,
         },
       });

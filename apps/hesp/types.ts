@@ -49,7 +49,6 @@ export const modelMap: ModelMapInterface = {
 export interface IUserRole {
   ADMIN: "ADMIN";
   STAFF: "STAFF";
-  TRAINEE: "TRAINEE";
 }
 
 export interface IWorkingSituation {
@@ -71,7 +70,6 @@ export interface IUser {
   email: string;
   password: string;
   role: keyof IUserRole;
-  // Comment: IComment[];
   WOLcheckpoint: IWOLcheckpoint[];
   PDCcheckpoint: IPDCcheckpoint[];
   Trainee: ITrainee[];
@@ -135,7 +133,6 @@ export interface ITrainee {
   email?: string;
   phone?: string;
   registerNumber?: string;
-  role: keyof IUserRole;
   TraineeMetaData: ITraineeMetaData[];
   userId?: number;
   User?: IUser;

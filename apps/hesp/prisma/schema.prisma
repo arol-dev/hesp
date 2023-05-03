@@ -8,29 +8,18 @@ datasource db {
 }
 
 model User {
-  id            Int             @id @default(autoincrement())
-  firstName     String
-  lastName      String
-  role          UserRole        @default(STAFF)
-  email         String          @unique
-  password      String
-  // Comment       Comment[]
-  PDCcheckpoint PDCcheckpoint[]
-  Trainee       Trainee[]
-  WOLcheckpoint WOLcheckpoint[]
+  id        Int       @id @default(autoincrement())
+  firstName String
+  lastName  String
+  role      UserRole  @default(STAFF)
+  email     String    @unique
+  password  String
+  Trainee   Trainee[]
 }
 
-// model Comment {
-//   id            Int            @id @default(autoincrement())
-//   message       String
-//   relatedUser   Int
-//   User          User           @relation(fields: [relatedUser], references: [id])
-//   WOLcheckpoint WOLcheckpoint?
-// }
-
 model WOLcheckpoint {
-  id                         Int    @id @default(autoincrement())
-  createdAt                  DateTime   @default(now())
+  id                         Int      @id @default(autoincrement())
+  createdAt                  DateTime @default(now())
   health                     Int
   healthFeel                 String
   healthImprove              String
@@ -55,16 +44,13 @@ model WOLcheckpoint {
   fun                        Int
   funFeel                    String
   funImprove                 String
-  // relatedUser                Int?
-  // commentID           Int?     @unique
-  // Comment             Comment? @relation(fields: [commentID], references: [id])
-   userId             Int?
-   user               User?          @relation(fields: [userId], references: [id])
+  traineeId                  Int?
+  trainee                    Trainee? @relation(fields: [traineeId], references: [id])
 }
 
 model PDCcheckpoint {
   id                 Int            @id @default(autoincrement())
-  createdAt                  DateTime   @default(now())
+  createdAt          DateTime       @default(now())
   trust              Int
   willFollow         Int
   retention          Int
@@ -72,13 +58,13 @@ model PDCcheckpoint {
   cv                 Int
   readyForInterviews Int
   advancement        Int
-  userId             Int?
-  user               User?          @relation(fields: [userId], references: [id])
+  traineeId          Int?
+  trainee            Trainee?       @relation(fields: [traineeId], references: [id])
   SessionNotes       SessionNotes[]
 }
 
 model SessionNotes {
-  id            BigInt         @unique
+  id            String         @unique
   topic         String
   objective     String
   actions       String
@@ -96,10 +82,11 @@ model Trainee {
   email              String?
   phone              String?
   registerNumber     String?
-  role               UserRole             @default(TRAINEE)
-  userId             Int?
+  PDCcheckpoint      PDCcheckpoint[]
+  WOLcheckpoint      WOLcheckpoint[]
   ProvidedSoloutions ProvidedSoloutions[]
-  User               User?                @relation(fields: [userId], references: [id])
+  coachId            Int?
+  User               User?                @relation(fields: [coachId], references: [id])
   TraineeMetaData    TraineeMetaData?
 }
 
@@ -146,7 +133,6 @@ model InviteLink {
 enum UserRole {
   ADMIN
   STAFF
-  TRAINEE
 }
 
 enum WorkingSituation {
