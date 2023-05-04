@@ -84,6 +84,7 @@ export interface IUser {
   WOLcheckpoint: IWOLcheckpoint[];
   PDCcheckpoint: IPDCcheckpoint[];
   Trainee: ITrainee[];
+  picture: string
 }
 
 export interface IComment {

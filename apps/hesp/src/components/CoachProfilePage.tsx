@@ -8,17 +8,36 @@ interface CoachProfilePageProps {
 
 function CoachProfilePage({ person }: CoachProfilePageProps) {
 
+  const [selectedPicFile, setSelectedPicFile] = useState<File | null>(null)
+  const [picpreview, setPicPreview] = useState<string | undefined>(person.picture)
   const [formData, setFormData] = useState({
     firstName: person.firstName,
     lastName: person.lastName,
     email: person.email,
   })
-  console.log('form data', formData)
+  console.log('form data', picpreview)
 
 
   function handleInputChange(event: any) {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
+  }
+
+
+  function handleFileInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files ? event.target.files[0] : null;
+
+    if (!file) {
+      return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+      console.log('File type not supported');
+      return;
+    }
+
+    setSelectedPicFile(file);
+    setPicPreview(URL.createObjectURL(file));
   }
 
 
@@ -43,7 +62,7 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
                     </label>
                     <div className="mt-2">
                       <textarea
-                        onChange={handleInputChange}
+                        onChange={() => handleInputChange}
                         id="firstName"
                         name="firstName"
                         rows={1}
@@ -58,7 +77,7 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
                     </label>
                     <div className="mt-2">
                       <textarea
-                        onChange={handleInputChange}
+                        onChange={() => handleInputChange}
                         id="lastName"
                         name="lastName"
                         rows={1}
@@ -75,7 +94,7 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
                     </label>
                     <div className="mt-2">
                       <textarea
-                        onChange={handleInputChange}
+                        onChange={() => handleInputChange}
                         id="email"
                         name="email"
                         rows={1}
@@ -90,35 +109,27 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
                       Photo
                     </label>
                     <div className="mt-2 flex items-center gap-x-3">
-                      <UserCircleIcon className="h-12 w-12 text-gray-300" aria-hidden="true" />
-                      <button
-                        type="button"
-                        className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                      >
-                        Change
-                      </button>
-                    </div>
-                  </div>
 
-                  <div className="col-span-full">
-                    <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">
-                      Cover photo
-                    </label>
-                    <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                      <div className="text-center">
-                        <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-                        <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                          <label
-                            htmlFor="file-upload"
-                            className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                          >
-                            <span>Upload a file</span>
-                            <input id="file-upload" name="file-upload" type="file" className="sr-only" />
-                          </label>
-                          <p className="pl-1">or drag and drop</p>
-                        </div>
-                        <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
-                      </div>
+                      {!picpreview && !person.picture && !selectedPicFile ? (
+                        <div className="h-12 w-12 flex items-center justify-center rounded-full bg-gray-300">
+                          <PhotoIcon className="h-6 w-6 text-white" />
+                        </div>) : <img
+                        src={picpreview ?? person.picture}
+                        alt="Profile"
+                        className="h-12 w-12 rounded-full object-cover"
+                      />
+                      }
+                      <label htmlFor="photoInput" className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                        Change
+                      </label>
+                      <input
+                        type="file"
+                        id="photoInput"
+                        name="photo"
+                        className="hidden"
+                        accept="image/*"
+                        onChange={(event) => handleFileInputChange(event)}
+                      />
                     </div>
                   </div>
                 </div>
