@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt";
 import { generateJWTToken } from "../../../../lib/auth/jwt";
 import serverToDb from "../../../../lib/helperFuntions/serverToDb";
-import { IUser } from "../../../../types";
+import { IUser, ModelMapInterface, IinviteLink } from "../../../../types";
 
 const prisma = new PrismaClient();
 
@@ -47,8 +47,8 @@ export default async function handler(
       return;
     }
 
-    const links = await serverToDb("InviteLink", "get", undefined);
-    const link = links.find(
+    const linksFromDb = await serverToDb("InviteLink", "get", undefined);
+    const link: InviteLink[] = linksFromDb.filter(
       (link: InviteLink) => link.code === incomingLinkToCheck
     );
 
@@ -58,7 +58,7 @@ export default async function handler(
     }
 
     const now = new Date();
-    if (link.used || link.expiresAt <= now) {
+    if (link[0].used || link[0].expiresAt <= now) {
       res.status(401).json({ error: "Link is already used or expired" });
       return;
     }
@@ -67,7 +67,7 @@ export default async function handler(
     const newUser: any = await createUser(firstName, lastName, email, password);
 
     if (newUser) {
-      await setLinkAsUsed(link.id);
+      await setLinkAsUsed(link[0].id);
 
       const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30); // Set the cookie to expire in 24 hours
       const token = generateJWTToken(newUser);
