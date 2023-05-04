@@ -1,30 +1,24 @@
-import {
-  PrismaClient,
-  Trainee,
-  User,
-  // Comment,
-  WOLcheckpoint,
-  PDCcheckpoint,
-  Soloutions,
-  ProvidedSoloutions,
-  InviteLink,
-} from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 export const modelRelations: any = {
-  User: ["PDCcheckpoint", "Trainee", "WOLcheckpoint"],
+  User: ["Trainee"],
   WOLcheckpoint: ["User"],
   PDCcheckpoint: ["User", "SessionNotes"],
   SessionNotes: ["PDCcheckpoint"],
-  Trainee: ["User", "TraineeMetaData", "ProvidedSoloutions"],
+  Trainee: [
+    "User",
+    "TraineeMetaData",
+    "ProvidedSoloutions",
+    "PDCcheckpoint",
+    "WOLcheckpoint",
+  ],
   TraineeMetaData: ["Trainee"],
   ProvidedSoloutions: ["Trainee", "Soloutions"],
   Soloutions: ["ProvidedSoloutions"],
   InviteLink: [],
 };
-
 export interface ModelMapInterface {
-  [x: string]: any;
   Trainee: typeof prisma.trainee;
   User: typeof prisma.user;
   // Comment: typeof prisma.comment;
@@ -33,6 +27,8 @@ export interface ModelMapInterface {
   Solutions: typeof prisma.soloutions;
   ProvidedSoloutions: typeof prisma.providedSoloutions;
   InviteLink: typeof prisma.inviteLink;
+  SessionNotes: typeof prisma.sessionNotes;
+  TraineeMetaData: typeof prisma.traineeMetaData;
 }
 
 export const modelMap: ModelMapInterface = {
@@ -44,6 +40,8 @@ export const modelMap: ModelMapInterface = {
   Solutions: prisma.soloutions,
   ProvidedSoloutions: prisma.providedSoloutions,
   InviteLink: prisma.inviteLink,
+  SessionNotes: prisma.sessionNotes,
+  TraineeMetaData: prisma.traineeMetaData,
 };
 
 export interface IUserRole {
