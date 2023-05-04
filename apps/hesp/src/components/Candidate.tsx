@@ -1,3 +1,5 @@
+'use client'
+
 import Link from "next/link";
 import Navbar from "./Navbar";
 import Chart from "./RadarChart";
@@ -5,8 +7,11 @@ import { useRouter } from "next/router";
 
 import AssignPerson from "./AssignCoach";
 
-function Candidate({ person, WOLs, PDs }: any) {
 
+import { useState, useEffect } from "react";
+
+function Candidate({ person, updatePerson, WOLs, PDs }: any) {
+  
 
   const router = useRouter()
 
@@ -33,6 +38,26 @@ function Candidate({ person, WOLs, PDs }: any) {
     });
   }
 
+  const [editMode, setIsEditMode] = useState(false)
+  const [personData, setPersonData] = useState({ ...person })
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setPersonData({ ...personData, [name]: value });
+  };
+
+  // console.log('updatePerson', updatePerson, 'personData', personData, 'person',person)
+  const toggleEditMode = () => {
+
+    if (editMode) {
+      // console.log('updatePerson----->', updatePerson, 'personData', personData, 'person',person)
+ 
+     updatePerson(personData);
+    }
+    setIsEditMode(!editMode);
+  };
+
+
   return (
     <div>
       <Navbar headerText={"HESP Program"}></Navbar>
@@ -49,6 +74,7 @@ function Candidate({ person, WOLs, PDs }: any) {
               <button
                 type="button"
                 className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                onClick={toggleEditMode}
               >
                 <svg
                   className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
@@ -58,7 +84,7 @@ function Candidate({ person, WOLs, PDs }: any) {
                 >
                   <path d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z" />
                 </svg>
-                Edit
+                {editMode ? 'Save' : 'Edit'}
               </button>
             </span>
 
@@ -168,47 +194,127 @@ function Candidate({ person, WOLs, PDs }: any) {
               </div>
               <div className="border-t border-gray-200">
                 <dl>
-                  <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt className="text-sm font-medium text-gray-500">
-                      Full name
-                    </dt>
-                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      {person.firstName + " " + person.lastName}
-                    </dd>
-                  </div>
-                  <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt className="text-sm font-medium text-gray-500">
-                      Telephone
-                    </dt>
-                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      {person.phone}
-                    </dd>
-                  </div>
-                  <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt className="text-sm font-medium text-gray-500">
-                      Email address
-                    </dt>
-                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      {person.email}
-                    </dd>
-                  </div>
-                  <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt className="text-sm font-medium text-gray-500">
-                      Reference
-                    </dt>
-                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      {person.registerNumber}
-                    </dd>
-                  </div>
-                  <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt className="text-sm font-medium text-gray-500">About</dt>
-                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      Fugiat ipsum ipsum deserunt culpa aute sint do nostrud
-                      anim incididunt cillum culpa consequat. Excepteur qui
-                      ipsum aliquip consequat sint. Sit id mollit nulla mollit
-                      nostrud in ea officia proident. Irure nostrud pariatur
-                      mollit ad adipisicing reprehenderit deserunt qui eu.
-                    </dd>
+                  <div className="border-t border-gray-200">
+
+                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm font-medium text-gray-500">Full name</dt>
+                      {editMode ? (
+
+
+                        <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                          {editMode ? (
+                            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                              {editMode ? (
+                                <div className="flex">
+                                  <input
+                                    type="text"
+                                    name="firstName"
+                                    id="firstName"
+                                    autoComplete="given-name"
+                                    value={personData.firstName}
+                                    onChange={handleInputChange}
+                                    style={{
+                                      width: personData.firstName.length > 0
+                                        ? personData.firstName.length * 18 + "px"
+                                        : "32px"
+                                    }}
+                                    className="shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md mt-1 text-sm text-gray-900 sm:col-span-1 sm:mt-0 ml-4 flex-grow-1 flex-shrink-1"
+                                  />
+                                  <input
+                                    type="text"
+                                    name="lastName"
+                                    id="lastName"
+                                    autoComplete="family-name"
+                                    value={personData.lastName}
+                                    onChange={handleInputChange}
+                                    style={{
+                                      width: personData.lastName.length > 0
+                                        ? personData.lastName.length * 18 + "px"
+                                        : "32px"
+                                    }}
+                                    className="shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md mt-1 text-sm text-gray-900 sm:col-span-1 sm:mt-0 flex-grow-1 flex-shrink-1"
+                                  />
+                                </div>
+                              ) : (
+                                <div className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                  {personData.firstName + " " + personData.lastName}
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            <div className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                              {personData.firstName + " " + personData.lastName}
+                            </div>
+                          )}
+                        </div>
+
+                      ) : (
+                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                          {personData.firstName + " " + personData.lastName}
+                        </dd>
+                      )}
+                    </div>
+
+                    <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm font-medium text-gray-500">Phone</dt>
+                      {editMode ? (
+                        <input
+                          type="tel"
+                          name="phone"
+                          id="phone"
+                          autoComplete="off"
+                          value={personData.phone}
+                          onChange={handleInputChange}
+                          className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-mdmt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
+                        />
+                      ) : (
+                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                          {personData.phone}
+                        </dd>
+                      )}
+                    </div>
+
+
+
+                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm font-medium text-gray-500">
+                        Email address
+                      </dt>
+                      {editMode ? (
+                        <input
+                          type="text"
+                          name="email"
+                          id="email"
+                          autoComplete="email"
+                          value={personData.email}
+                          onChange={handleInputChange}
+                          className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-mdmt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
+                        />
+                      ) : (
+                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                          {personData.email}
+                        </dd>
+                      )}
+                    </div>
+
+
+                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt className="text-sm font-medium text-gray-500">About</dt>{editMode ? (
+                        <input
+                          type="text"
+                          name="about"
+                          id="about"
+                          autoComplete="off"
+                          value={personData.about}
+                          onChange={handleInputChange}
+                          className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-mdmt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
+                        />
+                      ) : (
+                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                          {personData.about}
+                        </dd>
+                      )}
+                    </div>
                   </div>
                 </dl>
               </div>
@@ -245,6 +351,7 @@ function Candidate({ person, WOLs, PDs }: any) {
         </span>
       </div>
     </div>
+
   );
 }
 export default Candidate;

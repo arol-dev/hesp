@@ -89,6 +89,7 @@ model Trainee {
   coachId            Int?
   User               User?                @relation(fields: [coachId], references: [id])
   TraineeMetaData    TraineeMetaData?
+  about              String?
 }
 
 model TraineeMetaData {

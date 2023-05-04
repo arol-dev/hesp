@@ -1,3 +1,4 @@
+
 const { PrismaClient } = require('@prisma/client')
 const bcrypt = require('bcrypt')
 
@@ -37,6 +38,7 @@ async function main() {
       email: "bob@prisma.io",
       phone: "+3497867853",
       registerNumber: "023/1234",
+      about:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu luctus sem. Ut non tellus nulla. Mauris accumsan rutrum viverra. Ut sit amet facilisis sapien, vel hendrerit nisl. Integer consequat justo ut lacinia facilisis. Nulla vitae ligula non nulla accumsan iaculis sit amet quis neque. Maecenas luctus mi sit amet erat suscipit, nec pharetra nisi semper.",
     }
   })
 
@@ -105,8 +107,6 @@ async function main() {
       SessionNotes: true
     }
   })
-
-
 
 }
 main()
