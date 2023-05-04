@@ -44,7 +44,6 @@ function Teampage({ coaches }: TeampageProps) {
         </div>
       </div>
       <AddCoach showForm={showAddCoachForm} closeForm={handleAddCoachFormClose} />
-      <DeleteCoach showWindow={showDeleteCoach} closeWindow={handleDeleteCoachWindowClose} />
       <div className="mt-8 flow-root">
         {coaches && coaches.length > 0 ? (
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -68,54 +67,57 @@ function Teampage({ coaches }: TeampageProps) {
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {coaches.map((person, index) => (
-                    <tr key={index}>
-                      <td className="flex whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                        <div className="flex-shrink-0 mr-5">
-                          <img
-                            className="h-10 w-10 rounded-full"
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                            alt=""
-                          />
-                        </div>
-                        <Link
-                          href={`/candidates/${person.id}`}
-                          className="text-black hover:text-indigo-900"
-                        >
-                          {person.firstName + " " + person.lastName}
-                          <p className="whitespace-nowrap text-sm text-gray-500">
-                            {person.email}
-                          </p>
-                        </Link>
-                      </td>
+                    <>
+                      <DeleteCoach showWindow={showDeleteCoach} closeWindow={handleDeleteCoachWindowClose} coach={person} />
+                      <tr key={index}>
+                        <td className="flex whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                          <div className="flex-shrink-0 mr-5">
+                            <img
+                              className="h-10 w-10 rounded-full"
+                              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                              alt=""
+                            />
+                          </div>
+                          <Link
+                            href={`/candidates/${person.id}`}
+                            className="text-black hover:text-indigo-900"
+                          >
+                            {person.firstName + " " + person.lastName}
+                            <p className="whitespace-nowrap text-sm text-gray-500">
+                              {person.email}
+                            </p>
+                          </Link>
+                        </td>
 
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {person.Trainee.length}
-                      </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {person.Trainee.length}
+                        </td>
 
-                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                        <a
-                          href="#"
-                          className="text-indigo-600 hover:text-indigo-900"
-                        >
-                          Edit
-                          <span className="sr-only">
-                            , {person.firstName + " " + person.lastName}
-                          </span>
-                        </a>
-                      </td>
-                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                        <button
-                          // href={`/candidates/${person.id}/checkpoint`}
-                          className="text-indigo-600 hover:text-indigo-900"
-                          onClick={() => handleDeleteCoach()}
-                        >
-                          Remove
-                          <span className="sr-only">
-                            , {person.firstName + " " + person.lastName}
-                          </span>
-                        </button>
-                      </td>
-                    </tr>
+                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                          <a
+                            href="#"
+                            className="text-indigo-600 hover:text-indigo-900"
+                          >
+                            Edit
+                            <span className="sr-only">
+                              , {person.firstName + " " + person.lastName}
+                            </span>
+                          </a>
+                        </td>
+                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                          <button
+                            // href={`/candidates/${person.id}/checkpoint`}
+                            className="text-indigo-600 hover:text-indigo-900"
+                            onClick={() => handleDeleteCoach()}
+                          >
+                            Remove
+                            <span className="sr-only">
+                              , {person.firstName + " " + person.lastName}
+                            </span>
+                          </button>
+                        </td>
+                      </tr>
+                    </>
                   ))}
                 </tbody>
               </table>

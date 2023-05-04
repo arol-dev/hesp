@@ -1,6 +1,42 @@
-function DeleteCoach({ closeWindow, showWindow }) {
+import { IUser } from "../../types"
+
+interface DeleteCoachProps {
+  closeWindow: () => void
+  showWindow: boolean
+  coach: IUser
+}
+
+
+
+
+
+function DeleteCoach({ closeWindow, showWindow, coach }: DeleteCoachProps) {
+
   if (!showWindow) {
     return null
+  }
+
+  async function handleSubmit(event: any) {
+    event.preventDefault();
+
+    const response = await fetch("/api/delete-Coach", {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(coach)
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      console.log('Coacy deleted successfully:', result);
+      closeWindow();
+      window.location.reload()
+    } else {
+      console.error('Error deleting coach:', result);
+    }
+
   }
 
 
@@ -31,7 +67,7 @@ function DeleteCoach({ closeWindow, showWindow }) {
               Cancel
             </button>
             <button
-              // onClick={handleSubmit}
+              onClick={() => handleSubmit(event)}
               type="submit"
               className="rounded-md bg-red-600 px-5  py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
