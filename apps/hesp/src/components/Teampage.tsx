@@ -77,11 +77,9 @@ function Teampage({ coaches }: TeampageProps) {
                           </p>
                         </Link>
                       </td>
+
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {/* {person.checkpoint} */}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {/* {person.status} */}
+                        {person.Trainee.length}
                       </td>
 
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">

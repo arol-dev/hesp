@@ -40,7 +40,7 @@ export default async function serverToDb(
 
 
   if (action === "getAll" && modelName === "User") {
-    const result = await Model.findMany();
+    const result = await Model.findMany({ ...includeParam });
     const staffUsers = result.filter((user: { role: string; }) => user.role === "STAFF");
     return staffUsers
   }
