@@ -189,7 +189,7 @@ function Checkpoint({ id }: Id) {
 
   return (
     <div>
-      <Navbar></Navbar>
+      <Navbar headerText={"HESP Program"}></Navbar>
       {pd ? (
         <div className="lg:flex lg:items-center lg:justify-between pl-5 pr-5 pb-10">
           <div className="min-w-0 flex-1 pb-8">

@@ -35,7 +35,7 @@ function Candidate({ person, WOLs, PDs }: any) {
 
   return (
     <div>
-      <Navbar></Navbar>
+      <Navbar headerText={"HESP Program"}></Navbar>
       <div className="pl-5 pr-5">
         <div className="lg:flex lg:items-center lg:justify-between ">
           <div className="min-w-0 flex-1 pb-8">

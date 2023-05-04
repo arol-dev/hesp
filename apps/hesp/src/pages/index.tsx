@@ -5,7 +5,7 @@ import List from "@/components/List";
 function Main({ user }: any) {
   return (
     <div>
-      <Navbar></Navbar>
+      <Navbar headerText={"HESP Program"}></Navbar>
       <List user={user}></List>
     </div>
   );

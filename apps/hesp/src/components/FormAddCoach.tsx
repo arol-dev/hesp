@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 interface AddCoachProps {
   closeForm: () => void
-  showForm: () => void
+  showForm: boolean
 }
 
 function AddCoach({ closeForm, showForm }: AddCoachProps) {
@@ -23,14 +23,14 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
   })
 
 
-  function handleInputChange(event) {
+  function handleInputChange(event: any) {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   }
 
 
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: any) {
     event.preventDefault();
 
     const response = await fetch("/api/form-createCoach", {

@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-function Navbar({ headerText }) {
+interface NavbarProps {
+  headerText: string
+}
+
+function Navbar({ headerText }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 

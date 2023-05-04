@@ -1,10 +1,13 @@
 import Link from "next/link";
-import Navbar from "./Navbar";
 import AddCoach from './FormAddCoach';
 import { useState } from "react";
-import Modal from "./Modal";
+import { IUser } from "../../types";
 
-function Teampage({ coaches }) {
+interface TeampageProps {
+  coaches: IUser[]
+}
+
+function Teampage({ coaches }: TeampageProps) {
 
   const [showAddCoachForm, setShowAddCoachForm] = useState(false);
 
@@ -75,10 +78,10 @@ function Teampage({ coaches }) {
                         </Link>
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {person.checkpoint}
+                        {/* {person.checkpoint} */}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {person.status}
+                        {/* {person.status} */}
                       </td>
 
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
