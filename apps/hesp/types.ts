@@ -19,6 +19,7 @@ export const modelRelations: any = {
   InviteLink: [],
 };
 export interface ModelMapInterface {
+  [x: string]: any;
   Trainee: typeof prisma.trainee;
   User: typeof prisma.user;
   // Comment: typeof prisma.comment;
@@ -135,6 +136,13 @@ export interface ITrainee {
   userId?: number;
   User?: IUser;
   ProvidedSoloutions: IProvidedSoloutions[];
+}
+
+export interface IinviteLink {
+  id: number;
+  code: string;
+  used: boolean;
+  expiresAt: any;
 }
 
 interface ITraineeMetaData {

@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt";
 import { generateJWTToken } from "../../../../lib/auth/jwt";
 import serverToDb from "../../../../lib/helperFuntions/serverToDb";
-import { IUser } from "../../../../types";
+import { IUser, ModelMapInterface, IinviteLink } from "../../../../types";
 
 const prisma = new PrismaClient();
 
@@ -47,8 +47,8 @@ export default async function handler(
       return;
     }
 
-    const links = await serverToDb("InviteLink", "get", undefined);
-    const link = links.filter(
+    const linksFromDb = await serverToDb("InviteLink", "get", undefined);
+    const link: InviteLink = linksFromDb.filter(
       (link: InviteLink) => link.code === incomingLinkToCheck
     );
 
