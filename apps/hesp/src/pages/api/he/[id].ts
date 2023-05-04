@@ -6,6 +6,10 @@ export default async function handler(
   res: NextApiResponse<any>
 ) {
   if (req.method === "PUT") {
+    
+    console.log('Request id:', req.query.id);
+
+    console.log('im arriving pages api he id...', req.method)
     try {
       const newTrainee = await serverToDb("Trainee", "put", req);
 
