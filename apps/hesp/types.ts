@@ -64,10 +64,12 @@ export interface IHousingSituation {
 }
 
 export interface IUser {
+  email: string;
+  phone: string;
+  reference: string;
   id: number;
   firstName: string;
   lastName: string;
-  email: string;
   password: string;
   role: keyof IUserRole;
   WOLcheckpoint: IWOLcheckpoint[];
