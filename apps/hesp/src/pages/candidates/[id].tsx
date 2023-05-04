@@ -2,11 +2,9 @@ import Candidate from "@/components/Candidate";
 import { profile } from "console";
 import { GetServerSideProps } from "next";
 
- function Profile({ person, WOLs, PDs }: any) {
+export function Profile({ person, WOLs, PDs }: any) {
 
   const updatePerson = (updatedPersonData: any) => {
-
-    console.log( 'I am in candidates/id', updatePerson )
     
     fetch(`http://localhost:3000/api/he/${updatedPersonData.id}`, {
       method: "PUT",
@@ -19,7 +17,6 @@ import { GetServerSideProps } from "next";
       .then((data) => {
    
       });
-  }
   
     return <Candidate
       WOLs={WOLs}
@@ -29,9 +26,9 @@ import { GetServerSideProps } from "next";
     ></Candidate>
     
     
-  
+  }
 }
-  export default Profile;
+  export default Candidate;
 
   export const getServerSideProps: GetServerSideProps = async (context) => {
     const { id }: any = context.query
@@ -53,7 +50,7 @@ import { GetServerSideProps } from "next";
       props: {
         person,
         WOLs,
-        PDs,
+        PDs
       },
     };
   }

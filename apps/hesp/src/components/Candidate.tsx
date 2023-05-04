@@ -46,13 +46,10 @@ function Candidate({ person, updatePerson, WOLs, PDs }: any) {
     setPersonData({ ...personData, [name]: value });
   };
 
-  // console.log('updatePerson', updatePerson, 'personData', personData, 'person',person)
-  const toggleEditMode = () => {
 
+  const toggleEditMode = () => {
     if (editMode) {
-      // console.log('updatePerson----->', updatePerson, 'personData', personData, 'person',person)
- 
-     updatePerson(personData);
+      updatePerson(personData);
     }
     setIsEditMode(!editMode);
   };
@@ -195,126 +192,130 @@ function Candidate({ person, updatePerson, WOLs, PDs }: any) {
               <div className="border-t border-gray-200">
                 <dl>
                   <div className="border-t border-gray-200">
+                    
+                      <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt className="text-sm font-medium text-gray-500">Full name</dt>
+                        {editMode ? (
 
-                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt className="text-sm font-medium text-gray-500">Full name</dt>
-                      {editMode ? (
 
+                          <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                            {editMode ? (
+                              <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+                                {editMode ? (
+                                  <div className="flex">
+                                    <input
+                                      type="text"
+                                      name="firstName"
+                                      id="firstName"
+                                      autoComplete="given-name"
+                                      value={personData.firstName}
+                                      onChange={handleInputChange}
+                                      style={{
+                                        width: personData.firstName.length > 0
+                                          ? personData.firstName.length * 18 + "px"
+                                          : "32px"
+                                      }}
+                                      className="shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md mt-1 text-sm text-gray-900 sm:col-span-1 sm:mt-0 ml-4 flex-grow-1 flex-shrink-1"
+                                    />
+                                    <input
+                                      type="text"
+                                      name="lastName"
+                                      id="lastName"
+                                      autoComplete="family-name"
+                                      value={personData.lastName}
+                                      onChange={handleInputChange}
+                                      style={{
+                                        width: personData.lastName.length > 0
+                                          ? personData.lastName.length * 18 + "px"
+                                          : "32px"
+                                      }}
+                                      className="shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md mt-1 text-sm text-gray-900 sm:col-span-1 sm:mt-0 flex-grow-1 flex-shrink-1"
+                                    />
+                                  </div>
+                                ) : (
+                                  <div className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                    {personData.firstName + " " + personData.lastName}
+                                  </div>
+                                )}
+                              </div>
+                            ) : (
+                              <div className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                {personData.firstName + " " + personData.lastName}
+                              </div>
+                            )}
+                          </div>
 
-                        <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
-                          {editMode ? (
-                            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
-                              {editMode ? (
-                                <div className="flex">
-                                  <input
-                                    type="text"
-                                    name="firstName"
-                                    id="firstName"
-                                    autoComplete="given-name"
-                                    value={personData.firstName}
-                                    onChange={handleInputChange}
-                                    style={{
-                                      width: personData.firstName.length > 0
-                                        ? personData.firstName.length * 18 + "px"
-                                        : "32px"
-                                    }}
-                                    className="shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md mt-1 text-sm text-gray-900 sm:col-span-1 sm:mt-0 ml-4 flex-grow-1 flex-shrink-1"
-                                  />
-                                  <input
-                                    type="text"
-                                    name="lastName"
-                                    id="lastName"
-                                    autoComplete="family-name"
-                                    value={personData.lastName}
-                                    onChange={handleInputChange}
-                                    style={{
-                                      width: personData.lastName.length > 0
-                                        ? personData.lastName.length * 18 + "px"
-                                        : "32px"
-                                    }}
-                                    className="shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md mt-1 text-sm text-gray-900 sm:col-span-1 sm:mt-0 flex-grow-1 flex-shrink-1"
-                                  />
-                                </div>
-                              ) : (
-                                <div className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                  {personData.firstName + " " + personData.lastName}
-                                </div>
-                              )}
-                            </div>
-                          ) : (
-                            <div className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                              {personData.firstName + " " + personData.lastName}
-                            </div>
-                          )}
-                        </div>
-
-                      ) : (
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                          {personData.firstName + " " + personData.lastName}
-                        </dd>
-                      )}
-                    </div>
-
-                    <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt className="text-sm font-medium text-gray-500">Phone</dt>
-                      {editMode ? (
-                        <input
-                          type="tel"
-                          name="phone"
-                          id="phone"
-                          autoComplete="off"
-                          value={personData.phone}
-                          onChange={handleInputChange}
-                          className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-mdmt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
-                        />
-                      ) : (
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                          {personData.phone}
-                        </dd>
-                      )}
-                    </div>
+                        ) : (
+                          <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            {personData.firstName + " " + personData.lastName}
+                          </dd>
+                        )}
+                      </div>
 
 
 
-                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt className="text-sm font-medium text-gray-500">
-                        Email address
-                      </dt>
-                      {editMode ? (
-                        <input
-                          type="text"
-                          name="email"
-                          id="email"
-                          autoComplete="email"
-                          value={personData.email}
-                          onChange={handleInputChange}
-                          className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-mdmt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
-                        />
-                      ) : (
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                          {personData.email}
-                        </dd>
-                      )}
-                    </div>
 
 
-                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt className="text-sm font-medium text-gray-500">About</dt>{editMode ? (
-                        <input
-                          type="text"
-                          name="about"
-                          id="about"
-                          autoComplete="off"
-                          value={personData.about}
-                          onChange={handleInputChange}
-                          className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-mdmt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
-                        />
-                      ) : (
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                          {personData.about}
-                        </dd>
-                      )}
-                    </div>
+                      <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt className="text-sm font-medium text-gray-500">Phone</dt>
+                        {editMode ? (
+                          <input
+                            type="tel"
+                            name="phone"
+                            id="phone"
+                            autoComplete="off"
+                            value={personData.phone}
+                            onChange={handleInputChange}
+                            className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-mdmt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
+                          />
+                        ) : (
+                          <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            {personData.phone}
+                          </dd>
+                        )}
+                      </div>
+
+
+
+                      <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt className="text-sm font-medium text-gray-500">
+                          Email address
+                        </dt>
+                        {editMode ? (
+                          <input
+                            type="text"
+                            name="email"
+                            id="email"
+                            autoComplete="email"
+                            value={personData.email}
+                            onChange={handleInputChange}
+                            className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-mdmt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
+                          />
+                        ) : (
+                          <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            {personData.email}
+                          </dd>
+                        )}
+                      </div>
+
+
+                      <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt className="text-sm font-medium text-gray-500">About</dt>{editMode ? (
+                          <input
+                            type="text"
+                            name="about"
+                            id="about"
+                            autoComplete="off"
+                            value={personData.about}
+                            onChange={handleInputChange}
+                            className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-mdmt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"
+                          />
+                        ) : (
+                          <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            {personData.about}
+                          </dd>
+                        )}
+                      </div>
                   </div>
                 </dl>
               </div>
