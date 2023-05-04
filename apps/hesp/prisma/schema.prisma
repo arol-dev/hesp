@@ -15,6 +15,7 @@ model User {
   email     String    @unique
   password  String
   Trainee   Trainee[]
+  picture Bytes?
 }
 
 model WOLcheckpoint {
