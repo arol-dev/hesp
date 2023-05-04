@@ -2,6 +2,7 @@ import Link from "next/link";
 import AddCoach from './FormAddCoach';
 import { useState } from "react";
 import { IUser } from "../../types";
+import DeleteCoach from "./DeleteCoach";
 
 interface TeampageProps {
   coaches: IUser[]
@@ -10,6 +11,7 @@ interface TeampageProps {
 function Teampage({ coaches }: TeampageProps) {
 
   const [showAddCoachForm, setShowAddCoachForm] = useState(false);
+  const [showDeleteCoach, setShowDeleteCoach] = useState(false)
 
 
   function handleAddNewCoach() {
@@ -18,6 +20,13 @@ function Teampage({ coaches }: TeampageProps) {
 
   function handleAddCoachFormClose() {
     setShowAddCoachForm(false);
+  }
+
+  function handleDeleteCoach() {
+    setShowDeleteCoach(true)
+  }
+  function handleDeleteCoachWindowClose() {
+    setShowDeleteCoach(false)
   }
 
   return (
@@ -35,6 +44,7 @@ function Teampage({ coaches }: TeampageProps) {
         </div>
       </div>
       <AddCoach showForm={showAddCoachForm} closeForm={handleAddCoachFormClose} />
+      <DeleteCoach showWindow={showDeleteCoach} closeWindow={handleDeleteCoachWindowClose} />
       <div className="mt-8 flow-root">
         {coaches && coaches.length > 0 ? (
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -94,15 +104,16 @@ function Teampage({ coaches }: TeampageProps) {
                         </a>
                       </td>
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                        <a
-                          href={`/candidates/${person.id}/checkpoint`}
+                        <button
+                          // href={`/candidates/${person.id}/checkpoint`}
                           className="text-indigo-600 hover:text-indigo-900"
+                          onClick={() => handleDeleteCoach()}
                         >
                           Remove
                           <span className="sr-only">
                             , {person.firstName + " " + person.lastName}
                           </span>
-                        </a>
+                        </button>
                       </td>
                     </tr>
                   ))}
