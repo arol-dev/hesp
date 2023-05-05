@@ -27,20 +27,17 @@ export default async function serverToDb(
   }
 
   if (action === "get") {
-    // const id = parseInt(req.query.id as string);
     const result = await Model.findUnique({ where: { id }, ...includeParam });
     return result;
  
   }
 
   if (action === "getAll" && modelName === "PDC") {
-    // const id = parseInt(req.query.id as string);
     const result = await Model.findMany({ where: { traineeId: id }, include: { SessionNotes: true }, ...includeParam });
     return result;
   }
 
   else if (action === "getAll") {
-    // const id = parseInt(req.query.id as string);
     const result = await Model.findMany({ where: { traineeId: id }, ...includeParam });
  
     return result;
@@ -59,8 +56,7 @@ export default async function serverToDb(
         cleanData.password = await bcrypt.hash(cleanData.password, 10);
       }
       try {
-        const result = await Model.update({ where: { id }, data: cleanData, ...includeParam }); // Use cleanData instead of data
-        console.log('PUT action in serverToDb, result:', result);
+        const result = await Model.update({ where: { id }, data: cleanData, ...includeParam }); 
         return result;
       } catch (error) {
         console.error('Error during update operation:', error);
