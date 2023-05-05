@@ -1,6 +1,5 @@
 
 const { PrismaClient } = require('@prisma/client')
-const { v4: uuidv4 } = require('uuid');
 
 
 const prisma = new PrismaClient()
@@ -92,7 +91,7 @@ async function main() {
     data: {
       SessionNotes: {
         create: {
-          id: uuidv4(),
+          id: '29384907328971302981209823190',
           topic: "Trust",
           objective: "He wants to trust people",
           actions: "Start communicating with people actively",
