@@ -1,0 +1,25 @@
+name: hesp preview end to end testing
+
+on:
+  workflow_run:
+    workflows:
+      - "main.yml"
+    types:
+      - completed
+
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: vercel-preview-url-output
+
+      - name: Print and variable
+        run: |
+          VERCEL_PREVIEW_OUTPUT=$(cat my-file.txt)
+          echo "vercel preview url: $VERCEL_PREVIEW_OUTPUT"
+      
+      - name: Run testing
+        run: yarn test --$VERCEL_PREVIEW_OUTPUT

@@ -46,6 +46,15 @@ jobs:
           VERCEL_DEPLOYMENT=$(curl -s -H "Authorization: Bearer $VERCEL_TOKEN" "https://api.vercel.com/v5/now/deployments?teamId=$(vercel --token $VERCEL_TOKEN --yes whoami)" | jq -r 'first(.deployments[] | select(.state == "READY")) | .url')
           echo "::set-output name=url::https://$VERCEL_DEPLOYMENT"
 
+      - name: create artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: vercel-preview-url-output
+          path: vercel-preview-url-output.txt
+        
+      - name: upload artifact
+        run: echo "${{ env.MY_VARIABLE }}" > vercel-preview-url-output.txt
+
       - name: Add comment with preview URL
         uses: actions/github-script@v3
         env:
