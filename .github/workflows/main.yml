@@ -61,3 +61,39 @@ jobs:
               repo: context.repo.repo,
               body: comment
             })
+
+  test_migration_and_seed:
+    runs-on: ubuntu-latest
+    needs: vercel_preview
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Prisma CLI
+        run: npm i -g prisma
+
+      - name: Set up test database
+        run: |
+          sudo apt-get -yqq install libpq-dev
+          echo "DATABASE_URL=postgresql://postgres:postgres@localhost:5432/test_db" > apps/hesp/.env
+
+      - name: Run migrations
+        working-directory: apps/hesp
+        run: |
+          prisma migrate deploy
+
+      - name: Seed test database
+        working-directory: apps/hesp
+        run: |
+          prisma db seed --preview-feature
