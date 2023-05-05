@@ -11,9 +11,12 @@ import AssignPerson from "./AssignCoach";
 import { useState, useEffect } from "react";
 
 function Candidate({ person, updatePerson, WOLs, PDs }: any) {
-
+  
 
   const router = useRouter()
+ console.log('updatePerson prop in candidate', updatePerson)
+
+  
 
   function handleCheckLastCreated(event: React.MouseEvent) {
     event.preventDefault();
@@ -46,10 +49,14 @@ function Candidate({ person, updatePerson, WOLs, PDs }: any) {
     setPersonData({ ...personData, [name]: value });
   };
 
-
+  // console.log('updatePerson', updatePerson, 'personData', personData, 'person',person)
   const toggleEditMode = () => {
+
+    console.log('hey iM toggling edit mode')
     if (editMode) {
-      updatePerson(personData);
+      // console.log('updatePerson----->', updatePerson, 'personData', personData, 'person',person)
+ 
+     updatePerson(personData);
     }
     setIsEditMode(!editMode);
   };

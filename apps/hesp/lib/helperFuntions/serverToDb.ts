@@ -13,6 +13,7 @@ export default async function serverToDb(
   if (!Model) {
     throw new Error("Invalid model name");
   }
+  const id = req && req.query && req.query.id ? parseInt(req.query.id as string) : null; 
 
   const include = buildIncludeObject(modelRelations[modelName]);
   const includeParam = Object.keys(include).length > 0 ? { include } : {};
@@ -26,20 +27,20 @@ export default async function serverToDb(
   }
 
   if (action === "get") {
-    const id = parseInt(req.query.id as string);
+    // const id = parseInt(req.query.id as string);
     const result = await Model.findUnique({ where: { id }, ...includeParam });
     return result;
  
   }
 
   if (action === "getAll" && modelName === "PDC") {
-    const id = parseInt(req.query.id as string);
+    // const id = parseInt(req.query.id as string);
     const result = await Model.findMany({ where: { traineeId: id }, include: { SessionNotes: true }, ...includeParam });
     return result;
   }
 
   else if (action === "getAll") {
-    const id = parseInt(req.query.id as string);
+    // const id = parseInt(req.query.id as string);
     const result = await Model.findMany({ where: { traineeId: id }, ...includeParam });
  
     return result;
@@ -50,15 +51,24 @@ export default async function serverToDb(
   if (action === "post") {
     const result = await Model.create({ data, ...includeParam });
     return result;
-  } else if (action === "put") {
-    if (data.password) {
-      data.password = await bcrypt.hash(data.password, 10);
-    }
 
-    const id = parseInt(req.query.id as string);
-    const result = await Model.update({ where: { id }, data, ...includeParam });
-    return result;
-  } else {
+  } else if (action === "put") {
+      const { User, TraineeMetaData, ProvidedSoloutions, PDCcheckpoint, WOLcheckpoint, ...cleanData } = data;
+    
+      if (cleanData.password) {
+        cleanData.password = await bcrypt.hash(cleanData.password, 10);
+      }
+    
+      console.log('PUT action in serverToDb, before updating');
+      try {
+        const result = await Model.update({ where: { id }, data: cleanData, ...includeParam }); // Use cleanData instead of data
+        console.log('PUT action in serverToDb, result:', result);
+        return result;
+      } catch (error) {
+        console.error('Error during update operation:', error);
+        throw error;
+      }
+    } else {
     throw new Error("Invalid action");
   }
 }
