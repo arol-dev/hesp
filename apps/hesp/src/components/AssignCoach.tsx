@@ -55,7 +55,7 @@ const AssignPerson = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId: selectedPerson.id }),
+        body: JSON.stringify({ coachId: selectedPerson.id }),
       });
 
       if (response.ok) {
