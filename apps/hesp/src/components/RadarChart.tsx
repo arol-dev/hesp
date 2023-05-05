@@ -29,8 +29,8 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
   let optionsPD = {}
   let optionsWOL = {}
 
-  console.log(PDs[0], '....................', WOLs[0])
-  if(!PDs[0] || WOLs[0]) {
+  console.log('PDS', PDs[0], '....................', 'WOLS', WOLs[0])
+  if(!PDs[0] || !WOLs[0]) {
     
     return <div>missing data from PDs or WOLs </div>
   }
