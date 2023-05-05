@@ -6,6 +6,7 @@ interface User {
   id: number;
   email: string;
   password: string;
+  role: string;
 }
 
 interface props {
@@ -15,9 +16,8 @@ interface props {
 const UserSwitcher: React.FC<any> = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [users, setUsers] = useState<User[]>([
-    { id: 1, email: "Admin", password: "Admin" },
-    { id: 2, email: "Staff", password: "Staff" },
-    { id: 3, email: "HE", password: "HE" },
+    { id: 1, email: "mike@prisma.io", password: "12345", role: "Admin" },
+    { id: 2, email: "alice@prisma.io", password: "12345", role: "Staff" },
   ]);
 
   const switchUser = async (user: User) => {
@@ -59,7 +59,7 @@ const UserSwitcher: React.FC<any> = () => {
             className="bg-blue-500 mt-5 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             onClick={() => switchUser(user)}
           >
-            {user.email}
+            {user.role}
           </button>
         ))}
       </div>
