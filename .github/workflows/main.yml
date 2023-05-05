@@ -1,9 +1,9 @@
 name: hesp deployment
 
 on:
-  pull_request:
+  push:
     branches:
-      - main
+      - test-end-to-end
 
 jobs:
   vercel_preview:
