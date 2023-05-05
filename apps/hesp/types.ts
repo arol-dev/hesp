@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
+
 export const modelRelations: any = {
   User: ["Trainee"],
   WOLcheckpoint: ["User"],
@@ -30,6 +31,7 @@ export interface ModelMapInterface {
   InviteLink: typeof prisma.inviteLink;
   SessionNotes: typeof prisma.sessionNotes;
   TraineeMetaData: typeof prisma.traineeMetaData;
+ 
 }
 
 export const modelMap: ModelMapInterface = {
@@ -43,6 +45,7 @@ export const modelMap: ModelMapInterface = {
   InviteLink: prisma.inviteLink,
   SessionNotes: prisma.sessionNotes,
   TraineeMetaData: prisma.traineeMetaData,
+ 
 };
 
 export interface IUserRole {
@@ -74,6 +77,7 @@ export interface IUser {
   WOLcheckpoint: IWOLcheckpoint[];
   PDCcheckpoint: IPDCcheckpoint[];
   Trainee: ITrainee[];
+  picture: string
 }
 
 export interface IComment {

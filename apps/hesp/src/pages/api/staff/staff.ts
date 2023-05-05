@@ -24,7 +24,7 @@ export default async function handler(req: UserRequest, res: NextApiResponse) {
       }
     }
     if (req.method === "GET") {
-      const users = await serverToDb("User", "get", undefined);
+      const users = await serverToDb("User", "getAll", req);
       res.status(200).json(users);
     }
   } catch (error) {

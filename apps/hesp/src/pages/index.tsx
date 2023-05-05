@@ -5,8 +5,7 @@ import List from "@/components/List";
 function Main({ user }: any) {
   return (
     <div>
-      <Navbar></Navbar>
-
+      <Navbar headerText={"HESP Program"}></Navbar>
       <List user={user}></List>
     </div>
   );
@@ -16,6 +15,7 @@ export async function getServerSideProps(context: any) {
   const decodedToken = await authenticateAndGetToken(context);
   const cookies = context.req.headers.cookie;
   const host = context.req.headers.host;
+
 
   if (!cookies) {
     return {
@@ -32,6 +32,8 @@ export async function getServerSideProps(context: any) {
       cookie: context.req.headers.cookie,
     },
   }).then((res) => res.json());
+
+
 
   return {
     props: {

@@ -25,15 +25,18 @@ export default async function serverToDb(
     throw new Error("Invalid request");
   }
 
+ 
   const id = req.query.id ? parseInt(req.query.id as string) : null;
   const data = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+ 
 
   switch (action) {
     case "get":
       return await Model.findUnique({ where: { id }, ...includeParam });
-
+ 
     case "post":
       return await Model.create({ data, ...includeParam });
+ 
 
     case "put":
       if (data.password) {
