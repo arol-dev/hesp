@@ -13,5 +13,45 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: end to end test
-        run: yarn ;cd apps; cd hesp; export VERCEL_PREVIEW_OUTPUT=https://google.com ;yarn e2e-test
+      - name: Install Vercel CLI
+        run: npm i -g vercel
+
+      - name: Install Prisma CLI
+        run: npm i -g prisma
+
+      - name: Prisma generate and migrate
+        working-directory: apps/hesp
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          prisma generate
+          prisma migrate deploy
+
+      - name: Deploy to Vercel
+        working-directory: apps/hesp
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          vercel --token $VERCEL_TOKEN --yes
+
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Get deployment preview URL
+        id: deployment
+        working-directory: apps/hesp
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          VERCEL_DEPLOYMENT=$(curl -s -H "Authorization: Bearer $VERCEL_TOKEN" "https://api.vercel.com/v5/now/deployments?teamId=$(vercel --token $VERCEL_TOKEN --yes whoami)" | jq -r 'first(.deployments[] | select(.state == "READY")) | .url')
+          echo "::set-output name=url::https://$VERCEL_DEPLOYMENT"
+
+      - name: set up test
+        run: | 
+          cd apps;
+          cd hesp;
+          export VERCEL_PREVIEW_OUTPUT=${{steps.deployment.outputs.url}};
+          echo $VERCEL_PREVIEW_OUTPUT;
+          yarn e2e-test
+        
+
