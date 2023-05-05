@@ -79,7 +79,7 @@ function Teampage({ coaches }: TeampageProps) {
                             />
                           </div>
                           <Link
-                            href={`/candidates/${person.id}`}
+                            href={`/team/${person.id}`}
                             className="text-black hover:text-indigo-900"
                           >
                             {person.firstName + " " + person.lastName}

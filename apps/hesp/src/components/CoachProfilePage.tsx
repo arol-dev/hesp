@@ -1,6 +1,7 @@
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import { IUser } from '../../types'
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 interface CoachProfilePageProps {
   person: IUser
@@ -8,10 +9,13 @@ interface CoachProfilePageProps {
 
 function CoachProfilePage({ person }: CoachProfilePageProps) {
 
+  const router = useRouter()
+
   const [selectedPicFile, setSelectedPicFile] = useState<File | null>(null)
   const [picpreview, setPicPreview] = useState<string | undefined>(person.picture)
 
   const [formData, setFormData] = useState({
+    id: person.id,
     firstName: person.firstName,
     lastName: person.lastName,
     email: person.email,
@@ -41,42 +45,47 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
   }
 
 
+
   async function handleSubmit(event: any) {
     event.preventDefault()
 
+
+
     const updatedCoach = new FormData();
+    updatedCoach.append('id', formData.id.toString());
     updatedCoach.append('firstName', formData.firstName);
     updatedCoach.append('lastName', formData.lastName);
     updatedCoach.append('email', formData.email);
 
-    if (selectedPicFile) {
-      updatedCoach.append('picture', selectedPicFile);
-    }
+    // if (selectedPicFile) {
+    //   updatedCoach.append('picture', selectedPicFile);
+    // }
 
 
     const response = await fetch("/api/form-updateCoach", {
       method: "PUT",
       headers: {
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json',
       },
-      body: updatedCoach
+      body: JSON.stringify(formData)
     })
 
     const result = await response.json();
-    console.log('result', result)
 
-    // if (response.ok) {
-    //   window.alert('Personal information of the coach updated successfully');
-    //   window.location.reload()
-    // } else {
-    //   console.error('Error deleting coach:', result);
-    // }
+
+    if (response.ok) {
+      window.alert('Personal information of the coach updated successfully');
+      // window.location.reload()
+      router.push(`/team`)
+    } else {
+      console.error('Error deleting coach:', result);
+    }
 
   }
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
-      <div className="sm:flex sm:items-center">
+      <div className="mb-10">
         <div className="sm:flex-auto"></div>
         <div className="space-y-10 divide-y divide-gray-900/10">
           <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
@@ -88,18 +97,18 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
             </div>
             <form className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
               <div className="px-4 py-6 sm:p-8">
-                <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="col-span-2">
                     <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-gray-900">
                       Name
                     </label>
                     <div className="mt-2">
                       <textarea
-                        onChange={() => handleInputChange}
+                        onChange={(event) => handleInputChange(event)}
                         id="firstName"
                         name="firstName"
                         rows={1}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="resize-none block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         defaultValue={person.firstName}
                       />
                     </div>
@@ -110,11 +119,11 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
                     </label>
                     <div className="mt-2">
                       <textarea
-                        onChange={() => handleInputChange}
+                        onChange={(event) => handleInputChange(event)}
                         id="lastName"
                         name="lastName"
                         rows={1}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="resize-none first-letter:block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         defaultValue={person.lastName}
                       />
                     </div>
@@ -127,11 +136,11 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
                     </label>
                     <div className="mt-2">
                       <textarea
-                        onChange={() => handleInputChange}
+                        onChange={(event) => handleInputChange(event)}
                         id="email"
                         name="email"
                         rows={1}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className=" resize-none block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         defaultValue={person.email}
                       />
                     </div>
