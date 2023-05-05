@@ -22,7 +22,7 @@ describe('example to-do app', () => {
   })
 
   it('displays two todo items by default', () => {
-    if (!process.env.VERCEL_PREVIEW_OUTPUT) {
+    if (!process.env.host) {
       throw new Error('VERCEL_PREVIEW_OUTPUT is not set')
     }
     // We use the `cy.get()` command to get all elements that match the selector.
