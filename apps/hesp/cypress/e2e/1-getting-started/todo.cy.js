@@ -22,7 +22,7 @@ describe('example to-do app', () => {
   })
 
   it('displays two todo items by default', () => {
-    if (cy.env('VERCEL_PREVIEW_OUTPUT') !== 'https://google.com') {
+    if (Cypress.env('VERCEL_PREVIEW_OUTPUT') !== 'https://google.com') {
       throw new Error('VERCEL_PREVIEW_OUTPUT is not set')
     }
     // We use the `cy.get()` command to get all elements that match the selector.
