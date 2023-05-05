@@ -92,7 +92,7 @@ model Trainee {
 }
 
 model TraineeMetaData {
-  traineeId           Int              @id @default(autoincrement())
+  id                  Int              @id @default(autoincrement())
   workingSituation    WorkingSituation
   housingSituation    HousingSituation
   needWork            Boolean
@@ -106,6 +106,7 @@ model TraineeMetaData {
   helpCandidate       Boolean
   filledForms         Boolean
   helpAccepted        Boolean
+  traineeId           Int              @unique
   trainee             Trainee          @relation(fields: [traineeId], references: [id])
 }
 

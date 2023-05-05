@@ -1,3 +1,6 @@
+### To run cypress tests on app
+First navigate to the app directory (/app/hesp). Then run the command `yarn test` to open the test suite. From there you can run all tests or individual tests.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

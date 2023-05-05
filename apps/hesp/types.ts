@@ -1,14 +1,4 @@
-import {
-  PrismaClient,
-  Trainee,
-  User,
-  // Comment,
-  WOLcheckpoint,
-  PDCcheckpoint,
-  Soloutions,
-  ProvidedSoloutions,
-  InviteLink,
-} from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -39,10 +29,9 @@ export interface ModelMapInterface {
   Solutions: typeof prisma.soloutions;
   ProvidedSoloutions: typeof prisma.providedSoloutions;
   InviteLink: typeof prisma.inviteLink;
-
   SessionNotes: typeof prisma.sessionNotes;
-
-
+  TraineeMetaData: typeof prisma.traineeMetaData;
+ 
 }
 
 export const modelMap: ModelMapInterface = {
@@ -55,6 +44,8 @@ export const modelMap: ModelMapInterface = {
   ProvidedSoloutions: prisma.providedSoloutions,
   InviteLink: prisma.inviteLink,
   SessionNotes: prisma.sessionNotes,
+  TraineeMetaData: prisma.traineeMetaData,
+ 
 };
 
 export interface IUserRole {
@@ -75,10 +66,12 @@ export interface IHousingSituation {
 }
 
 export interface IUser {
+  email: string;
+  phone: string;
+  reference: string;
   id: number;
   firstName: string;
   lastName: string;
-  email: string;
   password: string;
   role: keyof IUserRole;
   WOLcheckpoint: IWOLcheckpoint[];
@@ -149,6 +142,13 @@ export interface ITrainee {
   userId?: number;
   User?: IUser;
   ProvidedSoloutions: IProvidedSoloutions[];
+}
+
+export interface IinviteLink {
+  id: number;
+  code: string;
+  used: boolean;
+  expiresAt: any;
 }
 
 interface ITraineeMetaData {

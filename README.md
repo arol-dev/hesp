@@ -38,3 +38,6 @@ yarn dev
 ### prerequisites
 
 To use this project you need to already have installed yarn, docker.
+
+### Running cypress tests suite
+First navigate to the app directory (/app/hesp). Then run the command `yarn test` to open the test suite. From there you can run all tests or individual tests.

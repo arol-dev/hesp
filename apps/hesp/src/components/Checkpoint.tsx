@@ -17,8 +17,6 @@ type TopicProps = {
   evaluation: string
 }
 
-
-
 type Topic = {
   name: string
   body: string,
@@ -32,7 +30,6 @@ type Topics = Topic[]
 type Id = {
   id: number
 }
-
 
 function Checkpoint({ id }: Id) {
   const router = useRouter()
@@ -49,8 +46,6 @@ function Checkpoint({ id }: Id) {
   const handleDataChange = (data: any) => {
     setWOLdata(data)
   }
-
-
 
   const [ratings, setRatings] = useState([
     {
@@ -97,19 +92,19 @@ function Checkpoint({ id }: Id) {
     },
   ]);
 
-
-
   function handleRatingChange(index: number, value: number) {
     const updatedRatings = [...ratings];
     updatedRatings[index].value = value;
     setRatings(updatedRatings);
   }
 
-
-
   const [PDSaved, setPDSaved] = useState(false)
   const [WOLSaved, setWOLSaved] = useState(false)
-
+  // function handleRatingChangeWOL(index: number, value: number) {
+  //   const updatedRatings = [...WOLformdata];
+  //   updatedRatings[index].value = value;
+  //   setWOLformdata(updatedRatings);
+  // }
 
   function handleSubmit(event: any) {
     event.preventDefault();
@@ -124,8 +119,6 @@ function Checkpoint({ id }: Id) {
     });
     const topicsListString = JSON.stringify(topicsList);
     params.append('topicsList', topicsListString);
-
-
 
     // POST request to your API endpoint
     fetch("/api/form-PD", {
@@ -149,7 +142,6 @@ function Checkpoint({ id }: Id) {
 
   function handleSubmitWol(event: any) {
     event.preventDefault();
-
 
     const data = WOLdata.map(topic => ({
       [topic.body]: topic.value,
@@ -183,9 +175,6 @@ function Checkpoint({ id }: Id) {
       // router.push(`/candidates/${id}`)
     })
   }
-
-
-
 
   return (
     <div>
@@ -308,4 +297,5 @@ function Checkpoint({ id }: Id) {
   )
 
 }
+
 export default Checkpoint;
