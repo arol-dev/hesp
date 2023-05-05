@@ -58,8 +58,6 @@ export default async function serverToDb(
       if (cleanData.password) {
         cleanData.password = await bcrypt.hash(cleanData.password, 10);
       }
-    
-      console.log('PUT action in serverToDb, before updating');
       try {
         const result = await Model.update({ where: { id }, data: cleanData, ...includeParam }); // Use cleanData instead of data
         console.log('PUT action in serverToDb, result:', result);

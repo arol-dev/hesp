@@ -14,9 +14,6 @@ function Candidate({ person, updatePerson, WOLs, PDs }: any) {
   
 
   const router = useRouter()
- console.log('updatePerson prop in candidate', updatePerson)
-
-  
 
   function handleCheckLastCreated(event: React.MouseEvent) {
     event.preventDefault();
@@ -52,7 +49,6 @@ function Candidate({ person, updatePerson, WOLs, PDs }: any) {
   // console.log('updatePerson', updatePerson, 'personData', personData, 'person',person)
   const toggleEditMode = () => {
 
-    console.log('hey iM toggling edit mode')
     if (editMode) {
       // console.log('updatePerson----->', updatePerson, 'personData', personData, 'person',person)
  
