@@ -14,4 +14,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: end to end test
-        run: cd apps; cd hesp; echo VERCEL_PREVIEW_OUTPUT="https://google.com" ;yarn e2e-test
+        run: yarn ;cd apps; cd hesp; echo VERCEL_PREVIEW_OUTPUT="https://google.com" ;yarn e2e-test
