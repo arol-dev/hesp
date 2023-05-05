@@ -15,6 +15,10 @@ export default async function handler(
         const staff = await serverToDb("User", "get", req);
         res.status(200).json(staff);
         break;
+      case "DELETE":
+        const deletedStaff = await serverToDb("User", "delete", req);
+        res.status(200).json(deletedStaff);
+        break;
       default:
         res.status(405).json({ error: "Method not allowed" });
     }

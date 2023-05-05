@@ -25,41 +25,27 @@ export default async function serverToDb(
     throw new Error("Invalid request");
   }
 
-  if (action === "get") {
-    const id = parseInt(req.query.id as string);
-    const result = await Model.findUnique({ where: { id }, ...includeParam });
-    return result;
- 
-  }
-
-  if (action === "getAll" && modelName === "PDC") {
-    const id = parseInt(req.query.id as string);
-    const result = await Model.findMany({ where: { traineeId: id }, include: { SessionNotes: true }, ...includeParam });
-    return result;
-  }
-
-  else if (action === "getAll") {
-    const id = parseInt(req.query.id as string);
-    const result = await Model.findMany({ where: { traineeId: id }, ...includeParam });
- 
-    return result;
-  }
-
+  const id = req.query.id ? parseInt(req.query.id as string) : null;
   const data = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 
-  if (action === "post") {
-    const result = await Model.create({ data, ...includeParam });
-    return result;
-  } else if (action === "put") {
-    if (data.password) {
-      data.password = await bcrypt.hash(data.password, 10);
-    }
+  switch (action) {
+    case "get":
+      return await Model.findUnique({ where: { id }, ...includeParam });
 
-    const id = parseInt(req.query.id as string);
-    const result = await Model.update({ where: { id }, data, ...includeParam });
-    return result;
-  } else {
-    throw new Error("Invalid action");
+    case "post":
+      return await Model.create({ data, ...includeParam });
+
+    case "put":
+      if (data.password) {
+        data.password = await bcrypt.hash(data.password, 10);
+      }
+      return await Model.update({ where: { id }, data, ...includeParam });
+
+    case "delete":
+      return await Model.delete({ where: { id } });
+
+    default:
+      throw new Error("Invalid action");
   }
 }
 
