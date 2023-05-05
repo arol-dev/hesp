@@ -10,12 +10,12 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
 
   const [selectedPicFile, setSelectedPicFile] = useState<File | null>(null)
   const [picpreview, setPicPreview] = useState<string | undefined>(person.picture)
+
   const [formData, setFormData] = useState({
     firstName: person.firstName,
     lastName: person.lastName,
     email: person.email,
   })
-  console.log('form data', picpreview)
 
 
   function handleInputChange(event: any) {
@@ -40,6 +40,39 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
     setPicPreview(URL.createObjectURL(file));
   }
 
+
+  async function handleSubmit(event: any) {
+    event.preventDefault()
+
+    const updatedCoach = new FormData();
+    updatedCoach.append('firstName', formData.firstName);
+    updatedCoach.append('lastName', formData.lastName);
+    updatedCoach.append('email', formData.email);
+
+    if (selectedPicFile) {
+      updatedCoach.append('picture', selectedPicFile);
+    }
+
+
+    const response = await fetch("/api/form-updateCoach", {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      body: updatedCoach
+    })
+
+    const result = await response.json();
+    console.log('result', result)
+
+    // if (response.ok) {
+    //   window.alert('Personal information of the coach updated successfully');
+    //   window.location.reload()
+    // } else {
+    //   console.error('Error deleting coach:', result);
+    // }
+
+  }
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
@@ -109,7 +142,6 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
                       Photo
                     </label>
                     <div className="mt-2 flex items-center gap-x-3">
-
                       {!picpreview && !person.picture && !selectedPicFile ? (
                         <div className="h-12 w-12 flex items-center justify-center rounded-full bg-gray-300">
                           <PhotoIcon className="h-6 w-6 text-white" />
@@ -139,6 +171,7 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
                   Cancel
                 </button>
                 <button
+                  onClick={() => handleSubmit(event)}
                   type="submit"
                   className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
@@ -150,10 +183,7 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
         </div>
       </div>
     </div>
-
   )
-
-
 }
 
 export default CoachProfilePage

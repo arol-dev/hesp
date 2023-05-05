@@ -30,7 +30,7 @@ function DeleteCoach({ closeWindow, showWindow, coach }: DeleteCoachProps) {
     const result = await response.json();
 
     if (response.ok) {
-      console.log('Coacy deleted successfully:', result);
+      window.alert('Coach deleted successfully');
       closeWindow();
       window.location.reload()
     } else {
