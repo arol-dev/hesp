@@ -1,8 +1,8 @@
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
 import { useState } from 'react';
-import PDForm from './PDform';
-import WOLForm from './WOLform';
-import SessionNotes from './SessionNotes';
+import PDForm from './PD/PDform';
+import WOLForm from './WOL/WOLform';
+import SessionNotes from "./PD/SessionNotes";
 import { useRouter } from "next/router";
 
 

@@ -1,4 +1,4 @@
-import Checkpoint from "@/components/Checkpoint"
+import Checkpoint from "@/components/Checkpoints/Checkpoint"
 import { GetServerSideProps } from "next"
 
 type Id = {

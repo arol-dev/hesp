@@ -1,4 +1,4 @@
-import Checkpoint from "../Checkpoint"
+import Checkpoint from "../Checkpoints/Checkpoint"
 
 import * as Router from "next/router"
 
