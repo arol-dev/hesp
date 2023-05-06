@@ -31,7 +31,7 @@ export interface ModelMapInterface {
   InviteLink: typeof prisma.inviteLink;
   SessionNotes: typeof prisma.sessionNotes;
   TraineeMetaData: typeof prisma.traineeMetaData;
- 
+
 }
 
 export const modelMap: ModelMapInterface = {
@@ -45,7 +45,7 @@ export const modelMap: ModelMapInterface = {
   InviteLink: prisma.inviteLink,
   SessionNotes: prisma.sessionNotes,
   TraineeMetaData: prisma.traineeMetaData,
- 
+
 };
 
 export interface IUserRole {
@@ -182,3 +182,19 @@ interface ISoloutions {
   providedID?: number;
   ProvidedSoloutions?: IProvidedSoloutions;
 }
+
+
+export type WOLTopic = {
+  name: string;
+  body: string;
+  value: number;
+  feel: string;
+  improve: string
+}
+
+export type WOLTopics = WOLTopic[]
+
+export type WOLCheckpointProps = {
+  onDataChange: (list: WOLTopics) => void
+}
+
