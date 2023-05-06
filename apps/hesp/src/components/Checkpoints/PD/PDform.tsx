@@ -13,7 +13,6 @@ type PDFormProps = {
 };
 
 function PDForm({ ratings, onRatingChange }: PDFormProps) {
-  const [topics, setTopics] = useState(1);
 
   function handleRatingChange(index: number, value: number) {
     onRatingChange(index, value);

@@ -198,3 +198,26 @@ export type WOLCheckpointProps = {
   onDataChange: (list: WOLTopics) => void
 }
 
+
+export type SessionNote = {
+  id: string,
+  edit: boolean,
+  saved: boolean,
+  topic: string,
+  objective: string,
+  actions: string,
+  notes: string,
+  results: string,
+  evaluation: string;
+}
+
+export type SessiontNotes = SessionNote[]
+
+export type SessionNotesProps = {
+  onSessionNotesChange: (notes: SessiontNotes) => void;
+};
+
+export type NewCheckpointProps = {
+  id: Number
+}
+

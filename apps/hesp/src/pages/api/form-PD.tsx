@@ -1,30 +1,14 @@
 import { Prisma, PrismaClient } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from "next"
-
-type TopicProps = {
-  id: number,
-  edit: boolean,
-  topic: string,
-  objective: string,
-  actions: string,
-  notes: string,
-  results: string,
-  evaluation: string;
-
-}
+import { SessionNote } from '../../../types'
 
 const prisma = new PrismaClient()
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   const body = req.body
-
-
-
-
-
   try {
-    const topicsList = JSON.parse(body.topicsList)
+    const sessioneNotes = JSON.parse(body.sessioneNotes)
     const checkpoint = await prisma.pDCcheckpoint.create({
       data: {
         traineeId: parseInt(body.userId),
@@ -42,14 +26,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       where: { id: checkpoint.id },
       data: {
         SessionNotes: {
-          create: topicsList.map((topic: TopicProps) => ({
-            id: topic.id,
-            topic: topic.topic,
-            objective: topic.objective,
-            actions: topic.actions,
-            notes: topic.notes,
-            results: topic.results,
-            evaluation: topic.evaluation,
+          create: sessioneNotes.map((note: SessionNote) => ({
+            id: note.id,
+            topic: note.topic,
+            objective: note.objective,
+            actions: note.actions,
+            notes: note.notes,
+            results: note.results,
+            evaluation: note.evaluation,
           }))
         }
       }
