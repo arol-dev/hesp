@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { PDFormProps } from "../../../../types";
 
 
-function PDForm({ onRatingChange }: PDFormProps) {
+function PDForm({ onRatingChange, PDSaved }: PDFormProps) {
 
   const [ratings, setRatings] = useState([
     {
@@ -110,6 +110,7 @@ function PDForm({ onRatingChange }: PDFormProps) {
                               key={`${index}-${number}`}
                             >
                               <input
+                                disabled={PDSaved}
                                 type="checkbox"
                                 name={`${rating.name}`}
                                 id={`${rating.name}-${number}`}

@@ -5,11 +5,12 @@ interface NoteEditModeProps {
   note: SessionNote;
   handleInputChange: (event: any, noteToChange: SessionNote) => void;
   handleSaveNote: (noteToSave: SessionNote, event: any) => void;
+  PDSaved: boolean
 }
 
 
 const NoteEditMode: React.FC<NoteEditModeProps> = ({
-  note, handleInputChange, handleSaveNote
+  note, handleInputChange, handleSaveNote, PDSaved
 }) => {
   return (
     <form onSubmit={(event) => handleSaveNote(note, event)} className="mb-5 grid justify-self-end bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
@@ -20,7 +21,7 @@ const NoteEditMode: React.FC<NoteEditModeProps> = ({
           </label>
           <div className=" ">
             <label htmlFor="topic">
-              <textarea
+              <textarea disabled={PDSaved}
                 id="topic"
                 name="topic"
                 rows={1}
@@ -36,7 +37,7 @@ const NoteEditMode: React.FC<NoteEditModeProps> = ({
             Objective               </label>
           <div className="">
             <label htmlFor="objective" >
-              <textarea
+              <textarea disabled={PDSaved}
                 id="objective"
                 name="objective"
                 rows={1}
@@ -53,7 +54,7 @@ const NoteEditMode: React.FC<NoteEditModeProps> = ({
           </label>
           <div className="">
             <label htmlFor="actions">
-              <textarea
+              <textarea disabled={PDSaved}
                 id="actions"
                 name="actions"
                 rows={3}
@@ -69,7 +70,7 @@ const NoteEditMode: React.FC<NoteEditModeProps> = ({
           </label>
           <div className="">
             <label htmlFor="notes">
-              <textarea
+              <textarea disabled={PDSaved}
                 id="notes"
                 name="notes"
                 rows={3}
@@ -86,7 +87,7 @@ const NoteEditMode: React.FC<NoteEditModeProps> = ({
           </label>
           <div className="">
             <label htmlFor="results">
-              <textarea
+              <textarea disabled={PDSaved}
                 id="results"
                 name="results"
                 rows={3}
@@ -102,7 +103,7 @@ const NoteEditMode: React.FC<NoteEditModeProps> = ({
             </label>
             <div className="">
               <label htmlFor="evaluation">
-                <textarea
+                <textarea disabled={PDSaved}
                   id="evaluation"
                   name="evaluation"
                   rows={3}

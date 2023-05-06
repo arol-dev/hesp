@@ -195,7 +195,8 @@ export type WOLTopic = {
 export type WOLTopics = WOLTopic[]
 
 export type WOLCheckpointProps = {
-  onDataChange: (list: WOLTopics) => void
+  onDataChange: (list: WOLTopics) => void;
+  WOLSaved: boolean
 }
 
 
@@ -215,6 +216,7 @@ export type SessiontNotes = SessionNote[]
 
 export type SessionNotesProps = {
   onSessionNotesChange: (notes: SessiontNotes) => void;
+  PDSaved: boolean
 };
 
 export type NewCheckpointProps = {
@@ -232,4 +234,5 @@ export type Ratings = Rating[]
 
 export type PDFormProps = {
   onRatingChange: (ratings: Ratings) => void;
+PDSaved: boolean
 };

@@ -2,7 +2,7 @@ import { ReactEventHandler, useCallback, useEffect, useState } from "react";
 import { WOLTopic, WOLTopics, WOLCheckpointProps } from "../../../../types";
 import WOLTopicCard from "./WOLTopicCard";
 
-function WOLForm({ onDataChange }: WOLCheckpointProps) {
+function WOLForm({ onDataChange, WOLSaved }: WOLCheckpointProps) {
   const [WOLformdata, setWOLformdata] = useState<WOLTopics>([
     {
       name: "Health",
@@ -65,8 +65,6 @@ function WOLForm({ onDataChange }: WOLCheckpointProps) {
     onDataChange(WOLformdata);
   }, [WOLformdata, onDataChange]);
 
-  console.log('WOLformdata', WOLformdata)
-
   const handleRatingChange = useCallback((index: number, value: number) => {
     const updatedRatings = [...WOLformdata];
     updatedRatings[index].value = value;
@@ -90,6 +88,7 @@ function WOLForm({ onDataChange }: WOLCheckpointProps) {
       {
         WOLformdata.map((topic: WOLTopic, index) => (
           <WOLTopicCard
+            WOLSaved={WOLSaved}
             key={index}
             topic={topic}
             index={index}

@@ -3,7 +3,7 @@ import { SessionNote } from "../../../../../types"
 
 interface NoteReadModeProps {
   note: SessionNote;
-  handleEditNote: (noteToEdit: SessionNote) => void
+  handleEditNote: (noteToEdit: SessionNote) => void;
 }
 
 const NoteReadMode: React.FC<NoteReadModeProps> = ({

@@ -7,8 +7,9 @@ const prisma = new PrismaClient()
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   const body = req.body
+
   try {
-    const sessioneNotes = JSON.parse(body.sessioneNotes)
+    const sessionNotes = JSON.parse(body.sessionNotes)
     const checkpoint = await prisma.pDCcheckpoint.create({
       data: {
         traineeId: parseInt(body.userId),
@@ -21,12 +22,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         advancement: parseInt(body.advancement),
       }
     });
-
     const updatedCheckpoit = await prisma.pDCcheckpoint.update({
       where: { id: checkpoint.id },
       data: {
         SessionNotes: {
-          create: sessioneNotes.map((note: SessionNote) => ({
+          create: sessionNotes.map((note: SessionNote) => ({
             id: note.id,
             topic: note.topic,
             objective: note.objective,

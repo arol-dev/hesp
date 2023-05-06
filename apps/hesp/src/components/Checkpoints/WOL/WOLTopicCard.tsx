@@ -6,9 +6,10 @@ type WOLTopicCardProps = {
   onRatingChange: (index: number, value: number) => void;
   onFeelChange: (index: number, event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onImproveChange: (index: number, event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  WOLSaved: boolean
 };
 
-const WOLTopicCard: React.FC<WOLTopicCardProps> = ({ topic, index, onRatingChange, onFeelChange, onImproveChange }) => {
+const WOLTopicCard: React.FC<WOLTopicCardProps> = ({ topic, index, onRatingChange, onFeelChange, onImproveChange, WOLSaved }) => {
 
   return (
     <>
@@ -49,6 +50,7 @@ const WOLTopicCard: React.FC<WOLTopicCardProps> = ({ topic, index, onRatingChang
                             key={`${index}-${number}`}
                           >
                             <input
+                              disabled={WOLSaved}
                               type="checkbox"
                               name={`${topic.name}`}
                               id={`${topic.name}-${number}`}
@@ -79,6 +81,7 @@ const WOLTopicCard: React.FC<WOLTopicCardProps> = ({ topic, index, onRatingChang
                   </label>
                   <div className="mt-2">
                     <textarea
+                      disabled={WOLSaved}
                       onChange={(event) => onFeelChange(index, event)}
                       id="feel"
                       name="feel"
@@ -94,6 +97,7 @@ const WOLTopicCard: React.FC<WOLTopicCardProps> = ({ topic, index, onRatingChang
                     What can you do to improve your satisfaction level?                  </label>
                   <div className="mt-2">
                     <textarea
+                      disabled={WOLSaved}
                       onChange={(event) => onImproveChange(index, event)}
                       id="improve"
                       name="improve"

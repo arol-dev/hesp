@@ -5,7 +5,7 @@ import NoteEditMode from "./NoteEditMode";
 import NoteReadMode from "./NoteReadMode";
 
 
-function SessionNotes({ onSessionNotesChange }: SessionNotesProps) {
+function SessionNotes({ onSessionNotesChange, PDSaved }: SessionNotesProps) {
 
   const [sessionNotes, setSessionNotes] = useState<SessiontNotes>([{
     id: uuidv4(),
@@ -89,6 +89,7 @@ function SessionNotes({ onSessionNotesChange }: SessionNotesProps) {
         return {
           ...note,
           edit: !noteToEdit.edit,
+          saved: !noteToEdit.saved
         };
       }
       return note;
@@ -104,7 +105,7 @@ function SessionNotes({ onSessionNotesChange }: SessionNotesProps) {
         </div>
         <div className="mt-5 flex lg:ml-4 lg:mt-0">
           <span className="sm:ml-3">
-            <button onClick={addNote} type="submit" className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            <button disabled={PDSaved} onClick={addNote} type="submit" className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
               + Add Topic
             </button>
           </span>
@@ -120,7 +121,7 @@ function SessionNotes({ onSessionNotesChange }: SessionNotesProps) {
         <div className="col-span-2 ">
           {sessionNotes.map((note) =>
             note.edit === true ?
-              (<NoteEditMode note={note} handleInputChange={handleInputChange} handleSaveNote={handleSaveNote} />) :
+              (<NoteEditMode note={note} handleInputChange={handleInputChange} handleSaveNote={handleSaveNote} PDSaved={PDSaved} />) :
               (<NoteReadMode note={note} handleEditNote={handleEditNote} />)
           )}
         </div>

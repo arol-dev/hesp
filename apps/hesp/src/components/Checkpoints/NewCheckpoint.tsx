@@ -1,5 +1,5 @@
 import Navbar from "../Navbar";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PDForm from './PD/PDform';
 import WOLForm from './WOL/WOLform';
 import SessionNotes from "./PD/Session Notes/SessionNotes";
@@ -50,7 +50,7 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
       },
     }).then((response) => {
       if (response.ok) {
-        window.alert("Checkpoint added");
+        window.alert("WOL checkpoint is added");
       } else {
         window.alert("Checkpoint can't be submitted")
       }
@@ -82,6 +82,8 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
     });
     const sessionNotesString = JSON.stringify(sessionNotes);
     params.append('sessionNotes', sessionNotesString);
+
+
 
     fetch("/api/form-PD", {
       method: "POST",
@@ -213,10 +215,10 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
 
       {
         pd ? <>
-          <PDForm onRatingChange={handleRatingChange} />
-          <SessionNotes onSessionNotesChange={handleSessionNotesChange} ></SessionNotes>
+          <PDForm PDSaved={PDSaved} onRatingChange={handleRatingChange} />
+          <SessionNotes PDSaved={PDSaved} onSessionNotesChange={handleSessionNotesChange} ></SessionNotes>
         </>
-          : <WOLForm onDataChange={handleWOLDataChange}></WOLForm>
+          : <WOLForm WOLSaved={WOLSaved} onDataChange={handleWOLDataChange}></WOLForm>
 
       }
     </div >
