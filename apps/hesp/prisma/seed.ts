@@ -1,5 +1,7 @@
 const { PrismaClient } = require('@prisma/client')
+const bcrypt = require('bcrypt')
 
+const hashPsw = async (password: string) => await bcrypt.hash(password, 10);
 
 const prisma = new PrismaClient()
 async function main() {
@@ -11,7 +13,7 @@ async function main() {
       lastName: "Andrews",
       role: "STAFF",
       email: "alice@prisma.io",
-      password: "12345"
+      password: await hashPsw('12345')
     }
   })
 
@@ -23,7 +25,7 @@ async function main() {
       lastName: "Wazowski",
       role: "ADMIN",
       email: "mike@prisma.io",
-      password: "12345"
+      password: await hashPsw('12345')
 
     }
   })

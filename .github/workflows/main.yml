@@ -1,9 +1,9 @@
 name: hesp deployment
 
 on:
-  push:
+  pull_request:
     branches:
-      - test-end-to-end
+      - main
 
 jobs:
   vercel_preview:
@@ -19,13 +19,13 @@ jobs:
       - name: Install Prisma CLI
         run: npm i -g prisma
 
-      #- name: Prisma generate and migrate
-      #  working-directory: apps/hesp
-      #  env:
-      #    DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      #  run: |
-      #    prisma generate
-      #    prisma migrate deploy
+      - name: Prisma generate and migrate
+        working-directory: apps/hesp
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          prisma generate
+          prisma migrate deploy
 
       - name: Deploy to Vercel
         working-directory: apps/hesp
@@ -51,20 +51,21 @@ jobs:
           cd hesp;
           export VERCEL_PREVIEW_OUTPUT=${{steps.deployment.outputs.url}};
           yarn e2e-test
-      #- name: Add comment with preview URL
-      #  uses: actions/github-script@v3
-      #  env:
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #  with:
-      #    github-token: ${{ secrets.GITHUB_TOKEN }}
-      #    script: |
-      #      const url = '${{ steps.deployment.outputs.url }}'
-      #      const comment = `🚀 Deployment preview: ${url}`
-      #      await github.issues.createComment({
-      #        issue_number: context.issue.number,
-      #        owner: context.repo.owner,
-      #        repo: context.repo.repo,
-      #        body: comment
-      #      })
+
+      - name: Add comment with preview URL
+        uses: actions/github-script@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const url = '${{ steps.deployment.outputs.url }}'
+            const comment = `🚀 Deployment preview: ${url}`
+            await github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            })
         
 
