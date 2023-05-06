@@ -19,13 +19,13 @@ jobs:
       - name: Install Prisma CLI
         run: npm i -g prisma
 
-      - name: Prisma generate and migrate
-        working-directory: apps/hesp
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: |
-          prisma generate
-          prisma migrate deploy
+      #- name: Prisma generate and migrate
+      #  working-directory: apps/hesp
+      #  env:
+      #    DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      #  run: |
+      #    prisma generate
+      #    prisma migrate deploy
 
       - name: Deploy to Vercel
         working-directory: apps/hesp
