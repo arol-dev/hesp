@@ -4,7 +4,7 @@ import PDForm from './PD/PDform';
 import WOLForm from './WOL/WOLform';
 import SessionNotes from "./PD/Session Notes/SessionNotes";
 import { useRouter } from "next/router";
-import { WOLTopics, NewCheckpointProps, SessiontNotes } from "../../../types";
+import { Ratings, WOLTopics, NewCheckpointProps, SessiontNotes } from "../../../types";
 
 
 
@@ -13,9 +13,12 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
 
   const [pd, setPD] = useState(false)
   const [sessionNotes, setSessionNotes] = useState<SessiontNotes>([]);
+  const [ratings, setRatings] = useState<Ratings>([]);
+  const [WOLdata, setWOLdata] = useState<WOLTopics>([]);
+  const [PDSaved, setPDSaved] = useState(false)
+  const [WOLSaved, setWOLSaved] = useState(false)
 
   // WOL 
-  const [WOLdata, setWOLdata] = useState<WOLTopics>([]);
 
   const handleWOLDataChange = (data: WOLTopics) => {
     setWOLdata(data)
@@ -62,64 +65,14 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
     setSessionNotes(notes);
   };
 
-  const [ratings, setRatings] = useState([
-    {
-      name: "Trust",
-      body: "trust",
-      description: "The trainee trust in the established action plan",
-      value: 0,
-    },
-    {
-      name: "Follow",
-      body: "willFollow",
-      description: "He will follow the action plan",
-      value: 0,
-    },
-    {
-      name: "Task retention",
-      body: "retention",
-      description: "He will remember what he should do",
-      value: 0,
-    },
-    {
-      name: "Plan commitment",
-      body: "commitment",
-      description: "He is committed with the formation",
-      value: 0,
-    },
-    {
-      name: "CV",
-      body: "cv",
-      description: "His CV (resume) is done",
-      value: 0,
-    },
-    {
-      name: "Interviews",
-      body: "readyForInterviews",
-      description: "He is ready to job interviews",
-      value: 0,
-    },
-    {
-      name: "Advancement",
-      body: "advancement",
-      description: "He is advancing well",
-      value: 0,
-    },
-  ]);
-
-  function handleRatingChange(index: number, value: number) {
-    const updatedRatings = [...ratings];
-    updatedRatings[index].value = value;
-    setRatings(updatedRatings);
+  const handleRatingChange = (ratings: Ratings) => {
+    setRatings(ratings);
   }
 
-  const [PDSaved, setPDSaved] = useState(false)
-  const [WOLSaved, setWOLSaved] = useState(false)
 
   function handleSubmit(event: any) {
     event.preventDefault();
 
-    // Convert ratings array into URLSearchParams object
     const params = new URLSearchParams();
 
     params.append('userId', id.toString());
@@ -130,7 +83,6 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
     const sessionNotesString = JSON.stringify(sessionNotes);
     params.append('sessionNotes', sessionNotesString);
 
-    // POST request to your API endpoint
     fetch("/api/form-PD", {
       method: "POST",
       body: params,
@@ -141,12 +93,11 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
       if (response.ok) {
         window.alert("Checkpoint added");
       } else {
-        // handle error
+        window.alert("Checkpoint can't be submitted")
       }
     });
     setPDSaved(!PDSaved)
     // router.push(`/candidates/${id}`)
-
   }
 
 
@@ -262,7 +213,7 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
 
       {
         pd ? <>
-          <PDForm ratings={ratings} onRatingChange={handleRatingChange} />
+          <PDForm onRatingChange={handleRatingChange} />
           <SessionNotes onSessionNotesChange={handleSessionNotesChange} ></SessionNotes>
         </>
           : <WOLForm onDataChange={handleWOLDataChange}></WOLForm>

@@ -221,3 +221,15 @@ export type NewCheckpointProps = {
   id: Number
 }
 
+export type Rating = {
+  name: string;
+  body: string,
+  description: string;
+  value: number;
+};
+
+export type Ratings = Rating[]
+
+export type PDFormProps = {
+  onRatingChange: (ratings: Ratings) => void;
+};
