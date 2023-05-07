@@ -1,9 +1,9 @@
 name: Test migration and seeding
 
 on:
-  push:
+  pull_request:
     branches:
-      - workflow-seed
+      - main
 
 jobs:
   test_migration_and_seed:
@@ -47,4 +47,4 @@ jobs:
       - name: Seed test database
         working-directory: apps/hesp
         run: |
-          prisma db seed
+          npx ts-node prisma/seed.ts
