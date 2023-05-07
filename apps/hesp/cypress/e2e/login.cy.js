@@ -57,13 +57,11 @@ describe('login page', () => {
 
   describe('form validation', () => {
     it('reject invalid credentials via windows.alert', () => {
-      const alertStub = cy.stub()
-      cy.on('window:alert', alertStub)
-
       cy.get('input[name="email"]').type('test@test.test')
       cy.get('input[name="password"]').type('qwertyui_thisisnotapassword')
-      cy.get('button[type="submit"]').click().then(() => {
-        expect(alertStub).to.be.calledOnce.and.to.be.calledWith(VALIDATION_MESSAGE)
+      cy.get('button[type="submit"]').click()
+      cy.on('window:alert', (str) => {
+        expect(str).to.equal(VALIDATION_MESSAGE)
       })
     })
     describe('pass with valid credentials', () => {
