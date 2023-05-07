@@ -1,4 +1,4 @@
-import Checkpoints from "@/components/Checkpoints"
+import Checkpoints from "@/components/Checkpoints/AllCheckpoints"
 import { GetServerSideProps } from "next"
 
 function AllCheckpoints({ id, WOLs, PDs }: any) {

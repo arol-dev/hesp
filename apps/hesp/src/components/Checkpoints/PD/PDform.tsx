@@ -1,22 +1,70 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { PDFormProps } from "../../../../types";
 
-type Rating = {
-  name: string;
-  body: string,
-  description: string;
-  value: number;
-};
 
-type PDFormProps = {
-  ratings: Rating[];
-  onRatingChange: (index: number, value: number) => void;
-};
+function PDForm({ onRatingChange, PDSaved }: PDFormProps) {
 
-function PDForm({ ratings, onRatingChange }: PDFormProps) {
-  const [topics, setTopics] = useState(1);
+  const [ratings, setRatings] = useState([
+    {
+      name: "Trust",
+      body: "trust",
+      description: "The trainee trust in the established action plan",
+      value: 0,
+    },
+    {
+      name: "Follow",
+      body: "willFollow",
+      description: "He will follow the action plan",
+      value: 0,
+    },
+    {
+      name: "Task retention",
+      body: "retention",
+      description: "He will remember what he should do",
+      value: 0,
+    },
+    {
+      name: "Plan commitment",
+      body: "commitment",
+      description: "He is committed with the formation",
+      value: 0,
+    },
+    {
+      name: "CV",
+      body: "cv",
+      description: "His CV (resume) is done",
+      value: 0,
+    },
+    {
+      name: "Interviews",
+      body: "readyForInterviews",
+      description: "He is ready to job interviews",
+      value: 0,
+    },
+    {
+      name: "Advancement",
+      body: "advancement",
+      description: "He is advancing well",
+      value: 0,
+    },
+  ]);
+
+
+  useEffect(() => {
+    onRatingChange(ratings);
+  }, [ratings, onRatingChange]);
+
 
   function handleRatingChange(index: number, value: number) {
-    onRatingChange(index, value);
+    setRatings((prevRatings) => {
+      const updatedRatings = prevRatings.map((rating, i) => {
+        if (i === index) {
+          return { ...rating, value };
+        }
+        return rating;
+      });
+      return updatedRatings;
+    });
   }
 
   return (
@@ -62,6 +110,7 @@ function PDForm({ ratings, onRatingChange }: PDFormProps) {
                               key={`${index}-${number}`}
                             >
                               <input
+                                disabled={PDSaved}
                                 type="checkbox"
                                 name={`${rating.name}`}
                                 id={`${rating.name}-${number}`}

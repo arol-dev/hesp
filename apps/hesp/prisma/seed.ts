@@ -82,7 +82,7 @@ async function main() {
   })
 
 
-  const updatedPDCcheckpoit = await prisma.pDCcheckpoint.update({
+  const updatedPDCcheckpoint = await prisma.pDCcheckpoint.update({
     where: {
       id: PDCcheckpoint.id
     },

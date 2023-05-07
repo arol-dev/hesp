@@ -31,7 +31,7 @@ export interface ModelMapInterface {
   InviteLink: typeof prisma.inviteLink;
   SessionNotes: typeof prisma.sessionNotes;
   TraineeMetaData: typeof prisma.traineeMetaData;
- 
+
 }
 
 export const modelMap: ModelMapInterface = {
@@ -45,7 +45,7 @@ export const modelMap: ModelMapInterface = {
   InviteLink: prisma.inviteLink,
   SessionNotes: prisma.sessionNotes,
   TraineeMetaData: prisma.traineeMetaData,
- 
+
 };
 
 export interface IUserRole {
@@ -182,3 +182,57 @@ interface ISoloutions {
   providedID?: number;
   ProvidedSoloutions?: IProvidedSoloutions;
 }
+
+
+export type WOLTopic = {
+  name: string;
+  body: string;
+  value: number;
+  feel: string;
+  improve: string
+}
+
+export type WOLTopics = WOLTopic[]
+
+export type WOLCheckpointProps = {
+  onDataChange: (list: WOLTopics) => void;
+  WOLSaved: boolean
+}
+
+
+export type SessionNote = {
+  id: string,
+  edit: boolean,
+  saved: boolean,
+  topic: string,
+  objective: string,
+  actions: string,
+  notes: string,
+  results: string,
+  evaluation: string;
+}
+
+export type SessiontNotes = SessionNote[]
+
+export type SessionNotesProps = {
+  onSessionNotesChange: (notes: SessiontNotes) => void;
+  PDSaved: boolean
+};
+
+export type NewCheckpointProps = {
+  id: Number
+}
+
+export type Rating = {
+  name: string;
+  body: string,
+  description: string;
+  value: number;
+};
+
+export type Ratings = Rating[]
+
+export type PDFormProps = {
+  onRatingChange: (ratings: Ratings) => void;
+PDSaved: boolean
+};

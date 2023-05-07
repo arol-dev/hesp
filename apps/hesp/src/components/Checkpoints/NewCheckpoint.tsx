@@ -1,146 +1,30 @@
-import Navbar from "./Navbar";
-import { useState } from 'react';
-import PDForm from './PDform';
-import WOLForm from './WOLform';
-import SessionNotes from './SessionNotes';
+import Navbar from "../Navbar";
+import { useEffect, useState } from 'react';
+import PDForm from './PD/PDform';
+import WOLForm from './WOL/WOLform';
+import SessionNotes from "./PD/Session Notes/SessionNotes";
 import { useRouter } from "next/router";
+import { Ratings, WOLTopics, NewCheckpointProps, SessiontNotes } from "../../../types";
 
 
-type TopicProps = {
-  id: string,
-  edit: boolean,
-  topic: string,
-  objective: string,
-  actions: string,
-  notes: string,
-  results: string,
-  evaluation: string
-}
 
-type Topic = {
-  name: string
-  body: string,
-  value: number,
-  feel: string,
-  improve: string
-};
-
-type Topics = Topic[]
-
-type Id = {
-  id: number
-}
-
-function Checkpoint({ id }: Id) {
+function NewCheckpoint({ id }: NewCheckpointProps) {
   const router = useRouter()
 
   const [pd, setPD] = useState(false)
-  const [topicsList, setTopicsList] = useState([]);
+  const [sessionNotes, setSessionNotes] = useState<SessiontNotes>([]);
+  const [ratings, setRatings] = useState<Ratings>([]);
+  const [WOLdata, setWOLdata] = useState<WOLTopics>([]);
+  const [PDSaved, setPDSaved] = useState(false)
+  const [WOLSaved, setWOLSaved] = useState(false)
 
-  const handleTopicsList = (list: any) => {
-    setTopicsList(list);
-  };
+  // WOL 
 
-
-  const [WOLdata, setWOLdata] = useState<Topics>([]);
-  const handleDataChange = (data: any) => {
+  const handleWOLDataChange = (data: WOLTopics) => {
     setWOLdata(data)
   }
 
-  const [ratings, setRatings] = useState([
-    {
-      name: "Trust",
-      body: "trust",
-      description: "The trainee trust in the established action plan",
-      value: 0,
-    },
-    {
-      name: "Follow",
-      body: "willFollow",
-      description: "He will follow the action plan",
-      value: 0,
-    },
-    {
-      name: "Task retention",
-      body: "retention",
-      description: "He will remember what he should do",
-      value: 0,
-    },
-    {
-      name: "Plan commitment",
-      body: "commitment",
-      description: "He is committed with the formation",
-      value: 0,
-    },
-    {
-      name: "CV",
-      body: "cv",
-      description: "His CV (resume) is done",
-      value: 0,
-    },
-    {
-      name: "Interviews",
-      body: "readyForInterviews",
-      description: "He is ready to job interviews",
-      value: 0,
-    },
-    {
-      name: "Advancement",
-      body: "advancement",
-      description: "He is advancing well",
-      value: 0,
-    },
-  ]);
-
-  function handleRatingChange(index: number, value: number) {
-    const updatedRatings = [...ratings];
-    updatedRatings[index].value = value;
-    setRatings(updatedRatings);
-  }
-
-  const [PDSaved, setPDSaved] = useState(false)
-  const [WOLSaved, setWOLSaved] = useState(false)
-  // function handleRatingChangeWOL(index: number, value: number) {
-  //   const updatedRatings = [...WOLformdata];
-  //   updatedRatings[index].value = value;
-  //   setWOLformdata(updatedRatings);
-  // }
-
-  function handleSubmit(event: any) {
-    event.preventDefault();
-
-    // Convert ratings array into URLSearchParams object
-    const params = new URLSearchParams();
-
-    params.append('userId', id.toString());
-
-    ratings.forEach((rating) => {
-      params.append(rating.body, rating.value.toString());
-    });
-    const topicsListString = JSON.stringify(topicsList);
-    params.append('topicsList', topicsListString);
-
-    // POST request to your API endpoint
-    fetch("/api/form-PD", {
-      method: "POST",
-      body: params,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    }).then((response) => {
-      if (response.ok) {
-        window.alert("Checkpoint added");
-      } else {
-        // handle error
-      }
-    });
-    setPDSaved(!PDSaved)
-    // router.push(`/candidates/${id}`)
-
-  }
-
-
-  function handleSubmitWol(event: any) {
+  function handleSubmitWol(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
 
     const data = WOLdata.map(topic => ({
@@ -158,8 +42,50 @@ function Checkpoint({ id }: Id) {
       });
     });
 
-    // POST request to your API endpoint
     fetch("/api/form-WOL", {
+      method: "POST",
+      body: params,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    }).then((response) => {
+      if (response.ok) {
+        window.alert("WOL checkpoint is added");
+      } else {
+        window.alert("Checkpoint can't be submitted")
+      }
+      setWOLSaved(!WOLSaved)
+      // router.push(`/candidates/${id}`)
+    })
+  }
+
+
+  //PD topics 
+  const handleSessionNotesChange = (notes: SessiontNotes) => {
+    setSessionNotes(notes);
+  };
+
+  const handleRatingChange = (ratings: Ratings) => {
+    setRatings(ratings);
+  }
+
+
+  function handleSubmit(event: any) {
+    event.preventDefault();
+
+    const params = new URLSearchParams();
+
+    params.append('userId', id.toString());
+
+    ratings.forEach((rating) => {
+      params.append(rating.body, rating.value.toString());
+    });
+    const sessionNotesString = JSON.stringify(sessionNotes);
+    params.append('sessionNotes', sessionNotesString);
+
+
+
+    fetch("/api/form-PD", {
       method: "POST",
       body: params,
       headers: {
@@ -169,12 +95,14 @@ function Checkpoint({ id }: Id) {
       if (response.ok) {
         window.alert("Checkpoint added");
       } else {
-        // handle error
+        window.alert("Checkpoint can't be submitted")
       }
-      setWOLSaved(!WOLSaved)
-      // router.push(`/candidates/${id}`)
-    })
+    });
+    setPDSaved(!PDSaved)
+    // router.push(`/candidates/${id}`)
   }
+
+
 
   return (
     <div>
@@ -287,10 +215,10 @@ function Checkpoint({ id }: Id) {
 
       {
         pd ? <>
-          <PDForm ratings={ratings} onRatingChange={handleRatingChange} />
-          <SessionNotes onTopicsListChange={handleTopicsList} ></SessionNotes>
+          <PDForm PDSaved={PDSaved} onRatingChange={handleRatingChange} />
+          <SessionNotes PDSaved={PDSaved} onSessionNotesChange={handleSessionNotesChange} ></SessionNotes>
         </>
-          : <WOLForm onDataChange={handleDataChange}></WOLForm>
+          : <WOLForm WOLSaved={WOLSaved} onDataChange={handleWOLDataChange}></WOLForm>
 
       }
     </div >
@@ -298,4 +226,4 @@ function Checkpoint({ id }: Id) {
 
 }
 
-export default Checkpoint;
+export default NewCheckpoint;
