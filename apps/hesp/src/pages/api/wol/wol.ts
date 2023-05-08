@@ -8,6 +8,7 @@ export default async function handler(
 ) {
   try {
     if (req.method === "POST") {
+      console.log('my request', req.body)
       const newWolCheck = await serverToDb("WOL", "post", req);
       res.status(200).json(newWolCheck);
     }

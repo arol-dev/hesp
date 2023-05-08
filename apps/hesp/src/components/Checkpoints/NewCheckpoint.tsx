@@ -5,6 +5,7 @@ import WOLForm from './WOL/WOLform';
 import SessionNotes from "./PD/Session Notes/SessionNotes";
 import { useRouter } from "next/router";
 import { Ratings, WOLTopics, NewCheckpointProps, SessiontNotes } from "../../../types";
+import { parse } from "path";
 
 
 
@@ -41,12 +42,11 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
         params.append(key, value.toString());
       });
     });
-
     fetch("/api/form-WOL", {
       method: "POST",
       body: params,
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
     }).then((response) => {
       if (response.ok) {
@@ -89,7 +89,7 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
       method: "POST",
       body: params,
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
 
       },
     }).then((response) => {

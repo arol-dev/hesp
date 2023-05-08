@@ -7,8 +7,6 @@ const prisma = new PrismaClient()
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const body = req.body
-
-
     const wolCheckpoint = await prisma.wOLcheckpoint.create({
       data: {
         traineeId: Number(body.userId),
@@ -40,6 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       }
     })
+
     res.status(200).json({ data: wolCheckpoint });
   } catch (error) {
     console.error(error)

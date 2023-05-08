@@ -1,7 +1,7 @@
 import { Radar } from "react-chartjs-2";
 import {
   Chart as chartjs,
-  LineElement, PointElement, Tooltip, Legend, RadialLinearScale, Filler, ChartDataset, ChartDataCustomTypesPerDataset, ChartDatasetProperties
+  LineElement, PointElement, Tooltip, Legend, RadialLinearScale, Filler, ChartDataset, ChartDataCustomTypesPerDataset, ChartDatasetProperties, ChartData, RadarController, RadarControllerChartOptions
 } from "chart.js"
 import { IWOLcheckpoint } from "../../types";
 import { PDCcheckpoint } from "@prisma/client";
@@ -22,13 +22,16 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
 
   chartjs.register(LineElement, PointElement, Tooltip, Legend, RadialLinearScale, Filler)
 
-  let dataPD: any
-  let dataWOL: any
 
+
+  let dataPD: any = {}
+  let dataWOL: any = {}
 
   let optionsPD = {}
   let optionsWOL = {}
+
   if (PDs.length > 0 && WOLs.length > 0) {
+
     let firstPD = PDs[0]
     let firstWOL = WOLs[0]
     if (PDs.length === 1 && WOLs.length === 1) {
@@ -159,8 +162,8 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
     }
     else {
 
-      let lastPD = PDs[PDs.length - 1]
-      let lastWOL = WOLs[WOLs.length - 1]
+      const lastPD = PDs[PDs.length - 1]
+      const lastWOL = WOLs[WOLs.length - 1]
 
 
       dataPD = {
@@ -312,22 +315,19 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
 
 
   return (
-    (PDs.length === 0 && WOLs.length === 0) ? <></> :
+    (PDs.length === 0 && WOLs.length === 0) ? <> Nothing to show</> :
       <div className="flex ">
         <div className=" bg-white  p-10" >
           <h3 className="px-5 py-5 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
             PD CHECKPOINTS
           </h3>
-
-          <Radar data={dataPD} options={optionsPD} ></Radar>
-
-        </div >
+          {Object.keys(dataPD).length !== 0 && <Radar data={dataPD} options={optionsPD} />}        </div >
         <div className="ml-10 bg-white p-10" >
           <h3 className="px-5 py-5 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
             WOL CHECKPOINTS
           </h3>
 
-          <Radar data={dataWOL} options={optionsWOL} ></Radar>
+          {Object.keys(dataWOL).length !== 0 && <Radar data={dataWOL} options={optionsWOL} />}
 
         </div>
       </div>

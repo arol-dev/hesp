@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     res.json()
   );
 
-
+  console.log('data', PDs, WOLs)
   return {
     props: {
       person,
