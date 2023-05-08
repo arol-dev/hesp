@@ -1,17 +1,15 @@
 import jwt from "jsonwebtoken";
 import { config } from "dotenv";
 import { IUser } from "../../types";
-import { User } from "@prisma/client";
 
 config();
-
 
 const secret: string | undefined = process.env.JWT_SECRET;
 if (!secret) {
   throw new Error("JWT_SECRET is not defined");
 }
 
-export const generateJWTToken = (user: User) => {
+export const generateJWTToken = (user: IUser) => {
   const { id, firstName, lastName, password, role } = user;
   return jwt.sign(
     {
