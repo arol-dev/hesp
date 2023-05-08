@@ -43,7 +43,7 @@ function Candidate({ person, WOLs, PDs }: any) {
               {person.firstName + " " + person.lastName}
             </h3>
           </div>
-          <div className="mt-5 flex lg:ml-4 lg:mt-0">
+          <div className="flex pb-8 lg:ml-4 lg:mt-0">
             <AssignPerson />
             <span className="hidden sm:block">
               <button
