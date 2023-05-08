@@ -13,15 +13,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     res.json()
   );
 
-  const WOLs = await fetch(`http://${domainName}/api/wol/${id}`).then((res) =>
+  const WOLs = await fetch(`http://${domainName}/api/wol/wol`).then((res) =>
     res.json()
   );
 
-  const PDs = await fetch(`http://${domainName}/api/pdc/${id}`).then((res) =>
+  const PDs = await fetch(`http://${domainName}/api/pdc/pdc`).then((res) =>
     res.json()
   );
 
-  console.log('data', PDs, WOLs)
   return {
     props: {
       person,
