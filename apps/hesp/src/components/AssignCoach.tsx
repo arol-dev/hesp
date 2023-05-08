@@ -90,7 +90,7 @@ const AssignPerson = () => {
       {showSelect && (
         <>
           <select
-            className="block mt-1 bg-white border-gray-300 w-auto rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            className="block mt-2 mb-2 bg-white border-gray-300 w-auto rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
             defaultValue=""
             onChange={handleSelectChange}
           >
