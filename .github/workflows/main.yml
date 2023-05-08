@@ -33,11 +33,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: apps/hesp
-        run: npm install --ignore-scripts
-
-      - name: Prisma generate
-        working-directory: apps/hesp
-        run: prisma generate
+        run: npm install
 
       - name: Build the project
         working-directory: apps/hesp
