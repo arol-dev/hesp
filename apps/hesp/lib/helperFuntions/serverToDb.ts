@@ -24,10 +24,9 @@ export default async function serverToDb(
   if (req === undefined) {
     throw new Error("Invalid request");
   }
-
  
   const id = req.query.id ? parseInt(req.query.id as string) : null;
-  const data = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+  const data = typeof req.body === "string" && req.body.trim() !== "" ? JSON.parse(req.body) : {};
  
 
   switch (action) {

@@ -46,7 +46,7 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
       method: "POST",
       body: params,
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
       },
     }).then((response) => {
       if (response.ok) {
@@ -89,7 +89,8 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
       method: "POST",
       body: params,
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
+
       },
     }).then((response) => {
       if (response.ok) {
