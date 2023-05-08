@@ -22,7 +22,7 @@ const LoginPage = () => {
     if (res.status === 200) {
       window.location.href = "/";
     } else {
-      alert("Please check your credentials and try again");
+      window.alert("Please check your credentials and try again");
     }
     return;
   };
