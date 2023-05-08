@@ -33,9 +33,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: apps/hesp
-        env:
-          HUSKY: 0
-        run: npm install
+        run: npm install --ignore-scripts
 
       - name: Build the project
         working-directory: apps/hesp
