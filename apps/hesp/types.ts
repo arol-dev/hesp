@@ -20,7 +20,6 @@ export const modelRelations: any = {
   InviteLink: [],
 };
 export interface ModelMapInterface {
-  [x: string]: any;
   Trainee: typeof prisma.trainee;
   User: typeof prisma.user;
   // Comment: typeof prisma.comment;
@@ -132,6 +131,7 @@ export interface IPDCcheckpoint {
 }
 
 export interface ITrainee {
+  status: string;
   id: number;
   firstName: string;
   lastName: string;
