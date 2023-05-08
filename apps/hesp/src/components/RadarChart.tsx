@@ -28,10 +28,14 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
 
   let optionsPD = {}
   let optionsWOL = {}
+
+  if ((!PDs || !WOLs) || (!PDs[0] || !WOLs[0])) {
+    return <div>missing data from PDs or WOLs</div>;
+  }
   if (PDs.length > 0 && WOLs.length > 0) {
     let firstPD = PDs[0]
     let firstWOL = WOLs[0]
-    if (PDs.length === 1 && WOLs.length === 1) {
+    if (PDs.length === 1 && WOLs.length === 1 ) {
       dataPD = {
         labels: [
           'Trust',

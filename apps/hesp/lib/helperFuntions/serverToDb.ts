@@ -14,6 +14,7 @@ export default async function serverToDb(
     throw new Error("Invalid model name");
   }
 
+
   const include = buildIncludeObject(modelRelations[modelName]);
   const includeParam = Object.keys(include).length > 0 ? { include } : {};
 

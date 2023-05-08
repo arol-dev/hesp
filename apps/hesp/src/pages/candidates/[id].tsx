@@ -1,11 +1,12 @@
 import Candidate from "@/components/Candidate";
+import { profile } from "console";
 import { GetServerSideProps } from "next";
 import serverToDb from "../../../lib/helperFuntions/serverToDb";
 import dateToISOString from "../../../lib/helperFuntions/dataToIsoString";
 export function Profile({ person, WOLs, PDs }: any) {
   return <Candidate WOLs={WOLs} person={person} pds={PDs}></Candidate>;
 }
-export default Candidate;
+export default Profile;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id }: any = context.query;

@@ -47,37 +47,44 @@ export default async function handler(
       return;
     }
 
-    const linksFromDb = await serverToDb("InviteLink", "get", undefined);
+    const linksFromDb = await serverToDb("InviteLink", "get");
 
-    const link: InviteLink[] = linksFromDb.filter(
-      (link: InviteLink) => link.code === incomingLinkToCheck
-    );
-
-    if (!link) {
-      res.status(401).json({ error: "Invalid link" });
-      return;
-    }
-
-    const now = new Date();
-    if (link[0].used || link[0].expiresAt <= now) {
-      res.status(401).json({ error: "Link is already used or expired" });
-      return;
-    }
-
-    const { firstName, lastName, email, password } = req.body;
-    const newUser: any = await createUser(firstName, lastName, email, password);
-
-    if (newUser) {
-      await setLinkAsUsed(link[0].id);
-
-      const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30); // Set the cookie to expire in 24 hours
-      const token = generateJWTToken(newUser);
-
-      res.setHeader(
-        "Set-Cookie",
-        `token=${token}; Path=/; Expires=${expires.toUTCString()}; HttpOnly; SameSite=Lax`
+    if (Array.isArray(linksFromDb)) {
+      const link = linksFromDb.filter(
+        (link: InviteLink) => link.code === incomingLinkToCheck
       );
-      res.status(201).json({ user: newUser });
+
+      if (!link) {
+        res.status(401).json({ error: "Invalid link" });
+        return;
+      }
+
+      const now = new Date();
+      if (link[0].used || link[0].expiresAt <= now) {
+        res.status(401).json({ error: "Link is already used or expired" });
+        return;
+      }
+
+      const { firstName, lastName, email, password } = req.body;
+      const newUser: any = await createUser(
+        firstName,
+        lastName,
+        email,
+        password
+      );
+
+      if (newUser) {
+        await setLinkAsUsed(link[0].id);
+
+        const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30); // Set the cookie to expire in 24 hours
+        const token = generateJWTToken(newUser);
+
+        res.setHeader(
+          "Set-Cookie",
+          `token=${token}; Path=/; Expires=${expires.toUTCString()}; HttpOnly; SameSite=Lax`
+        );
+        res.status(201).json({ user: newUser });
+      }
     } else {
       res.status(500).json({ error: "Failed to create user" });
     }
