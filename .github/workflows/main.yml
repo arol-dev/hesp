@@ -37,8 +37,7 @@ jobs:
 
       - name: Prisma generate
         working-directory: apps/hesp
-        run: |
-          prisma generate
+        run: prisma generate
 
       - name: Build the project
         working-directory: apps/hesp
