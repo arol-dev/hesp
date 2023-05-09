@@ -18,6 +18,13 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
   const [WOLdata, setWOLdata] = useState<WOLTopics>([]);
   const [PDSaved, setPDSaved] = useState(false)
   const [WOLSaved, setWOLSaved] = useState(false)
+  const [isPDFormValid, setIsPDFormValid] = useState(false)
+
+
+  useEffect(() => {
+    setIsPDFormValid(ratings.every((rating) => rating.value !== 0));
+  }, [ratings]);
+
 
   // WOL 
 
@@ -37,11 +44,11 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
     const params = new URLSearchParams();
     params.append('userId', id.toString());
 
-    fetch("/api/monthValidator", {
+    fetch("/api/checkpointValidator", {
       method: "POST",
       body: params,
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
     }).then((response) => {
       if (response.ok) {
@@ -69,11 +76,7 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
         window.alert(`A checkpoint was already created for this trainee within the last month.`)
       }
     });
-
-
   }
-
-
 
 
 
@@ -106,7 +109,7 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
       method: "POST",
       body: params,
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
     }).then((response) => {
       if (response.ok) {
@@ -218,6 +221,7 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
             </span>
             <span className="sm:ml-3">
               <button
+                disabled={!isPDFormValid}
                 onClick={(event) => {
                   handleSubmitWol(event);
                 }}

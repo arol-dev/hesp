@@ -17,12 +17,11 @@ function Candidate({ person, WOLs, PDs }: any) {
 
 
     params.append('userId', person.id.toString());
-
-    fetch("/api/monthValidator", {
+    fetch("/api/checkpointValidator", {
       method: "POST",
       body: params,
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
     }).then((response) => {
       if (response.ok) {
