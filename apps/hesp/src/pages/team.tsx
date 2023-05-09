@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar"
-import Teampage from "@/components/Teampage"
+import Teampage from "@/components/Team/Teampage"
 import { GetServerSideProps } from "next";
 import { IUser } from "../../types";
 

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import AddCoach from './FormAddCoach';
 import { useState } from "react";
-import { IUser } from "../../types";
+import { IUser } from "../../../types";
 import DeleteCoach from "./DeleteCoach";
 
 interface TeampageProps {
@@ -125,17 +125,15 @@ function Teampage({ coaches }: TeampageProps) {
         ) : (
           <div className="px-4 py-5 sm:px-6">
             <h3 className="text-lg leading-6 font-medium text-gray-900">
-              No candidates
+              No team members
             </h3>
             <p className="mt-1 max-w-2xl text-sm text-gray-500">
-              You currently don't have any candidates assigned to you.
+              There is currently no coaches registered in the app.
             </p>
           </div>
         )}
       </div>
     </div>
-
-
   )
 }
 export default Teampage

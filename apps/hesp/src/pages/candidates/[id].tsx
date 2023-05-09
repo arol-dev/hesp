@@ -1,4 +1,4 @@
-import Candidate from "@/components/Candidate";
+import Candidate from "@/components/CandidatePage/Candidate";
 import { GetServerSideProps } from "next";
 
 export function Profile({ person, WOLs, PDs }: any) {
@@ -13,14 +13,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     res.json()
   );
 
-  const WOLs = await fetch(`http://${domainName}/api/wol/${id}`).then((res) =>
+  const WOLs = await fetch(`http://${domainName}/api/wol/wol`).then((res) =>
     res.json()
   );
 
-  const PDs = await fetch(`http://${domainName}/api/pdc/${id}`).then((res) =>
+  const PDs = await fetch(`http://${domainName}/api/pdc/pdc`).then((res) =>
     res.json()
   );
-
 
   return {
     props: {

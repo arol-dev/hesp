@@ -1,8 +1,5 @@
 import { useState } from 'react';
 
-
-
-
 interface AddCoachProps {
   closeForm: () => void
   showForm: boolean
@@ -13,8 +10,6 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
     return null;
   }
 
-
-
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -23,18 +18,15 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
     password: "12345"
   })
 
-
   function handleInputChange(event: any) {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   }
 
-
-
   async function handleSubmit(event: any) {
     event.preventDefault();
 
-    const response = await fetch("/api/form-createCoach", {
+    const response = await fetch("/api/staff/createCoach", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -52,8 +44,6 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
       console.error('Error submitting form:', result);
     }
   }
-
-
 
   return (
     <form>

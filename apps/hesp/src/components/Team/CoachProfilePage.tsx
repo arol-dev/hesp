@@ -1,5 +1,5 @@
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import { IUser } from '../../types'
+import { IUser } from '../../../types'
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
@@ -62,7 +62,7 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
     // }
 
 
-    const response = await fetch("/api/form-updateCoach", {
+    const response = await fetch("/api/staff/updateCoach", {
       method: "PUT",
       headers: {
         'Content-Type': 'application/json',

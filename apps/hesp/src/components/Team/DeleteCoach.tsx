@@ -1,4 +1,4 @@
-import { IUser } from "../../types"
+import { IUser } from "../../../types"
 
 interface DeleteCoachProps {
   closeWindow: () => void
@@ -19,7 +19,7 @@ function DeleteCoach({ closeWindow, showWindow, coach }: DeleteCoachProps) {
   async function handleSubmit(event: any) {
     event.preventDefault();
 
-    const response = await fetch("/api/delete-Coach", {
+    const response = await fetch("/api/staff/deleteCoach", {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

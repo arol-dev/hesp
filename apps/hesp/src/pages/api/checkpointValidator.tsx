@@ -1,13 +1,13 @@
 import { PrismaClient } from "@prisma/client"
+import { last } from "cypress/types/lodash"
 import { NextApiRequest, NextApiResponse } from "next"
 
 
 const prisma = new PrismaClient()
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
+  console.log('im here')
   const body = req.body
-
-
 
   const oneMonthAgo = new Date()
   oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1)
@@ -29,6 +29,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       createdAt: 'desc'
     }
   })
+
+  console.log('last', lastCheckpoint)
+
 
   if (allWols.length === 0 || !lastCheckpoint) {
     res.status(200).send('OK')

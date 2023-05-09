@@ -1,6 +1,6 @@
 import { authenticateAndGetToken } from "../../lib/auth/authUtils";
 import Navbar from "@/components/Navbar";
-import List from "@/components/List";
+import List from "@/components/MainPage";
 import serverToDb from "../../lib/helperFuntions/serverToDb";
 import { props } from "cypress/types/bluebird";
 import { ITrainee, IUser } from "../../types";

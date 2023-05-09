@@ -5,6 +5,7 @@ import WOLForm from './WOL/WOLform';
 import SessionNotes from "./PD/Session Notes/SessionNotes";
 import { useRouter } from "next/router";
 import { Ratings, WOLTopics, NewCheckpointProps, SessiontNotes } from "../../../types";
+import { parse } from "path";
 
 
 
@@ -17,6 +18,13 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
   const [WOLdata, setWOLdata] = useState<WOLTopics>([]);
   const [PDSaved, setPDSaved] = useState(false)
   const [WOLSaved, setWOLSaved] = useState(false)
+  const [isPDFormValid, setIsPDFormValid] = useState(false)
+
+
+  useEffect(() => {
+    setIsPDFormValid(ratings.every((rating) => rating.value !== 0));
+  }, [ratings]);
+
 
   // WOL 
 
@@ -36,13 +44,7 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
     const params = new URLSearchParams();
     params.append('userId', id.toString());
 
-    data.forEach((item) => {
-      Object.entries(item).forEach(([key, value]) => {
-        params.append(key, value.toString());
-      });
-    });
-
-    fetch("/api/form-WOL", {
+    fetch("/api/checkpointValidator", {
       method: "POST",
       body: params,
       headers: {
@@ -50,14 +52,33 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
       },
     }).then((response) => {
       if (response.ok) {
-        window.alert("WOL checkpoint is added");
+        data.forEach((item) => {
+          Object.entries(item).forEach(([key, value]) => {
+            params.append(key, value.toString());
+          });
+        });
+        fetch("/api/wol/createWOL", {
+          method: "POST",
+          body: params,
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }).then((response) => {
+          if (response.ok) {
+            window.alert("WOL checkpoint is added");
+          } else {
+            window.alert("Checkpoint can't be submitted")
+          }
+          setWOLSaved(!WOLSaved)
+          // router.push(`/candidates/${id}`)
+        })
       } else {
-        window.alert("Checkpoint can't be submitted")
+        window.alert(`A checkpoint was already created for this trainee within the last month.`)
       }
-      setWOLSaved(!WOLSaved)
-      // router.push(`/candidates/${id}`)
-    })
+    });
   }
+
+
 
 
   //PD topics 
@@ -84,8 +105,7 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
     params.append('sessionNotes', sessionNotesString);
 
 
-
-    fetch("/api/form-PD", {
+    fetch("/api/checkpointValidator", {
       method: "POST",
       body: params,
       headers: {
@@ -93,16 +113,29 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
       },
     }).then((response) => {
       if (response.ok) {
-        window.alert("Checkpoint added");
+
+
+        fetch("/api/pdc/createPD", {
+          method: "POST",
+          body: params,
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+
+          },
+        }).then((response) => {
+          if (response.ok) {
+            window.alert("Checkpoint added");
+          } else {
+            window.alert("Checkpoint can't be submitted")
+          }
+        });
+        setPDSaved(!PDSaved)
+        // router.push(`/candidates/${id}`)
       } else {
-        window.alert("Checkpoint can't be submitted")
+        window.alert(`A checkpoint was already created for this trainee within the last month.`)
       }
     });
-    setPDSaved(!PDSaved)
-    // router.push(`/candidates/${id}`)
   }
-
-
 
   return (
     <div>
@@ -188,6 +221,7 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
             </span>
             <span className="sm:ml-3">
               <button
+                disabled={!isPDFormValid}
                 onClick={(event) => {
                   handleSubmitWol(event);
                 }}
