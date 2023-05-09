@@ -10,13 +10,11 @@
     "build": "turbo run build",
     "dev": "docker-compose up -d && turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky install"
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "prettier": "latest",
-    "turbo": "latest",
-    "husky": "^8.0.0"
+    "turbo": "latest"
   },
   "engines": {
     "node": ">=18.0.0"

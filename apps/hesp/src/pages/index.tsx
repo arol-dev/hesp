@@ -1,21 +1,29 @@
 import { authenticateAndGetToken } from "../../lib/auth/authUtils";
 import Navbar from "@/components/Navbar";
 import List from "@/components/List";
+import serverToDb from "../../lib/helperFuntions/serverToDb";
+import { props } from "cypress/types/bluebird";
+import { ITrainee, IUser } from "../../types";
+import dateToISOString from "../../lib/helperFuntions/dataToIsoString";
 
-function Main({ user }: any) {
+interface props {
+  user: IUser[];
+  jwt: IUser;
+  Trainees: ITrainee[];
+}
+
+const Main: React.FC<props> = ({ user, jwt, Trainees }) => {
   return (
     <div>
       <Navbar headerText={"HESP Program"}></Navbar>
-      <List user={user}></List>
+      <List user={user} jwt={jwt} Trainees={Trainees}></List>
     </div>
   );
-}
+};
 
 export async function getServerSideProps(context: any) {
   const decodedToken = await authenticateAndGetToken(context);
   const cookies = context.req.headers.cookie;
-  const host = context.req.headers.host;
-
 
   if (!cookies) {
     return {
@@ -25,20 +33,13 @@ export async function getServerSideProps(context: any) {
       },
     };
   }
-
-  const user = await fetch(`http://${host}/api/auth/authenticate`, {
-    method: "GET",
-    headers: {
-      cookie: context.req.headers.cookie,
-    },
-  }).then((res) => res.json());
-
-
-
+  const user = await serverToDb("User", "get", undefined);
+  const HEs = await serverToDb("Trainee", "get");
   return {
     props: {
-      user: user.user,
-      jwt: decodedToken, // Pass the decoded token as a prop
+      user: user,
+      jwt: decodedToken,
+      Trainees: dateToISOString(HEs),
     },
   };
 }
