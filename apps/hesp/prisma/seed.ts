@@ -91,7 +91,6 @@ async function main() {
     data: {
       SessionNotes: {
         create: {
-          id: '29384907328971302981209823190',
           topic: "Trust",
           objective: "He wants to trust people",
           actions: "Start communicating with people actively",

@@ -51,7 +51,13 @@ function NewCheckpoint({ id, lastPDCheckpoint, lastWOLCheckpoint }: NewCheckpoin
     const params = new URLSearchParams();
     params.append('userId', id.toString());
 
-    fetch("/api/checkpointValidator", {
+
+    data.forEach((item) => {
+      Object.entries(item).forEach(([key, value]) => {
+        params.append(key, value.toString());
+      });
+    });
+    fetch("/api/wol/createWOL", {
       method: "POST",
       body: params,
       headers: {
@@ -59,29 +65,12 @@ function NewCheckpoint({ id, lastPDCheckpoint, lastWOLCheckpoint }: NewCheckpoin
       },
     }).then((response) => {
       if (response.ok) {
-        data.forEach((item) => {
-          Object.entries(item).forEach(([key, value]) => {
-            params.append(key, value.toString());
-          });
-        });
-        fetch("/api/wol/createWOL", {
-          method: "POST",
-          body: params,
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }).then((response) => {
-          if (response.ok) {
-            window.alert("WOL checkpoint is added");
-          } else {
-            window.alert("Checkpoint can't be submitted")
-          }
-          setWOLSaved(!WOLSaved)
-          // router.push(`/candidates/${id}`)
-        })
+        window.alert("WOL checkpoint is added");
       } else {
-        window.alert(`A checkpoint was already created for this trainee within the last month.`)
+        window.alert("Checkpoint can't be submitted")
       }
+      setWOLSaved(!WOLSaved)
+      // router.push(`/candidates/${id}`)
     });
   }
 
@@ -112,34 +101,23 @@ function NewCheckpoint({ id, lastPDCheckpoint, lastWOLCheckpoint }: NewCheckpoin
       params.append('sessionNotes', sessionNotesString);
 
 
-      fetch("/api/checkpointValidator", {
+
+      fetch("/api/pdc/createPD", {
         method: "POST",
         body: params,
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
+
         },
       }).then((response) => {
         if (response.ok) {
-          fetch("/api/pdc/createPD", {
-            method: "POST",
-            body: params,
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-
-            },
-          }).then((response) => {
-            if (response.ok) {
-              window.alert("Checkpoint added");
-            } else {
-              window.alert("Checkpoint can't be submitted")
-            }
-          });
-          setPDSaved(!PDSaved)
-          // router.push(`/candidates/${id}`)
+          window.alert("Checkpoint added");
         } else {
-          window.alert(`A checkpoint was already created for this trainee within the last month.`)
+          window.alert("Checkpoint can't be submitted")
         }
       });
+      setPDSaved(!PDSaved)
+      // router.push(`/candidates/${id}`)
     } else {
       window.alert('Please answer all the questions to submit the form')
     }

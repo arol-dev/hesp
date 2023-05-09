@@ -10,26 +10,9 @@ function Candidate({ person, WOLs, PDs }: any) {
 
   const router = useRouter()
 
-  function handleCheckLastCreated(event: React.MouseEvent) {
+  function handleClickNewCheckpoint(event: React.MouseEvent) {
     event.preventDefault();
-
-    const params = new URLSearchParams();
-
-
-    params.append('userId', person.id.toString());
-    fetch("/api/checkpointValidator", {
-      method: "POST",
-      body: params,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    }).then((response) => {
-      if (response.ok) {
-        router.push(`/candidates/${person.id}/checkpoint`)
-      } else {
-        window.alert(`A checkpoint was already created for trainee ${person.firstName + " " + person.lastName} within the last month.`)
-      }
-    });
+    router.push(`/candidates/${person.id}/checkpoint`)
   }
 
   return (
@@ -63,7 +46,7 @@ function Candidate({ person, WOLs, PDs }: any) {
 
             <span className="sm:ml-3">
               <button
-                onClick={(event) => handleCheckLastCreated(event)}
+                onClick={(event) => handleClickNewCheckpoint(event)}
                 type="button"
                 className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >

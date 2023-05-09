@@ -27,7 +27,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       data: {
         SessionNotes: {
           create: sessionNotes.map((note: SessionNote) => ({
-            id: note.id,
             topic: note.topic,
             objective: note.objective,
             actions: note.actions,
