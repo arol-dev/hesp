@@ -1,6 +1,25 @@
 import Link from "next/link";
+import { ITrainee, IUser } from "../../types";
 
-export default function List({ user }: any) {
+interface props {
+  user: IUser[];
+  jwt: {
+    role: "STAFF" | "ADMIN";
+    id: number;
+  };
+  Trainees: ITrainee[];
+}
+
+const List: React.FC<props> = ({ user, jwt, Trainees }) => {
+  const showIHe = jwt.role === "STAFF";
+
+  const matchingUser = user.filter((user: IUser) => {
+    console.log(user.id);
+    return user.id == jwt.id;
+  });
+
+  const dataToMap = showIHe ? matchingUser[0].Trainee : Trainees;
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
@@ -8,6 +27,7 @@ export default function List({ user }: any) {
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
           <button
             type="button"
+            onClick={() => console.log(matchingUser)}
             className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             + Add new candidate
@@ -15,7 +35,7 @@ export default function List({ user }: any) {
         </div>
       </div>
       <div className="mt-8 flow-root">
-        {user && user.Trainee && user.Trainee.length > 0 ? (
+        {matchingUser && matchingUser.length > 0 ? (
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
               <table className="min-w-full divide-y divide-gray-300">
@@ -45,7 +65,7 @@ export default function List({ user }: any) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {user.Trainee.map((person: any, index: number) => (
+                  {dataToMap.map((person: any, index: number) => (
                     <tr key={index}>
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                         <Link
@@ -106,4 +126,6 @@ export default function List({ user }: any) {
       </div>
     </div>
   );
-}
+};
+
+export default List;
