@@ -50,7 +50,7 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
             params.append(key, value.toString());
           });
         });
-        fetch("/api/form-WOL", {
+        fetch("/api/wol/createWOL", {
           method: "POST",
           body: params,
           headers: {
@@ -102,7 +102,7 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
     params.append('sessionNotes', sessionNotesString);
 
 
-    fetch("/api/monthValidator", {
+    fetch("/api/checkpointValidator", {
       method: "POST",
       body: params,
       headers: {
@@ -112,7 +112,7 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
       if (response.ok) {
 
 
-        fetch("/api/form-PD", {
+        fetch("/api/pdc/createPD", {
           method: "POST",
           body: params,
           headers: {

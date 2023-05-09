@@ -1,4 +1,4 @@
-import Candidate from "@/components/Candidate";
+import Candidate from "@/components/CandidatePage/Candidate";
 import { GetServerSideProps } from "next";
 
 export function Profile({ person, WOLs, PDs }: any) {

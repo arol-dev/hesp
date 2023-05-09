@@ -1,6 +1,6 @@
 import { Prisma, PrismaClient } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from "next"
-import { SessionNote } from '../../../types'
+import { SessionNote } from '../../../../types'
 
 const prisma = new PrismaClient()
 

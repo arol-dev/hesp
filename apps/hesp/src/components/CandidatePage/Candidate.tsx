@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
 import Chart from "./RadarChart";
 import { useRouter } from "next/router";
 

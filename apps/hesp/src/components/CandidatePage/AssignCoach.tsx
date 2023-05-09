@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
 import "tailwindcss/tailwind.css";
-import { IUser } from "../../types";
+import { IUser } from "../../../types";
 
 const AssignPerson = () => {
   const [people, setPeople] = useState<IUser[]>([]);

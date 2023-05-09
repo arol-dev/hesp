@@ -1,6 +1,6 @@
 import { authenticateAndGetToken } from "../../lib/auth/authUtils";
 import Navbar from "@/components/Navbar";
-import List from "@/components/List";
+import List from "@/components/MainPage";
 
 function Main({ user }: any) {
   return (

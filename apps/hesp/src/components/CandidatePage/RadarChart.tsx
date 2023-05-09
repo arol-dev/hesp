@@ -3,9 +3,9 @@ import {
   Chart as chartjs,
   LineElement, PointElement, Tooltip, Legend, RadialLinearScale, Filler, ChartDataset, ChartDataCustomTypesPerDataset, ChartDatasetProperties, ChartData, RadarController, RadarControllerChartOptions
 } from "chart.js"
-import { IWOLcheckpoint } from "../../types";
+import { IWOLcheckpoint } from "../../../types";
 import { PDCcheckpoint } from "@prisma/client";
-import { IUser } from "../../types";
+import { IUser } from "../../../types";
 
 
 

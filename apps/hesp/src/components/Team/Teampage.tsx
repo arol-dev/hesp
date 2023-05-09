@@ -1,7 +1,7 @@
 import Link from "next/link";
 import AddCoach from './FormAddCoach';
 import { useState } from "react";
-import { IUser } from "../../types";
+import { IUser } from "../../../types";
 import DeleteCoach from "./DeleteCoach";
 
 interface TeampageProps {
@@ -134,8 +134,6 @@ function Teampage({ coaches }: TeampageProps) {
         )}
       </div>
     </div>
-
-
   )
 }
 export default Teampage
