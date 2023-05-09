@@ -5,11 +5,11 @@ import WOLForm from './WOL/WOLform';
 import SessionNotes from "./PD/Session Notes/SessionNotes";
 import { useRouter } from "next/router";
 import { Ratings, WOLTopics, NewCheckpointProps, SessiontNotes } from "../../../types";
-import { parse } from "path";
 
 
 
-function NewCheckpoint({ id }: NewCheckpointProps) {
+
+function NewCheckpoint({ id, lastPDCheckpoint, lastWOLCheckpoint }: NewCheckpointProps) {
   const router = useRouter()
 
   const [pd, setPD] = useState(false)
@@ -20,10 +20,17 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
   const [WOLSaved, setWOLSaved] = useState(false)
   const [isPDFormValid, setIsPDFormValid] = useState(false)
 
-
+  // to check that all the fields are fille
   useEffect(() => {
     setIsPDFormValid(ratings.every((rating) => rating.value !== 0));
   }, [ratings]);
+  // do the same for WOL
+  // ....
+  // ........
+
+
+
+
 
 
   // WOL 
@@ -90,51 +97,52 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
     setRatings(ratings);
   }
 
-
   function handleSubmit(event: any) {
     event.preventDefault();
+    if (isPDFormValid) {
 
-    const params = new URLSearchParams();
+      const params = new URLSearchParams();
 
-    params.append('userId', id.toString());
+      params.append('userId', id.toString());
 
-    ratings.forEach((rating) => {
-      params.append(rating.body, rating.value.toString());
-    });
-    const sessionNotesString = JSON.stringify(sessionNotes);
-    params.append('sessionNotes', sessionNotesString);
-
-
-    fetch("/api/checkpointValidator", {
-      method: "POST",
-      body: params,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    }).then((response) => {
-      if (response.ok) {
+      ratings.forEach((rating) => {
+        params.append(rating.body, rating.value.toString());
+      });
+      const sessionNotesString = JSON.stringify(sessionNotes);
+      params.append('sessionNotes', sessionNotesString);
 
 
-        fetch("/api/pdc/createPD", {
-          method: "POST",
-          body: params,
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
+      fetch("/api/checkpointValidator", {
+        method: "POST",
+        body: params,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }).then((response) => {
+        if (response.ok) {
+          fetch("/api/pdc/createPD", {
+            method: "POST",
+            body: params,
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
 
-          },
-        }).then((response) => {
-          if (response.ok) {
-            window.alert("Checkpoint added");
-          } else {
-            window.alert("Checkpoint can't be submitted")
-          }
-        });
-        setPDSaved(!PDSaved)
-        // router.push(`/candidates/${id}`)
-      } else {
-        window.alert(`A checkpoint was already created for this trainee within the last month.`)
-      }
-    });
+            },
+          }).then((response) => {
+            if (response.ok) {
+              window.alert("Checkpoint added");
+            } else {
+              window.alert("Checkpoint can't be submitted")
+            }
+          });
+          setPDSaved(!PDSaved)
+          // router.push(`/candidates/${id}`)
+        } else {
+          window.alert(`A checkpoint was already created for this trainee within the last month.`)
+        }
+      });
+    } else {
+      window.alert('Please answer all the questions to submit the form')
+    }
   }
 
   return (
@@ -167,29 +175,30 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
                 Switch to WOL
               </button>
             </span>
-            <span className="sm:ml-3">
-              <button
-                onClick={(event) => {
-                  handleSubmit(event);
-                }}
-                type="submit"
-                className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                <svg
-                  className="-ml-0.5 mr-1.5 h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
+            {lastPDCheckpoint ? <></> :
+              <span className="sm:ml-3">
+                <button
+                  onClick={(event) => {
+                    handleSubmit(event);
+                  }}
+                  type="submit"
+                  className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                Save
-              </button>
-            </span>
+                  <svg
+                    className="-ml-0.5 mr-1.5 h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  Save
+                </button>
+              </span>}
           </div>
         </div>
       ) :
@@ -219,40 +228,41 @@ function NewCheckpoint({ id }: NewCheckpointProps) {
                 Switch to Professional Development
               </button>
             </span>
-            <span className="sm:ml-3">
-              <button
-                disabled={!isPDFormValid}
-                onClick={(event) => {
-                  handleSubmitWol(event);
-                }}
-                type="button"
-                className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                <svg
-                  className="-ml-0.5 mr-1.5 h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
+            {lastWOLCheckpoint ? <></> :
+              <span className="sm:ml-3">
+                <button
+
+                  onClick={(event) => {
+                    handleSubmitWol(event);
+                  }}
+                  type="button"
+                  className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                Save
-              </button>
-            </span>
+                  <svg
+                    className="-ml-0.5 mr-1.5 h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  Save
+                </button>
+              </span>}
           </div>
         </div>
       }
 
       {
         pd ? <>
-          <PDForm PDSaved={PDSaved} onRatingChange={handleRatingChange} />
-          <SessionNotes PDSaved={PDSaved} onSessionNotesChange={handleSessionNotesChange} ></SessionNotes>
+          <PDForm PDSaved={PDSaved} lastPDCheckpoint={lastPDCheckpoint} onRatingChange={handleRatingChange} />
+          <SessionNotes PDSaved={PDSaved} lastPDCheckpoint={lastPDCheckpoint} onSessionNotesChange={handleSessionNotesChange} ></SessionNotes>
         </>
-          : <WOLForm WOLSaved={WOLSaved} onDataChange={handleWOLDataChange}></WOLForm>
+          : <WOLForm lastWOLCheckpoint={lastWOLCheckpoint} WOLSaved={WOLSaved} onDataChange={handleWOLDataChange}></WOLForm>
 
       }
     </div >

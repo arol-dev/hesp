@@ -1,4 +1,4 @@
-import { WOLTopic } from "../../../../types";
+import { IWOLcheckpoint, WOLTopic } from "../../../../types";
 
 type WOLTopicCardProps = {
   topic: WOLTopic;
