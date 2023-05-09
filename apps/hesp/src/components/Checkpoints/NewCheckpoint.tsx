@@ -70,7 +70,7 @@ function NewCheckpoint({ id, lastPDCheckpoint, lastWOLCheckpoint }: NewCheckpoin
         window.alert("Checkpoint can't be submitted")
       }
       setWOLSaved(!WOLSaved)
-      // router.push(`/candidates/${id}`)
+      // window.location.reload()
     });
   }
 
@@ -117,7 +117,7 @@ function NewCheckpoint({ id, lastPDCheckpoint, lastWOLCheckpoint }: NewCheckpoin
         }
       });
       setPDSaved(!PDSaved)
-      // router.push(`/candidates/${id}`)
+      router.push(`/candidates/${id}/checkpoint`)
     } else {
       window.alert('Please answer all the questions to submit the form')
     }
