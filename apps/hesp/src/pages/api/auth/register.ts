@@ -48,6 +48,7 @@ export default async function handler(
     }
 
     const linksFromDb = await serverToDb("InviteLink", "get", undefined);
+
     const link: InviteLink[] = linksFromDb.filter(
       (link: InviteLink) => link.code === incomingLinkToCheck
     );

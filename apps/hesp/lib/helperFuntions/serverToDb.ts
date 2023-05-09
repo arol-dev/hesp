@@ -5,10 +5,10 @@ import { NextApiRequest } from "next";
 export default async function serverToDb(
   modelName: keyof ModelMapInterface,
   action: string,
-  req: NextApiRequest | undefined
+  req?: NextApiRequest | undefined,
+  providedID?: string | undefined
 ): Promise<ModelMapInterface> {
   const Model: any = modelMap[modelName];
-
 
   if (!Model) {
     throw new Error("Invalid model name");
@@ -32,10 +32,9 @@ export default async function serverToDb(
   switch (action) {
     case "get":
       return await Model.findUnique({ where: { id }, ...includeParam });
- 
+
     case "post":
       return await Model.create({ data, ...includeParam });
- 
 
     case "put":
       if (data.password) {
