@@ -33,9 +33,6 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
     }
   }
 
-  console.log('data', dataToMap)
-
-
   return (
     <div className="h-screen">
       <Navbar headerText={"HESP Program"}></Navbar>
