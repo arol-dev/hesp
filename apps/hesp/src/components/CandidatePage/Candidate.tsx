@@ -13,12 +13,14 @@ import {
 import { decodeToken } from "../../../lib/auth/jwt";
 import { PDCcheckpoint } from "@prisma/client";
 
+ 
 interface IPageProps {
   person: ITrainee;
   WOLs: IWOLcheckpoint[];
   PDs: PDCcheckpoint[];
   decodedToken: Partial<IUser>;
 }
+ 
 
 function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
   const router = useRouter();

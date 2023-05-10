@@ -1,6 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;700&display=swap');
+
+
+body {
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+ 
+}
+
+html {
+  min-height: 100vh;
+}
 
 :root {
   --foreground-rgb: 0, 0, 0;

@@ -131,6 +131,7 @@ export interface IPDCcheckpoint {
   userId?: number;
   user?: IUser;
   SessionNotes?: SessiontNotes
+  createdAt: Date
 }
 
 export interface ITrainee {
@@ -144,6 +145,8 @@ export interface ITrainee {
   userId?: number;
   User?: IUser;
   ProvidedSoloutions: IProvidedSoloutions[];
+  PDCcheckpoint: IPDCcheckpoint[]
+  WOLcheckpoint:IWOLcheckpoint[]
 }
 
 export interface IinviteLink {
