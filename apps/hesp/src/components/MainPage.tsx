@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ITrainee, IUser } from "../../types";
+import moment from "moment";
 
 interface props {
   user: IUser[];
@@ -19,6 +20,20 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
   });
 
   const dataToMap = showIHe ? matchingUser[0].Trainee : Trainees;
+
+  const lastCheckpoint = (person: ITrainee) => {
+    const pdc = person.PDCcheckpoint;
+    const last = pdc[pdc.length - 1];
+    if (last) {
+      const ago = moment(last.createdAt).startOf("day").fromNow();
+      return ago;
+    } else {
+      return 'No checkpoint has been created'
+    }
+  }
+
+
+
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
@@ -53,15 +68,9 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                     >
                       LAST CHECKPOINT
                     </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      HE STATUS
+                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                      <span className="sr-only">New Checkpoint</span>
                     </th>
-                    {/* <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                    <span className="sr-only">New Checkpoint</span>
-                  </th> */}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
@@ -79,12 +88,8 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                         </Link>
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {person.checkpoint}
+                        {lastCheckpoint(person)}
                       </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {person.status}
-                      </td>
-
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                         <a
                           href="#"
