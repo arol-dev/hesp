@@ -65,7 +65,7 @@ model PDCcheckpoint {
 }
 
 model SessionNotes {
-  id            Int          @id @default(autoincrement())
+  id            Int            @id @default(autoincrement())
   topic         String
   objective     String
   actions       String
@@ -126,10 +126,10 @@ model Soloutions {
 }
 
 model InviteLink {
-  id        Int      @id @default(autoincrement())
-  code      String
-  used      Boolean  @default(false)
+  id        String    @id @default(uuid())
+  used      Boolean   @default(false)
   expiresAt DateTime
+  role      UserRole?
 }
 
 enum UserRole {

@@ -1,9 +1,8 @@
-import { InviteLink, PrismaClient } from "@prisma/client";
+import { InviteLink, PrismaClient, User } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt";
 import { generateJWTToken } from "../../../../lib/auth/jwt";
 import serverToDb from "../../../../lib/helperFuntions/serverToDb";
-import { IUser, ModelMapInterface, IinviteLink } from "../../../../types";
 
 const prisma = new PrismaClient();
 
@@ -24,7 +23,7 @@ const createUser = async (
   });
 };
 
-const setLinkAsUsed = async (linkId: number) => {
+const setLinkAsUsed = async (linkId: string) => {
   return await prisma.inviteLink.update({
     where: { id: linkId },
     data: { used: true },
@@ -41,7 +40,8 @@ export default async function handler(
       return;
     }
 
-    const incomingLinkToCheck: string | undefined = req.headers.referer;
+    const incomingLinkToCheck: string | undefined =
+      req.headers.referer?.split("signup/")[1];
     if (!incomingLinkToCheck) {
       res.status(400).json({ error: "Missing incoming link to check" });
       return;
@@ -50,7 +50,7 @@ export default async function handler(
     const linksFromDb = await serverToDb("InviteLink", "get", undefined);
 
     const link: InviteLink[] = linksFromDb.filter(
-      (link: InviteLink) => link.code === incomingLinkToCheck
+      (link: InviteLink) => link.id === incomingLinkToCheck
     );
 
     if (!link) {
@@ -65,7 +65,12 @@ export default async function handler(
     }
 
     const { firstName, lastName, email, password } = req.body;
-    const newUser: any = await createUser(firstName, lastName, email, password);
+    const newUser: User = await createUser(
+      firstName,
+      lastName,
+      email,
+      password
+    );
 
     if (newUser) {
       await setLinkAsUsed(link[0].id);
