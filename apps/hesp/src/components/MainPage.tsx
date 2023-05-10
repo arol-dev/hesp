@@ -33,9 +33,6 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
     }
   }
 
-
-
-
   return (
     <div className="h-screen">
       <Navbar headerText={"HESP Program"}></Navbar>
@@ -53,7 +50,7 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
           </div>
         </div>
         <div className="mt-8 flow-root">
-          {matchingUser && matchingUser.length > 0 ? (
+          {matchingUser && matchingUser.length > 0 && dataToMap.length > 0 ? (
             <div className="px-4 sm:px-6 lg:px-8 pb-12">
               <div className="mt-8 flow-root">
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
