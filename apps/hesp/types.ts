@@ -114,8 +114,9 @@ export interface IWOLcheckpoint {
   fun: number;
   funFeel: string;
   funImprove: string;
-  userId?: number;
+  userId?: string;
   User: IUser;
+
 }
 
 export interface IPDCcheckpoint {
@@ -129,6 +130,7 @@ export interface IPDCcheckpoint {
   advancement: number;
   userId?: number;
   user?: IUser;
+  SessionNotes?: SessiontNotes
 }
 
 export interface ITrainee {
@@ -197,6 +199,7 @@ export type WOLTopics = WOLTopic[]
 export type WOLCheckpointProps = {
   onDataChange: (list: WOLTopics) => void;
   WOLSaved: boolean
+  lastWOLCheckpoint: IWOLcheckpoint | null
 }
 
 
@@ -217,10 +220,13 @@ export type SessiontNotes = SessionNote[]
 export type SessionNotesProps = {
   onSessionNotesChange: (notes: SessiontNotes) => void;
   PDSaved: boolean
+  lastPDCheckpoint:IPDCcheckpoint
 };
 
 export type NewCheckpointProps = {
   id: Number
+  lastPDCheckpoint: IPDCcheckpoint
+  lastWOLCheckpoint:IWOLcheckpoint
 }
 
 export type Rating = {
@@ -235,4 +241,5 @@ export type Ratings = Rating[]
 export type PDFormProps = {
   onRatingChange: (ratings: Ratings) => void;
 PDSaved: boolean
+lastPDCheckpoint: IPDCcheckpoint
 };

@@ -1,8 +1,9 @@
 import { ReactEventHandler, useCallback, useEffect, useState } from "react";
 import { WOLTopic, WOLTopics, WOLCheckpointProps } from "../../../../types";
 import WOLTopicCard from "./WOLTopicCard";
+import LastWOL from "./LastWOL";
 
-function WOLForm({ onDataChange, WOLSaved }: WOLCheckpointProps) {
+function WOLForm({ onDataChange, WOLSaved, lastWOLCheckpoint }: WOLCheckpointProps) {
   const [WOLformdata, setWOLformdata] = useState<WOLTopics>([
     {
       name: "Health",
@@ -83,9 +84,11 @@ function WOLForm({ onDataChange, WOLSaved }: WOLCheckpointProps) {
     setWOLformdata(newFormData);
   }, [WOLformdata])
 
+
+
   return (
     <>
-      {
+      {lastWOLCheckpoint ? <LastWOL lastWOLCheckpoint={lastWOLCheckpoint} > </LastWOL> :
         WOLformdata.map((topic: WOLTopic, index) => (
           <WOLTopicCard
             WOLSaved={WOLSaved}
@@ -101,4 +104,6 @@ function WOLForm({ onDataChange, WOLSaved }: WOLCheckpointProps) {
     </>
   )
 }
+
+
 export default WOLForm

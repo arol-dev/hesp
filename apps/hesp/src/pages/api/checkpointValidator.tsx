@@ -1,45 +1,65 @@
-import { PrismaClient } from "@prisma/client"
-import { last } from "cypress/types/lodash"
-import { NextApiRequest, NextApiResponse } from "next"
+// import { PrismaClient } from "@prisma/client"
+// import { NextApiRequest, NextApiResponse } from "next"
 
 
-const prisma = new PrismaClient()
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+// const prisma = new PrismaClient()
+// export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
-  console.log('im here')
-  const body = req.body
+//   const body = req.body
 
-  const oneMonthAgo = new Date()
-  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1)
+//   const oneMonthAgo = new Date()
+//   oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1)
 
-  const allWols = await prisma.pDCcheckpoint.findMany({
-    where: {
-      traineeId: parseInt(body.userId)
-    }
-  })
+//   const allPDs = await prisma.pDCcheckpoint.findMany({
+//     where: {
+//       traineeId: parseInt(body.userId)
+//     }
+//   })
 
-  const lastCheckpoint = await prisma.pDCcheckpoint.findFirst({
-    where: {
-      traineeId: parseInt(body.userId),
-      createdAt: {
-        gte: oneMonthAgo
-      }
-    },
-    orderBy: {
-      createdAt: 'desc'
-    }
-  })
+//   const allWols = await prisma.wOLcheckpoint.findMany({
+//     where: {
+//       traineeId: parseInt(body.userId)
+//     }
+//   })
 
-  console.log('last', lastCheckpoint)
+//   const lastPDCheckpoint = await prisma.pDCcheckpoint.findFirst({
+//     where: {
+//       traineeId: parseInt(body.userId),
+//       createdAt: {
+//         gte: oneMonthAgo
+//       }
+//     },
+//     orderBy: {
+//       createdAt: 'desc'
+//     }
+//   })
 
 
-  if (allWols.length === 0 || !lastCheckpoint) {
-    res.status(200).send('OK')
-  }
-  else {
-    res.status(500).send('Error')
-  }
-}
+//   const lastWOLCheckpoint = await prisma.wOLcheckpoint.findFirst({
+//     where: {
+//       traineeId: parseInt(body.userId),
+//       createdAt: {
+//         gte: oneMonthAgo
+//       }
+//     },
+//     orderBy: {
+//       createdAt: 'desc'
+//     }
+//   })
+
+//   // if ((allWols.length === 0 || !lastWOLCheckpoint) && (allPDs.length === 0 || !lastPDCheckpoint)) {
+//   res.status(200).send('OK')
+//   // }
+//   // if ((allWols.length === 0 || !lastWOLCheckpoint) && (allPDs.length > 0 || lastPDCheckpoint)) {
+//   //   res.status(200).send("Please create a WOL checkpoint")
+//   // }
+//   // if ((allWols.length > 0 || lastWOLCheckpoint) && (allPDs.length === 0 || !lastPDCheckpoint)) {
+//   //   res.status(200).send("Please create a PD checkpoint")
+//   // }
+//   // else {
+//   //   res.status(500).send('Error')
+//   // }
+// }
 
 
 
