@@ -1,100 +1,130 @@
 import { Radar } from "react-chartjs-2";
 import {
   Chart as chartjs,
-  LineElement, PointElement, Tooltip, Legend, RadialLinearScale, Filler, ChartDataset, ChartDataCustomTypesPerDataset, ChartDatasetProperties, ChartData, RadarController, RadarControllerChartOptions
-} from "chart.js"
-import { IWOLcheckpoint } from "../../../types";
+  LineElement,
+  PointElement,
+  Tooltip,
+  Legend,
+  RadialLinearScale,
+  Filler,
+  ChartDataset,
+  ChartDataCustomTypesPerDataset,
+  ChartDatasetProperties,
+  ChartData,
+  RadarController,
+  RadarControllerChartOptions,
+} from "chart.js";
+import { ITrainee, IWOLcheckpoint } from "../../../types";
 import { PDCcheckpoint } from "@prisma/client";
 import { IUser } from "../../../types";
 
-
-
-
 interface ChartProps {
-  person: IUser;
-  PDs: PDCcheckpoint[];
+  person: ITrainee;
   WOLs: IWOLcheckpoint[];
+  PDs: PDCcheckpoint[];
 }
 
-
-
 function Chart({ person, PDs, WOLs }: ChartProps) {
+  chartjs.register(
+    LineElement,
+    PointElement,
+    Tooltip,
+    Legend,
+    RadialLinearScale,
+    Filler
+  );
 
-  chartjs.register(LineElement, PointElement, Tooltip, Legend, RadialLinearScale, Filler)
+  let dataPD: any = {};
+  let dataWOL: any = {};
 
-
-
-  let dataPD: any = {}
-  let dataWOL: any = {}
-
-  let optionsPD = {}
-  let optionsWOL = {}
-
+  let optionsPD = {};
+  let optionsWOL = {};
+ 
+  
   if (person.PDCcheckpoint.length > 0 && person.WOLcheckpoint.length > 0) {
 
     let firstPD = person.PDCcheckpoint[0]
     let firstWOL = person.WOLcheckpoint[0]
     if (person.PDCcheckpoint.length === 1 && person.WOLcheckpoint.length === 1) {
+ 
       dataPD = {
         labels: [
-          'Trust',
-          'Follow',
-          'Task Retention',
-          'Plan Commitment',
-          'CV',
-          'Interviews',
-          'Advancement'
+          "Trust",
+          "Follow",
+          "Task Retention",
+          "Plan Commitment",
+          "CV",
+          "Interviews",
+          "Advancement",
         ],
-        datasets: [{
-          label: 'First Checkpoint',
-          data: [firstPD.trust, firstPD.willFollow, firstPD.retention, firstPD.commitment, firstPD.cv, firstPD.readyForInterviews, firstPD.advancement],
-          fill: true,
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgb(255, 99, 132)',
-          pointBackgroundColor: 'rgb(255, 99, 132)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgb(255, 99, 132)'
-        }
-        ]
+        datasets: [
+          {
+            label: "First Checkpoint",
+            data: [
+              firstPD.trust,
+              firstPD.willFollow,
+              firstPD.retention,
+              firstPD.commitment,
+              firstPD.cv,
+              firstPD.readyForInterviews,
+              firstPD.advancement,
+            ],
+            fill: true,
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            borderColor: "rgb(255, 99, 132)",
+            pointBackgroundColor: "rgb(255, 99, 132)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgb(255, 99, 132)",
+          },
+        ],
       };
 
       dataWOL = {
         labels: [
-          'Health',
-          'Career / Work',
-          'Finances',
-          'Environment',
-          'Love',
-          'Family and Friends',
-          'Personal Development',
-          'Fun'
+          "Health",
+          "Career / Work",
+          "Finances",
+          "Environment",
+          "Love",
+          "Family and Friends",
+          "Personal Development",
+          "Fun",
         ],
-        datasets: [{
-          label: 'First Checkpoint',
-          data: [firstWOL.health, firstWOL.work, firstWOL.finances, firstWOL.environment, firstWOL.love, firstWOL.familyFriends, firstWOL.personalDevelopment, firstWOL.fun],
-          fill: true,
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgb(255, 99, 132)',
-          pointBackgroundColor: 'rgb(255, 99, 132)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgb(255, 99, 132)'
-        }
-        ]
+        datasets: [
+          {
+            label: "First Checkpoint",
+            data: [
+              firstWOL.health,
+              firstWOL.work,
+              firstWOL.finances,
+              firstWOL.environment,
+              firstWOL.love,
+              firstWOL.familyFriends,
+              firstWOL.personalDevelopment,
+              firstWOL.fun,
+            ],
+            fill: true,
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            borderColor: "rgb(255, 99, 132)",
+            pointBackgroundColor: "rgb(255, 99, 132)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgb(255, 99, 132)",
+          },
+        ],
       };
-
 
       optionsPD = {
         stroke: {
           show: true,
           width: 2,
           colors: [],
-          dashArray: 0
+          dashArray: 0,
         },
         fill: {
           opacity: 0.5,
-          colors: []
+          colors: [],
         },
         scales: {
           r: {
@@ -103,22 +133,21 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
               max: 5,
               stepSize: 1,
               showLabelBackdrop: false,
-              backdropColor: "rgba(203, 197, 11, 1)"
+              backdropColor: "rgba(203, 197, 11, 1)",
             },
 
             angleLines: {
-              lineWidth: 1
+              lineWidth: 1,
             },
             gridLines: {
               color: "black",
               circular: true,
-
             },
             polygon: {
-              sides: 7
-            }
-          }
-        }
+              sides: 7,
+            },
+          },
+        },
       };
 
       optionsWOL = {
@@ -126,11 +155,11 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
           show: true,
           width: 2,
           colors: [],
-          dashArray: 0
+          dashArray: 0,
         },
         fill: {
           opacit: 0.5,
-          colors: []
+          colors: [],
         },
         scales: {
           r: {
@@ -139,18 +168,18 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
               max: 9,
               stepSize: 1,
               showLabelBackdrop: false,
-              backdropColor: "rgba(203, 197, 11, 1)"
+              backdropColor: "rgba(203, 197, 11, 1)",
             },
 
             angleLines: {
-              lineWidth: 1
+              lineWidth: 1,
             },
             gridLines: {
               color: "black",
               circular: true,
-
             },
             polygon: {
+
               sides: 7
             }
           }
@@ -166,87 +195,125 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
       const lastWOL = person.WOLcheckpoint[person.WOLcheckpoint.length - 1]
 
 
+
       dataPD = {
         labels: [
-          'Trust',
-          'Follow',
-          'Task Retention',
-          'Plan Commitment',
-          'CV',
-          'Interviews',
-          'Advancement'
+          "Trust",
+          "Follow",
+          "Task Retention",
+          "Plan Commitment",
+          "CV",
+          "Interviews",
+          "Advancement",
         ],
-        datasets: [{
-          label: 'First Checkpoint',
-          data: [firstPD.trust, firstPD.willFollow, firstPD.retention, firstPD.commitment, firstPD.cv, firstPD.readyForInterviews, firstPD.advancement],
-          fill: true,
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgb(255, 99, 132)',
-          pointBackgroundColor: 'rgb(255, 99, 132)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgb(255, 99, 132)'
-        }, {
-          label: 'Last Checkpoint',
-          data: [lastPD.trust, lastPD.willFollow, lastPD.retention, lastPD.commitment, lastPD.cv, lastPD.readyForInterviews, lastPD.advancement],
+        datasets: [
+          {
+            label: "First Checkpoint",
+            data: [
+              firstPD.trust,
+              firstPD.willFollow,
+              firstPD.retention,
+              firstPD.commitment,
+              firstPD.cv,
+              firstPD.readyForInterviews,
+              firstPD.advancement,
+            ],
+            fill: true,
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            borderColor: "rgb(255, 99, 132)",
+            pointBackgroundColor: "rgb(255, 99, 132)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgb(255, 99, 132)",
+          },
+          {
+            label: "Last Checkpoint",
+            data: [
+              lastPD.trust,
+              lastPD.willFollow,
+              lastPD.retention,
+              lastPD.commitment,
+              lastPD.cv,
+              lastPD.readyForInterviews,
+              lastPD.advancement,
+            ],
 
-          fill: true,
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgb(54, 162, 235)',
-          pointBackgroundColor: 'rgb(54, 162, 235)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgb(54, 162, 235)'
-        },
-        ]
+            fill: true,
+            backgroundColor: "rgba(54, 162, 235, 0.2)",
+            borderColor: "rgb(54, 162, 235)",
+            pointBackgroundColor: "rgb(54, 162, 235)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgb(54, 162, 235)",
+          },
+        ],
       };
 
       dataWOL = {
         labels: [
-          'Health',
-          'Career / Work',
-          'Finances',
-          'Environment',
-          'Love',
-          'Family and Friends',
-          'Personal Development',
-          'Fun'
+          "Health",
+          "Career / Work",
+          "Finances",
+          "Environment",
+          "Love",
+          "Family and Friends",
+          "Personal Development",
+          "Fun",
         ],
-        datasets: [{
-          label: 'First Checkpoint',
-          data: [firstWOL.health, firstWOL.work, firstWOL.finances, firstWOL.environment, firstWOL.love, firstWOL.familyFriends, firstWOL.personalDevelopment, firstWOL.fun],
-          fill: true,
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgb(255, 99, 132)',
-          pointBackgroundColor: 'rgb(255, 99, 132)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgb(255, 99, 132)'
-        }, {
-          label: 'Last Checkpoint',
-          data: [lastWOL.health, lastWOL.work, lastWOL.finances, lastWOL.environment, lastWOL.love, lastWOL.familyFriends, lastWOL.personalDevelopment, lastWOL.fun],
-          fill: true,
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgb(54, 162, 235)',
-          pointBackgroundColor: 'rgb(54, 162, 235)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgb(54, 162, 235)'
-        },
-        ]
+        datasets: [
+          {
+            label: "First Checkpoint",
+            data: [
+              firstWOL.health,
+              firstWOL.work,
+              firstWOL.finances,
+              firstWOL.environment,
+              firstWOL.love,
+              firstWOL.familyFriends,
+              firstWOL.personalDevelopment,
+              firstWOL.fun,
+            ],
+            fill: true,
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            borderColor: "rgb(255, 99, 132)",
+            pointBackgroundColor: "rgb(255, 99, 132)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgb(255, 99, 132)",
+          },
+          {
+            label: "Last Checkpoint",
+            data: [
+              lastWOL.health,
+              lastWOL.work,
+              lastWOL.finances,
+              lastWOL.environment,
+              lastWOL.love,
+              lastWOL.familyFriends,
+              lastWOL.personalDevelopment,
+              lastWOL.fun,
+            ],
+            fill: true,
+            backgroundColor: "rgba(54, 162, 235, 0.2)",
+            borderColor: "rgb(54, 162, 235)",
+            pointBackgroundColor: "rgb(54, 162, 235)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgb(54, 162, 235)",
+          },
+        ],
       };
-
 
       optionsPD = {
         stroke: {
           show: true,
           width: 2,
           colors: [],
-          dashArray: 0
+          dashArray: 0,
         },
         fill: {
           opacity: 0.5,
-          colors: []
+          colors: [],
         },
         scales: {
           r: {
@@ -255,22 +322,21 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
               max: 5,
               stepSize: 1,
               showLabelBackdrop: false,
-              backdropColor: "rgba(203, 197, 11, 1)"
+              backdropColor: "rgba(203, 197, 11, 1)",
             },
 
             angleLines: {
-              lineWidth: 1
+              lineWidth: 1,
             },
             gridLines: {
               color: "black",
               circular: true,
-
             },
             polygon: {
-              sides: 7
-            }
-          }
-        }
+              sides: 7,
+            },
+          },
+        },
       };
 
       optionsWOL = {
@@ -278,11 +344,11 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
           show: true,
           width: 2,
           colors: [],
-          dashArray: 0
+          dashArray: 0,
         },
         fill: {
           opacit: 0.5,
-          colors: []
+          colors: [],
         },
         scales: {
           r: {
@@ -291,26 +357,26 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
               max: 9,
               stepSize: 1,
               showLabelBackdrop: false,
-              backdropColor: "rgba(203, 197, 11, 1)"
+              backdropColor: "rgba(203, 197, 11, 1)",
             },
 
             angleLines: {
-              lineWidth: 1
+              lineWidth: 1,
             },
             gridLines: {
               color: "black",
               circular: true,
-
             },
             polygon: {
-              sides: 7
-            }
-          }
-        }
-      }
+              sides: 7,
+            },
+          },
+        },
+      };
     }
   }
 
+ 
 
 
 
@@ -335,6 +401,7 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
       </>
   )
 
+ 
 }
 
-export default Chart
+export default Chart;

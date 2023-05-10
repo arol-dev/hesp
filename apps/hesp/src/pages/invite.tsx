@@ -3,23 +3,18 @@ import { Context, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Head from "next/head";
 import Link from "next/link";
+import { authenticateAndGetToken } from "../../lib/auth/authUtils";
+import { IUser } from "../../types";
+interface IPageProps {
+  user: IUser;
+}
 
-export default function InvitePage({ user }: any) {
+const InvitePage: React.FC<IPageProps> = ({ user }: IPageProps) => {
   const [role, setRole] = useState("");
   const [link, setLink] = useState("");
 
   const generateInviteLink = async (e: any) => {
     e.preventDefault();
-
-    const dynamicID = uuidv4();
-
-    const inviteLink = `${window.location.origin}/signup/${dynamicID}`;
-
-    const today = new Date();
-    const expiresAt = new Date(today);
-
-    // link that expires 7 days from now
-    expiresAt.setDate(today.getDate() + 7);
 
     const res = await fetch("/api/auth/invite", {
       method: "POST",
@@ -27,14 +22,15 @@ export default function InvitePage({ user }: any) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        code: inviteLink,
-        expiresAt: expiresAt,
+        role,
       }),
     });
 
+    // currentHost
+    const host = window.location.host;
     const data = await res.json();
 
-    setLink(data.code);
+    setLink(`http://${host}/signup/${data.id}`);
   };
 
   return (
@@ -44,10 +40,9 @@ export default function InvitePage({ user }: any) {
       </Head>
 
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-        {user?.user?.role === "STAFF" ? (
+        {user.role === "ADMIN" ? (
           <div className="w-full max-w-md p-6 bg-white rounded-md shadow-md">
             <h2 className="text-2xl font-bold mb-4">Generate Invite Link</h2>
-            <button onClick={() => console.log(user)}>click me</button>
 
             <form onSubmit={generateInviteLink}>
               <div className="mb-4">
@@ -64,9 +59,8 @@ export default function InvitePage({ user }: any) {
                   onChange={(e) => setRole(e.target.value)}
                   required
                 >
-                  <option value="user">User</option>
-                  <option value="admin">Admin</option>
-                  <option value="he">Homeless entrepreneur</option>
+                  <option value="User">User</option>
+                  <option value="Admin">Admin</option>
                 </select>
               </div>
               <button
@@ -76,6 +70,9 @@ export default function InvitePage({ user }: any) {
                 Generate Link
               </button>
             </form>
+            <p className="mt-3 ml-3">
+              Generate a link and share it with the person signing up.
+            </p>
             {link && (
               <div className="mt-4 p-3 bg-green-100 border border-green-400 rounded-md">
                 <p className="text-sm font-medium">Invite Link:</p>
@@ -106,23 +103,28 @@ export default function InvitePage({ user }: any) {
       </div>
     </>
   );
-}
+};
 
 export async function getServerSideProps(context: {
   req: { headers: { host: string; cookie: string } };
 }) {
-  const host = context.req.headers.host;
+  const decodedToken = await authenticateAndGetToken(context);
+  const cookies = context.req.headers.cookie;
 
-  const user = await fetch(`http://${host}/api/auth/authenticate`, {
-    method: "GET",
-    headers: {
-      cookie: context.req.headers.cookie,
-    },
-  }).then((res) => res.json());
+  if (!cookies) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
 
   return {
     props: {
-      user: user,
+      user: decodedToken,
     },
   };
 }
+
+export default InvitePage;

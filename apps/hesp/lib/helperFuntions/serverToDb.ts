@@ -24,10 +24,17 @@ export default async function serverToDb(
   if (req === undefined) {
     throw new Error("Invalid request");
   }
- 
+
   const id = req.query.id ? parseInt(req.query.id as string) : null;
-  const data = typeof req.body === "string" && req.body.trim() !== "" ? JSON.parse(req.body) : {};
- 
+
+  let data;
+
+  if (typeof req.body === "string") {
+    data = req.body.trim() !== "" ? JSON.parse(req.body) : {};
+  }
+  if (typeof req.body === "object" && req.body !== null) {
+    data = req.body;
+  }
 
   switch (action) {
     case "get":
@@ -40,7 +47,8 @@ export default async function serverToDb(
       if (data.password) {
         data.password = await bcrypt.hash(data.password, 10);
       }
-      return await Model.update({ where: { id }, data, ...includeParam });
+      await Model.update({ where: { id }, data, ...includeParam });
+      return await Model.findUnique({ where: { id }, ...includeParam });
 
     case "delete":
       return await Model.delete({ where: { id } });
