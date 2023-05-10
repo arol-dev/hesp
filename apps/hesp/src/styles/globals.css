@@ -5,7 +5,13 @@
 
 
 body {
-  font-family: 'Inter', sans-serif
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+ 
+}
+
+html {
+  min-height: 100vh;
 }
 
 :root {

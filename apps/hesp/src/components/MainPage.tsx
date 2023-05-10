@@ -37,7 +37,7 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
 
 
   return (
-    <div className="h-full">
+    <div className="h-screen">
       <Navbar headerText={"HESP Program"}></Navbar>
       <div className="px-4 sm:px-6 lg:px-8 ">
         <div className="sm:flex sm:items-center">
@@ -62,7 +62,7 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                       <table className="min-w-full divide-y divide-gray-300">
                         <thead className="bg-gray-50">
                           <tr>
-                            <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-medium text-gray-500 sm:pl-6">
+                            <th scope="col" className="py-3.5 pl-4 pr-80 text-left text-sm font-medium text-gray-500 sm:pl-6">
                               NAME
                             </th>
                             <th scope="col" className="px-3 py-3.5 text-left text-sm font-medium text-gray-500">
@@ -81,7 +81,7 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                           {dataToMap.map((person: ITrainee, index: number) => (
                             <tr key={index}>
 
-                              <td className="flex whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                              <td className="flex whitespace-nowrap py-4 pl-4  pr-80 text-sm font-medium text-gray-900 sm:pl-6">
                                 <div className="mr-3">
                                   <img
                                     className="h-10 w-10 rounded-full"
