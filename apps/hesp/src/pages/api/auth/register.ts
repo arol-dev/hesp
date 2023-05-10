@@ -10,7 +10,8 @@ const createUser = async (
   firstName: string,
   lastName: string,
   email: string,
-  password: string
+  password: string,
+  role: "ADMIN" | "STAFF"
 ) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   return await prisma.user.create({
@@ -19,6 +20,7 @@ const createUser = async (
       lastName,
       email,
       password: hashedPassword,
+      role,
     },
   });
 };
@@ -63,13 +65,20 @@ export default async function handler(
       res.status(401).json({ error: "Link is already used or expired" });
       return;
     }
+    const { role } = link[0];
+
+    if (role === null) {
+      res.status(401).json({ error: "Invalid role" });
+      return;
+    }
 
     const { firstName, lastName, email, password } = req.body;
     const newUser: User = await createUser(
       firstName,
       lastName,
       email,
-      password
+      password,
+      role
     );
 
     if (newUser) {
