@@ -15,7 +15,6 @@ interface props {
 const Main: React.FC<props> = ({ user, jwt, Trainees }) => {
   return (
     <div>
-      <Navbar headerText={"HESP Program"}></Navbar>
       <List user={user} jwt={jwt} Trainees={Trainees}></List>
     </div>
   );

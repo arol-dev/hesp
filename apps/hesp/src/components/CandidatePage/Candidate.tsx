@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import AssignPerson from "./AssignCoach";
 
 function Candidate({ person, WOLs, PDs }: any) {
-
+  console.log('person', person)
 
   const router = useRouter()
 

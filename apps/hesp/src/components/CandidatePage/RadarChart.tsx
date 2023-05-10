@@ -30,11 +30,11 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
   let optionsPD = {}
   let optionsWOL = {}
 
-  if (PDs.length > 0 && WOLs.length > 0) {
+  if (person.PDCcheckpoint.length > 0 && person.WOLcheckpoint.length > 0) {
 
-    let firstPD = PDs[0]
-    let firstWOL = WOLs[0]
-    if (PDs.length === 1 && WOLs.length === 1) {
+    let firstPD = person.PDCcheckpoint[0]
+    let firstWOL = person.WOLcheckpoint[0]
+    if (person.PDCcheckpoint.length === 1 && person.WOLcheckpoint.length === 1) {
       dataPD = {
         labels: [
           'Trust',
@@ -162,8 +162,8 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
     }
     else {
 
-      const lastPD = PDs[PDs.length - 1]
-      const lastWOL = WOLs[WOLs.length - 1]
+      const lastPD = person.PDCcheckpoint[person.PDCcheckpoint.length - 1]
+      const lastWOL = person.WOLcheckpoint[person.WOLcheckpoint.length - 1]
 
 
       dataPD = {
@@ -315,7 +315,7 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
 
 
   return (
-    (PDs.length === 0 && WOLs.length === 0) ? <> Nothing to show</> :
+    (person.PDCcheckpoint.length === 0 && person.WOLcheckpoint.length === 0) ? <> Nothing to show</> :
       <div className="flex ">
         <div className=" bg-white  p-10" >
           <h3 className="px-5 py-5 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
