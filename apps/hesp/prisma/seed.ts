@@ -5,6 +5,11 @@ const hashPsw = async (password: string) => await bcrypt.hash(password, 10);
 
 const prisma = new PrismaClient()
 async function main() {
+ 
+
+
+
+
   const alice = await prisma.user.upsert({
     where: { email: "alice@prisma.io" },
     update: {},
@@ -13,7 +18,7 @@ async function main() {
       lastName: "Andrews",
       role: "STAFF",
       email: "alice@prisma.io",
-      password: await hashPsw('12345')
+      password: await hashPsw('12345'),
     }
   })
 
@@ -30,6 +35,8 @@ async function main() {
     }
   })
 
+
+
   const bob = await prisma.trainee.create({
     data: {
       firstName: "Bob",
@@ -37,8 +44,21 @@ async function main() {
       email: "bob@prisma.io",
       phone: "+3497867853",
       registerNumber: "023/1234",
+      coachId: Number(`${alice.id}`)
     }
   })
+
+  const john = await prisma.trainee.create({
+    data: {
+      firstName: "John",
+      lastName: "Williams",
+      email: "john@prisma.io",
+      phone: "+3497438963478853",
+      registerNumber: "023/19764",
+      coachId: Number(`${alice.id}`)
+    }
+  })
+
 
   const PDCcheckpoint = await prisma.PDCcheckpoint.create({
     data: {

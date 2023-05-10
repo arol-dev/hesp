@@ -23,9 +23,10 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
   const dataToMap = showIHe ? matchingUser[0].Trainee : Trainees;
 
   const lastCheckpoint = (person: ITrainee) => {
+
     const pdc = person.PDCcheckpoint;
-    const last = pdc[pdc.length - 1];
-    if (last) {
+    if (pdc) {
+      const last = pdc[pdc.length - 1];
       const ago = moment(last.createdAt).startOf("day").fromNow();
       return ago;
     } else {
@@ -76,7 +77,7 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
                           {dataToMap.map((person: ITrainee, index: number) => (
-                            <tr key={index}>
+                            <tr data-cy="trainee-row" key={index}>
 
                               <td className="flex whitespace-nowrap py-4 pl-4  pr-80 text-sm font-medium text-gray-900 sm:pl-6">
                                 <div className="mr-3">
@@ -109,6 +110,8 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a
                                 href={`/candidates/${person.id}/checkpoint`}
                                 className="text-indigo-600 hover:text-indigo-900"
+                                data-cy='trainee-new-checkpoint'
+                                data-cy-target={`${person.firstName}`}
                               >
                                 New Checkpoint
                                 <span className="sr-only">

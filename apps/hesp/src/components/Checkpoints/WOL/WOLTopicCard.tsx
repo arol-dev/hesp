@@ -45,12 +45,14 @@ const WOLTopicCard: React.FC<WOLTopicCardProps> = ({ topic, index, onRatingChang
                     <div className="flex rounded-md  focus-within:ring-indigo-600 sm:max-w-md">
                       <div className="flex items-center space-x-2">
                         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
-                          <label
-                            htmlFor={`${topic.name}-${number}`}
-                            key={`${index}-${number}`}
-                          >
+                          <>
+                            <label
+                              htmlFor={`${topic.name}-${number}`}
+                              key={`${index}-${number}`}
+                            />
                             <input
                               disabled={WOLSaved}
+                              data-cy='bar-input'
                               type="checkbox"
                               name={`${topic.name}`}
                               id={`${topic.name}-${number}`}
@@ -69,7 +71,8 @@ const WOLTopicCard: React.FC<WOLTopicCardProps> = ({ topic, index, onRatingChang
                             >
                               {number}
                             </span>
-                          </label>
+
+                          </>
                         ))}
                       </div>
                     </div>

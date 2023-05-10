@@ -156,6 +156,7 @@ function NewCheckpoint({ id, lastPDCheckpoint, lastWOLCheckpoint }: NewCheckpoin
             {lastPDCheckpoint ? <></> :
               <span className="sm:ml-3">
                 <button
+                  data-cy='pd-button'
                   onClick={(event) => {
                     handleSubmit(event);
                   }}
@@ -209,7 +210,7 @@ function NewCheckpoint({ id, lastPDCheckpoint, lastWOLCheckpoint }: NewCheckpoin
             {lastWOLCheckpoint ? <></> :
               <span className="sm:ml-3">
                 <button
-
+                  data-cy='wol-button'
                   onClick={(event) => {
                     handleSubmitWol(event);
                   }}
