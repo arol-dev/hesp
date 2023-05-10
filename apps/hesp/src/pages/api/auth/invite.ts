@@ -1,5 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import serverToDb from "../../../../lib/helperFuntions/serverToDb";
+import { decodeToken } from "../../../../lib/auth/jwt";
+import { PrismaClient } from "@prisma/client";
+import { IUser } from "../../../../types";
+
+const prisma = new PrismaClient();
 
 export default async function handler(
   req: NextApiRequest,
@@ -7,10 +12,43 @@ export default async function handler(
 ) {
   try {
     if (req.method === "POST") {
-      // destructure the body and add a key value pair
+      const cookie = req.cookies;
+      const { role } = req.body;
 
-      const newLink = await serverToDb("InviteLink", "post", req);
-      res.status(200).json(newLink);
+      const token = cookie.token;
+
+      if (typeof token === "string") {
+        const decodedToken = decodeToken(token);
+
+        if (decodedToken !== null && typeof decodeToken !== "string") {
+          const userId = (decodedToken as IUser).id;
+          const user = await prisma.user.findUnique({
+            where: { id: userId },
+          });
+
+          if (!user || user.role !== "ADMIN") {
+            res.status(401).json({ error: "Invalid token" });
+            return;
+          }
+
+          const today = new Date();
+          const expiresAt = new Date(today);
+
+          expiresAt.setDate(today.getDate() + 7);
+
+          const roleToPass = role === "Admin" ? "ADMIN" : "STAFF";
+
+          const inviteLink = await prisma.inviteLink.create({
+            data: {
+              expiresAt: expiresAt,
+              role: roleToPass,
+            },
+          });
+
+          res.status(200).json(inviteLink);
+        }
+      }
+      res.status(401);
     }
     if (req.method === "GET") {
       const links = await serverToDb("InviteLink", "get", undefined);

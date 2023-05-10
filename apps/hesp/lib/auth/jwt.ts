@@ -1,10 +1,8 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { config } from "dotenv";
-import { IUser } from "../../types";
 import { User } from "@prisma/client";
 
 config();
-
 
 const secret: string | undefined = process.env.JWT_SECRET;
 if (!secret) {
@@ -32,7 +30,7 @@ export const verifyToken = (token: string) => {
   return jwt.verify(token, process.env.JWT_SECRET as string);
 };
 
-export const decodeToken = (token: string) => {
+export const decodeToken = (token: string): JwtPayload | null | string => {
   // Extract the JWT token from the cookies
   token
     .split("; ")

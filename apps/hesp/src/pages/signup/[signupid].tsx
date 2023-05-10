@@ -13,8 +13,9 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: FormEvent<HTMLElement>) => {
     e.preventDefault();
+    const host = window.location.host;
 
-    const res = await fetch("http://localhost:3001/api/auth/register", {
+    const res = await fetch(`http://${host}}/api/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,7 +29,6 @@ export default function SignupPage() {
     });
 
     const data = await res.json();
-
 
     if (data.user.role) {
       router.push("/");
