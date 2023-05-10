@@ -4,15 +4,28 @@ import Chart from "./RadarChart";
 import { useRouter } from "next/router";
 
 import AssignPerson from "./AssignCoach";
+import {
+  ITrainee,
+  IUser,
+  IWOLcheckpoint,
+  WOLCheckpointProps,
+} from "../../../types";
+import { decodeToken } from "../../../lib/auth/jwt";
+import { PDCcheckpoint } from "@prisma/client";
 
-function Candidate({ person, WOLs, PDs }: any) {
+interface IPageProps {
+  person: ITrainee;
+  WOLs: IWOLcheckpoint[];
+  PDs: PDCcheckpoint[];
+  decodedToken: Partial<IUser>;
+}
 
-
-  const router = useRouter()
-
+function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
+  const router = useRouter();
+  const { role } = decodedToken;
   function handleClickNewCheckpoint(event: React.MouseEvent) {
     event.preventDefault();
-    router.push(`/candidates/${person.id}/checkpoint`)
+    router.push(`/candidates/${person.id}/checkpoint`);
   }
 
   return (
@@ -26,7 +39,7 @@ function Candidate({ person, WOLs, PDs }: any) {
             </h3>
           </div>
           <div className="flex pb-8 lg:ml-4 lg:mt-0">
-            <AssignPerson />
+            {role === "ADMIN" && <AssignPerson />}
             <span className="hidden sm:block">
               <button
                 type="button"
@@ -157,11 +170,12 @@ function Candidate({ person, WOLs, PDs }: any) {
                   clipRule="evenodd"
                 />
               </svg>
-              See All Checkpoints                </a>
+              See All Checkpoints{" "}
+            </a>
           </button>
         </span>
       </div>
-    </div >
+    </div>
   );
 }
 export default Candidate;
