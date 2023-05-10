@@ -97,14 +97,16 @@ const AssignPerson = () => {
             <option value="" disabled hidden>
               Select a Coach to assign.
             </option>
-            {people.map((person: IUser, index: number) => (
-              <option
-                key={index}
-                value={`${person.firstName} ${person.lastName}`}
-              >
-                {`${person.firstName} ${person.lastName}`}
-              </option>
-            ))}
+            {people
+              .filter((person: IUser) => person.role === "STAFF")
+              .map((person: IUser, index: number) => (
+                <option
+                  key={index}
+                  value={`${person.firstName} ${person.lastName}`}
+                >
+                  {`${person.firstName} ${person.lastName}`}
+                </option>
+              ))}
           </select>
           <button
             className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

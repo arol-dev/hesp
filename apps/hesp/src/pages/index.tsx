@@ -33,7 +33,7 @@ export async function getServerSideProps(context: any) {
       },
     };
   }
-  const user = await serverToDb("User", "get", undefined);
+  const user = await serverToDb("User", "get");
   const HEs = await serverToDb("Trainee", "get");
   return {
     props: {

@@ -1,14 +1,49 @@
 import Candidate from "@/components/CandidatePage/Candidate";
 import { GetServerSideProps } from "next";
+import { authenticateAndGetToken } from "../../../lib/auth/authUtils";
+import {
+  ITrainee,
+  IUser,
+  IWOLcheckpoint,
+  WOLCheckpointProps,
+} from "../../../types";
+import { PDCcheckpoint } from "@prisma/client";
 
-export function Profile({ person, WOLs, PDs }: any) {
-  return <Candidate WOLs={WOLs} person={person} pds={PDs}></Candidate>;
+interface IPageProps {
+  person: ITrainee;
+  WOLs: IWOLcheckpoint[];
+  PDs: PDCcheckpoint[];
+  decodedToken: Partial<IUser>;
+}
+
+export function Profile({ person, WOLs, PDs, decodedToken }: IPageProps) {
+  return (
+    <Candidate
+      WOLs={WOLs}
+      person={person}
+      PDs={PDs}
+      decodedToken={decodedToken}
+    ></Candidate>
+  );
 }
 export default Candidate;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id }: any = context.query
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
+  const decodedToken = await authenticateAndGetToken(context);
+  const cookies = context.req.headers.cookie;
+
+  if (!cookies) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  const { id }: any = context.query;
   const domainName = context.req.headers.host;
+
   const person = await fetch(`http://${domainName}/api/he/${id}`).then((res) =>
     res.json()
   );
@@ -25,7 +60,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       person,
       WOLs,
-      PDs
+      PDs,
+      decodedToken,
     },
   };
 };
