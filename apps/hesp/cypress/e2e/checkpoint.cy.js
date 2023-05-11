@@ -34,29 +34,33 @@ const TO_PD_BUTTON = "Switch to Professional Development";
 const TO_WOL_BUTTON = "Switch to WOL";
 
 describe("checkpoints", () => {
+  // beforeEach(() => {
+  //   cy.session([STAFF.email, STAFF.password], () => {
+  //     cy.visit(url);
+  //     cy.get('input[name="email"]').type(STAFF.email);
+  //     cy.get('input[name="password"]').type(STAFF.password);
+  //     cy.get('button[type="submit"]')
+  //       .click()
+  //       .then(() => {
+  //         cy.url().should("eq", `${url}/`);
+  //       });
+  //   });
+  //   cy.visit(url);
+
   beforeEach(() => {
-    cy.session([STAFF.email, STAFF.password], () => {
-      cy.visit(url);
-      cy.get('input[name="email"]').type(STAFF.email);
-      cy.get('input[name="password"]').type(STAFF.password);
-      cy.get('button[type="submit"]')
-        .click()
-        .then(() => {
-          cy.url().should("eq", `${url}/`);
-        });
-    });
     cy.visit(url);
+    cy.get('input[name="email"]').type(STAFF.email);
+    cy.get('input[name="password"]').type(STAFF.password);
+    cy.get('button[type="submit"]').click();
   });
 
   describe("home page", () => {
     it("has 2 trainees", () => {
-      cy.visit(url);
       cy.get('[data-cy="trainee-row"]').should("have.length", 2);
     });
 
     describe("trainee-table", () => {
       it("render the checkpoint", () => {
-        cy.visit(url);
         cy.get("[data-cy=trainee-new-checkpoint]").should("have.length", 2);
         cy.get("[data-cy=trainee-new-checkpoint]").then(($links) => {
           $links.each((_, link) => {
@@ -72,7 +76,6 @@ describe("checkpoints", () => {
       /////////////////// BOB /////////////////////////////
       describe("bob checkpoint page", () => {
         beforeEach(() => {
-          cy.visit(url);
           cy.get(`[data-cy-target=${bob.firstName}]`).click();
         });
 
@@ -126,7 +129,6 @@ describe("checkpoints", () => {
       //////////////// JOHN ////////////////////////////
       describe("john checkpoint page", () => {
         beforeEach(() => {
-          cy.visit(url);
           cy.get(`[data-cy-target=${john.firstName}]`).click();
         });
         describe("renders the checkpoint form", () => {
