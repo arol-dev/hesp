@@ -39,9 +39,11 @@ describe("checkpoints", () => {
       cy.visit(url);
       cy.get('input[name="email"]').type(STAFF.email);
       cy.get('input[name="password"]').type(STAFF.password);
-      cy.get('button[type="submit"]').click();
-      cy.location("pathname").should("eq", "/");
-      cy.visit(url);
+      cy.get('button[type="submit"]')
+        .click()
+        .then(() => {
+          cy.url().should("eq", `${url}/`);
+        });
     });
   });
 
