@@ -62,11 +62,15 @@ function WOLForm({ onDataChange, WOLSaved, lastWOLCheckpoint }: WOLCheckpointPro
     }
   ])
 
+
+  console.log('data', WOLformdata)
+
   useEffect(() => {
     onDataChange(WOLformdata);
   }, [WOLformdata, onDataChange]);
 
   const handleRatingChange = useCallback((index: number, value: number) => {
+    console.log('rating change', index, value)
     const updatedRatings = [...WOLformdata];
     updatedRatings[index].value = value;
     setWOLformdata(updatedRatings);
@@ -83,8 +87,6 @@ function WOLForm({ onDataChange, WOLSaved, lastWOLCheckpoint }: WOLCheckpointPro
     newFormData[index].improve = event.target.value;
     setWOLformdata(newFormData);
   }, [WOLformdata])
-
-
 
   return (
     <>
