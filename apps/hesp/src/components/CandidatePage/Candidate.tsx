@@ -4,13 +4,7 @@ import Chart from "./RadarChart";
 import { useRouter } from "next/router";
 
 import AssignPerson from "./AssignCoach";
-import {
-  ITrainee,
-  IUser,
-  IWOLcheckpoint,
-  WOLCheckpointProps,
-} from "../../../types";
-import { decodeToken } from "../../../lib/auth/jwt";
+import { ITrainee, IUser, IWOLcheckpoint } from "../../../types";
 import { PDCcheckpoint } from "@prisma/client";
 
  

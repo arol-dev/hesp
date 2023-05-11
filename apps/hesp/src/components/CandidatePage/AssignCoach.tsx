@@ -26,9 +26,6 @@ const AssignPerson = () => {
     fetchPeople();
   }, []);
 
-
-
-
   const handleClick = () => {
     setShowSelect(!showSelect);
   };
@@ -43,10 +40,6 @@ const AssignPerson = () => {
 
   const handleConfirmAssignment = async () => {
     if (selectedPerson) {
-      console.log(
-        `Assigned ${selectedPerson.firstName} ${selectedPerson.lastName} ${selectedPerson.id}`
-      );
-
       // get the last part of the path
       const path = window.location.pathname;
       const id = path.split("/").pop();
@@ -73,8 +66,6 @@ const AssignPerson = () => {
           `Error assigning ${selectedPerson.firstName} ${selectedPerson.lastName}.`
         );
       }
-
-      console.log(await response.json());
     }
 
     setShowSelect(false);
@@ -83,7 +74,8 @@ const AssignPerson = () => {
   return (
     <div className="mr-3 ">
       <button
-        className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={handleClick}
+        className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        onClick={handleClick}
       >
         Assign Coach
       </button>
