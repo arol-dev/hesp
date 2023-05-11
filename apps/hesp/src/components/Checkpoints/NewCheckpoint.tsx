@@ -70,7 +70,9 @@ function NewCheckpoint({ id, lastPDCheckpoint, lastWOLCheckpoint }: NewCheckpoin
         window.alert("Checkpoint can't be submitted")
       }
       setWOLSaved(!WOLSaved)
-      // window.location.reload()
+      // window.location.reload()   
+      router.push(`/candidates/${id}/checkpoint`)
+
     });
   }
 

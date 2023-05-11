@@ -72,6 +72,7 @@ function LastWOL({ lastWOLCheckpoint }: ILastWOLProps) {
     <>
       {WOLformdata.map((topic: WOLTopic, index) => (
         <div
+          data-cy="last-wol-topic-card"
           key={index}
           className="space-y-10 divide-y divide-gray-900/10 pl-5 pr-5 pb-10"
         >
@@ -108,11 +109,12 @@ function LastWOL({ lastWOLCheckpoint }: ILastWOLProps) {
                               key={`${index}-${number}`}
                             >
                               <input
+                                disabled={true}
                                 type="checkbox"
                                 name={`${topic.name}`}
                                 id={`${topic.name}-${number}`}
                                 value={`${topic.value}`}
-                                readOnly={topic.value === number}
+                                // readOnly={topic.value === number}
                                 className="hidden"
                               />
                               <span

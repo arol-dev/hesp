@@ -69,10 +69,12 @@ function PDForm({ onRatingChange, PDSaved, lastPDCheckpoint }: PDFormProps) {
   }
 
   return (
+
     lastPDCheckpoint ? (<LastPD lastPDCheckpoint={lastPDCheckpoint} > </LastPD>) :
       <div>
         {ratings.map((rating, index) => (
           <div
+            data-cy="pd-topic-card"
             key={index}
             className="space-y-10 divide-y divide-gray-900/10 pl-5 pr-5 pb-10"
           >
@@ -124,6 +126,7 @@ function PDForm({ onRatingChange, PDSaved, lastPDCheckpoint }: PDFormProps) {
                                   className="hidden"
                                 />
                                 <span
+                                  data-cy="rating-input"
                                   className={`${rating.value === number
                                     ? "bg-blue-500 text-white"
                                     : "bg-white text-gray-900"
@@ -142,6 +145,7 @@ function PDForm({ onRatingChange, PDSaved, lastPDCheckpoint }: PDFormProps) {
               </form>
             </div>
           </div>
+
         ))}
       </div >
   )
