@@ -9,12 +9,13 @@ interface ITeamProps {
 }
 
 function Team({ coaches }: ITeamProps) {
-  return (
-    <>
-      <Navbar headerText="Admin"></Navbar>
-      <Teampage coaches={coaches}></Teampage>
-    </>
-  );
+ 
+
+  return (<>
+    <Teampage coaches={coaches}></Teampage>
+  </>
+  )
+ 
 }
 export default Team;
 
