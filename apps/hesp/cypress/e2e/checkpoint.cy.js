@@ -47,11 +47,6 @@ describe("checkpoints", () => {
     });
   });
 
-  it("has 2 trtainees", () => {
-    cy.visit(url);
-    cy.get('[data-cy="trainee-row"]').should("have.length", 2);
-  });
-
   describe("home page", () => {
     it("has 2 trainees", () => {
       cy.visit(url);
