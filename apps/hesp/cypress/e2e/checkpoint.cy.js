@@ -34,56 +34,42 @@ const TO_PD_BUTTON = "Switch to Professional Development";
 const TO_WOL_BUTTON = "Switch to WOL";
 
 describe("checkpoints", () => {
-  beforeEach(() => {
-    cy.visit(url);
+  // beforeEach(() => {
+  //   cy.session([STAFF.email, STAFF.password], () => {
+  //     cy.visit(url);
+  //     cy.get('input[name="email"]').type(STAFF.email);
+  //     cy.get('input[name="password"]').type(STAFF.password);
+  //     cy.get('button[type="submit"]')
+  //       .click()
+  //       .then(() => {
+  //         cy.url().should("eq", `${url}/`);
+  //       });
+  //   });
+  //   cy.visit(url);
+
+  it("login with staff credentials", () => {
+    cy.get('input[name="email"]').type(STAFF.email);
+    cy.get('input[name="password"]').type(STAFF.password);
+    cy.get('button[type="submit"]')
+      .click()
+      .then(() => {
+        cy.url().should("eq", `${url}/`);
+      });
   });
 
-  describe("form structure", () => {
-    it("exist", () => {
-      cy.get("form").should("exist");
-      cy.get('input[name="email"]').should("exist");
-      cy.get('input[name="password"]').should("exist");
-    });
+  beforeEach(() => {
+    cy.visit(url);
+    cy.get('input[name="email"]').type(STAFF.email);
+    cy.get('input[name="password"]').type(STAFF.password);
+    cy.get('button[type="submit"]').click();
+  });
 
-    it("has required mail and password inputs", () => {
-      cy.get("input").then(($inputs) => {
-        expect($inputs).to.have.length(3);
-        $inputs.each((_, item) => {
-          expect(item).to.have.attr("name").and.be.oneOf(INPUT_NAMES);
-          if (item.name in INPUT_TYPES) {
-            expect(item).to.have.attr("type").and.be.oneOf(INPUT_TYPES);
-          }
-        });
-      });
+  describe("home page", () => {
+    it("has 2 trainees", () => {
+      cy.get('[data-cy="trainee-row"]').should("have.length", 2);
     });
   });
 });
-// beforeEach(() => {
-//   cy.session([STAFF.email, STAFF.password], () => {
-//     cy.visit(url);
-//     cy.get('input[name="email"]').type(STAFF.email);
-//     cy.get('input[name="password"]').type(STAFF.password);
-//     cy.get('button[type="submit"]')
-//       .click()
-//       .then(() => {
-//         cy.url().should("eq", `${url}/`);
-//       });
-//   });
-//   cy.visit(url);
-
-//   beforeEach(() => {
-//     cy.visit(url);
-//     cy.get('input[name="email"]').type(STAFF.email);
-//     cy.get('input[name="password"]').type(STAFF.password);
-//     cy.get('button[type="submit"]').click();
-//   });
-
-//   describe("home page", () => {
-//     it("has 2 trainees", () => {
-//       cy.get('[data-cy="trainee-row"]').should("have.length", 2);
-//     });
-//   });
-// });
 
 //     describe("trainee-table", () => {
 //       it("render the checkpoint", () => {
