@@ -45,6 +45,7 @@ describe("checkpoints", () => {
           cy.url().should("eq", `${url}/`);
         });
     });
+    cy.visit(url);
   });
 
   describe("home page", () => {
