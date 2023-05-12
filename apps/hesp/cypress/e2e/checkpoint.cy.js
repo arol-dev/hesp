@@ -66,56 +66,56 @@ describe("checkpoints", () => {
     });
 
     //       /////////////////// BOB /////////////////////////////
-    describe("bob checkpoint page", () => {
-      beforeEach(() => {
-        cy.visit(url);
-        cy.get(`[data-cy-target=${bob.firstName}]`).click();
-      });
+    // describe("bob checkpoint page", () => {
+    //   beforeEach(() => {
+    //     cy.visit(url);
+    //     cy.get(`[data-cy-target=${bob.firstName}]`).click();
+    //   });
 
-      describe("renders the checkpoint info", () => {
-        it("starts in WOL", () => {
-          cy.get("h3").should("have.text", WOL_HEADER);
-          cy.get("h3").should("not.have.text", PD_HEADER);
-        });
+    //   describe("renders the checkpoint info", () => {
+    //     it("starts in WOL", () => {
+    //       cy.get("h3").should("have.text", WOL_HEADER);
+    //       cy.get("h3").should("not.have.text", PD_HEADER);
+    //     });
 
-        it("wol checkpoint create disabled", () => {
-          cy.get("[data-cy=wol-button]").should("not.exist");
-        });
+    //     it("wol checkpoint create disabled", () => {
+    //       cy.get("[data-cy=wol-button]").should("not.exist");
+    //     });
 
-        it("switches to PD and back to WOL and check that save button does not exist", () => {
-          cy.get("[data-cy=wol-button]").should("not.exist");
-          cy.get("button").contains(TO_PD_BUTTON).click();
-          cy.get("[data-cy=pd-button]").should("not.exist");
-          cy.get("h3")
-            .should("not.have.text", WOL_HEADER)
-            .should("include.text", PD_HEADER);
-          cy.get("button").contains(TO_WOL_BUTTON).click();
-          cy.get("h3")
-            .should("not.have.text", PD_HEADER)
-            .should("include.text", WOL_HEADER);
-        });
+    //     it("switches to PD and back to WOL and check that save button does not exist", () => {
+    //       cy.get("[data-cy=wol-button]").should("not.exist");
+    //       cy.get("button").contains(TO_PD_BUTTON).click();
+    //       cy.get("[data-cy=pd-button]").should("not.exist");
+    //       cy.get("h3")
+    //         .should("not.have.text", WOL_HEADER)
+    //         .should("include.text", PD_HEADER);
+    //       cy.get("button").contains(TO_WOL_BUTTON).click();
+    //       cy.get("h3")
+    //         .should("not.have.text", PD_HEADER)
+    //         .should("include.text", WOL_HEADER);
+    //     });
 
-        it('should not allow input in the "What makes you feel this way" textarea', () => {
-          cy.get("[data-cy=last-wol-topic-card]").each(($card, index) => {
-            cy.wrap($card).find('textarea[name="feel"]').should("be.disabled");
-          });
-        });
+    //     it('should not allow input in the "What makes you feel this way" textarea', () => {
+    //       cy.get("[data-cy=last-wol-topic-card]").each(($card, index) => {
+    //         cy.wrap($card).find('textarea[name="feel"]').should("be.disabled");
+    //       });
+    //     });
 
-        it('should not allow input in the "What can you do to improve your satisfaction level?', () => {
-          cy.get("[data-cy=last-wol-topic-card]").each(($card, index) => {
-            cy.wrap($card)
-              .find('textarea[name="improve"]')
-              .should("be.disabled");
-          });
-        });
+    //     it('should not allow input in the "What can you do to improve your satisfaction level?', () => {
+    //       cy.get("[data-cy=last-wol-topic-card]").each(($card, index) => {
+    //         cy.wrap($card)
+    //           .find('textarea[name="improve"]')
+    //           .should("be.disabled");
+    //       });
+    //     });
 
-        it("should not allow checkbox to be clicked", () => {
-          cy.get("[data-cy=last-wol-topic-card]").each(($card, index) => {
-            cy.wrap($card).find("input[type=checkbox]").should("be.disabled");
-          });
-        });
-      });
-    });
+    //     it("should not allow checkbox to be clicked", () => {
+    //       cy.get("[data-cy=last-wol-topic-card]").each(($card, index) => {
+    //         cy.wrap($card).find("input[type=checkbox]").should("be.disabled");
+    //       });
+    //     });
+    //   });
+    // });
 
     //       //////////////// JOHN ////////////////////////////
     describe("john checkpoint page", () => {
@@ -190,7 +190,33 @@ describe("checkpoints", () => {
                 .should("not.have.class", "bg-blue-500 text-white");
             });
           });
-          it("should save the form when the save button is clicked", () => {
+          it("create a WOL checkpoint when save button is clicked", () => {
+            cy.get("[data-cy=wol-topic-card]").each(($card, index) => {
+              cy.wrap($card)
+                .find('span[data-cy="bar-input"]')
+                .first()
+                .click()
+                .should("have.class", "bg-blue-500 text-white");
+            });
+
+            const feelInput = "This is how I feel";
+            cy.get("[data-cy=wol-topic-card]").each(($card, index) => {
+              cy.wrap($card)
+                .find('textarea[name="feel"]')
+                .should("not.be.disabled")
+                .type(feelInput)
+                .should("have.value", feelInput);
+            });
+
+            const improveInput = "This is how I can improve";
+            cy.get("[data-cy=wol-topic-card").each(($card, index) => {
+              cy.wrap($card)
+                .find('textarea[name="improve"]')
+                .should("not.be.disabled")
+                .type(improveInput)
+                .should("have.value", improveInput);
+            });
+
             cy.get("[data-cy=wol-button]").click();
             cy.get("button").contains(TO_PD_BUTTON).click();
             cy.get("[data-cy=pd-button]").should("exist");
@@ -226,208 +252,526 @@ describe("checkpoints", () => {
             });
           });
         });
-        describe("PD from", () => {
-          it("should navigate to PD form and check that there is save button", () => {
-            cy.get("button").contains(TO_PD_BUTTON).click();
-            cy.get("[data-cy=pd-button]").should("exist");
-            cy.get("h3")
-              .should("not.have.text", WOL_HEADER)
-              .should("include.text", PD_HEADER);
-          });
-          it("should check the checkbox, change the color when clicked, and uncheck when another number is clicked", () => {
-            cy.get("button").contains(TO_PD_BUTTON).click();
-            cy.get("[data-cy=pd-topic-card]").each(($card, index) => {
-              cy.wrap($card)
-                .find('span[data-cy="rating-input"]')
-                .first()
-                .click()
-                .should("have.class", "bg-blue-500 text-white");
+        // describe("PD from", () => {
+        //   it("should navigate to PD form and check that there is save button", () => {
+        //     cy.get("button").contains(TO_PD_BUTTON).click();
+        //     cy.get("[data-cy=pd-button]").should("exist");
+        //     cy.get("h3")
+        //       .should("not.have.text", WOL_HEADER)
+        //       .should("include.text", PD_HEADER);
+        //   });
+        //   it("should check the checkbox, change the color when clicked, and uncheck when another number is clicked", () => {
+        //     cy.get("button").contains(TO_PD_BUTTON).click();
+        //     cy.get("[data-cy=pd-topic-card]").each(($card, index) => {
+        //       cy.wrap($card)
+        //         .find('span[data-cy="rating-input"]')
+        //         .first()
+        //         .click()
+        //         .should("have.class", "bg-blue-500 text-white");
 
-              // Check the third checkbox
-              cy.wrap($card)
-                .find('span[data-cy="rating-input"]')
-                .eq(2)
-                .click()
-                .should("have.class", "bg-blue-500 text-white");
+        //       // Check the third checkbox
+        //       cy.wrap($card)
+        //         .find('span[data-cy="rating-input"]')
+        //         .eq(2)
+        //         .click()
+        //         .should("have.class", "bg-blue-500 text-white");
 
-              // Verify that the first checkbox is not checked
-              cy.wrap($card)
-                .find('span[data-cy="rating-input"]')
-                .first()
-                .should("not.have.class", "bg-blue-500 text-white");
-            });
-          });
-          it("should allow input in the first session note and save it", () => {
-            const testInput = "This is first session note";
-            cy.get("button").contains(TO_PD_BUTTON).click();
-            cy.get("[data-cy=session-note-edit-mode]")
-              .find("textarea[name=topic]")
-              .should("not.be.disabled")
-              .type(testInput)
-              .should("have.value", testInput);
+        //       // Verify that the first checkbox is not checked
+        //       cy.wrap($card)
+        //         .find('span[data-cy="rating-input"]')
+        //         .first()
+        //         .should("not.have.class", "bg-blue-500 text-white");
+        //     });
+        //   });
+        //   it("should allow input in the first session note and save it", () => {
+        //     const testInput = "This is first session note";
+        //     cy.get("button").contains(TO_PD_BUTTON).click();
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=topic]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
 
-            cy.get("[data-cy=session-note-edit-mode]")
-              .find("textarea[name=objective]")
-              .should("not.be.disabled")
-              .type(testInput)
-              .should("have.value", testInput);
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=objective]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
 
-            cy.get("[data-cy=session-note-edit-mode]")
-              .find("textarea[name=actions]")
-              .should("not.be.disabled")
-              .type(testInput)
-              .should("have.value", testInput);
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=actions]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
 
-            cy.get("[data-cy=session-note-edit-mode]")
-              .find("textarea[name=notes]")
-              .should("not.be.disabled")
-              .type(testInput)
-              .should("have.value", testInput);
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=notes]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
 
-            cy.get("[data-cy=session-note-edit-mode]")
-              .find("textarea[name=results]")
-              .should("not.be.disabled")
-              .type(testInput)
-              .should("have.value", testInput);
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=results]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
 
-            cy.get("[data-cy=session-note-edit-mode]")
-              .find("textarea[name=evaluation]")
-              .should("not.be.disabled")
-              .type(testInput)
-              .should("have.value", testInput);
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=evaluation]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
 
-            cy.get("[data-cy=save-note]").click();
-          });
+        //     cy.get("[data-cy=save-note]").click();
+        //   });
 
-          it("should render first saved session note correctly", () => {
-            //create a note and save it
-            const testInput = "This is first session note";
-            cy.get("button").contains(TO_PD_BUTTON).click();
-            cy.get("[data-cy=session-note-edit-mode]")
-              .find("textarea[name=topic]")
-              .should("not.be.disabled")
-              .type(testInput)
-              .should("have.value", testInput);
+        //   it("should check that `add topic` button is disabled when the previous note is not saved", () => {
+        //     cy.get("button").contains(TO_PD_BUTTON).click();
+        //     const stub = cy.stub();
+        //     cy.on("window:alert", stub);
 
-            cy.get("[data-cy=session-note-edit-mode]")
-              .find("textarea[name=objective]")
-              .should("not.be.disabled")
-              .type(testInput)
-              .should("have.value", testInput);
+        //     cy.get("button[cy-data=add-topic]")
+        //       .click()
+        //       .then(() => {
+        //         expect(stub.getCall(0)).to.be.calledWith(
+        //           "Please save the previous topic before adding a new one"
+        //         );
+        //       });
+        //   });
 
-            cy.get("[data-cy=session-note-edit-mode]")
-              .find("textarea[name=actions]")
-              .should("not.be.disabled")
-              .type(testInput)
-              .should("have.value", testInput);
+        //   it("should create and render first saved session note correctly", () => {
+        //     //create a note and save it
+        //     const testInput = "This is first session note";
+        //     cy.get("button").contains(TO_PD_BUTTON).click();
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=topic]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
 
-            cy.get("[data-cy=session-note-edit-mode]")
-              .find("textarea[name=notes]")
-              .should("not.be.disabled")
-              .type(testInput)
-              .should("have.value", testInput);
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=objective]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
 
-            cy.get("[data-cy=session-note-edit-mode]")
-              .find("textarea[name=results]")
-              .should("not.be.disabled")
-              .type(testInput)
-              .should("have.value", testInput);
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=actions]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
 
-            cy.get("[data-cy=session-note-edit-mode]")
-              .find("textarea[name=evaluation]")
-              .should("not.be.disabled")
-              .type(testInput)
-              .should("have.value", testInput);
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=notes]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
 
-            // render saved note
-            cy.get("[data-cy=save-note]").click();
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=results]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
 
-            const text = " This is first session note ";
-            cy.get("[data-cy=session-note-read-mode]")
-              .find("div[id=topic]")
-              .should("contain.text", testInput);
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=evaluation]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
 
-            cy.get("[data-cy=session-note-read-mode]")
-              .find("div[id=objective]")
-              .should("contain.text", testInput);
+        //     // render saved note
+        //     cy.get("[data-cy=save-note]").click();
 
-            cy.get("[data-cy=session-note-read-mode]")
-              .find("div[id=actions]")
-              .should("contain.text", testInput);
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=topic]")
+        //       .should("contain.text", testInput);
 
-            cy.get("[data-cy=session-note-read-mode]")
-              .find("div[id=notes]")
-              .should("contain.text", testInput);
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=objective]")
+        //       .should("contain.text", testInput);
 
-            cy.get("[data-cy=session-note-read-mode]")
-              .find("div[id=results]")
-              .should("contain.text", testInput);
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=actions]")
+        //       .should("contain.text", testInput);
 
-            cy.get("[data-cy=session-note-read-mode]")
-              .find("div[id=evaluation]")
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=notes]")
+        //       .should("contain.text", testInput);
 
-              .should("contain.text", testInput);
-          });
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=results]")
+        //       .should("contain.text", testInput);
 
-          it("should create a new PD checkpoint", () => {
-            cy.get("button").contains(TO_PD_BUTTON).click();
-            const testInput = "This is first session note";
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=evaluation]")
 
-            cy.get("[data-cy=session-note-edit-mode]")
-              .find("textarea[name=topic]")
-              .should("not.be.disabled")
-              .type(testInput)
-              .should("have.value", testInput);
+        //       .should("contain.text", testInput);
+        //   });
 
-            cy.get("[data-cy=session-note-edit-mode]")
-              .find("textarea[name=objective]")
-              .should("not.be.disabled")
-              .type(testInput)
-              .should("have.value", testInput);
+        //   it("should create and render first note, then successfully create second note", () => {
+        //     const testInput = "This is first session note";
+        //     cy.get("button").contains(TO_PD_BUTTON).click();
 
-            cy.get("[data-cy=session-note-edit-mode]")
-              .find("textarea[name=actions]")
-              .should("not.be.disabled")
-              .type(testInput)
-              .should("have.value", testInput);
+        //     // create and save first note
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=topic]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
 
-            cy.get("[data-cy=session-note-edit-mode]")
-              .find("textarea[name=notes]")
-              .should("not.be.disabled")
-              .type(testInput)
-              .should("have.value", testInput);
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=objective]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
 
-            cy.get("[data-cy=session-note-edit-mode]")
-              .find("textarea[name=results]")
-              .should("not.be.disabled")
-              .type(testInput)
-              .should("have.value", testInput);
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=actions]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
 
-            cy.get("[data-cy=session-note-edit-mode]")
-              .find("textarea[name=evaluation]")
-              .should("not.be.disabled")
-              .type(testInput)
-              .should("have.value", testInput);
-            cy.get("[data-cy=save-note]").click();
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=notes]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
 
-            cy.get("[data-cy=pd-topic-card]").each(($card, index) => {
-              cy.wrap($card)
-                .find('span[data-cy="rating-input"]')
-                .first()
-                .click()
-                .should("have.class", "bg-blue-500 text-white");
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=results]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
 
-              cy.get("[data-cy=pd-button]").click();
-            });
-          });
-          it("checks that pd was saved", () => {
-            cy.get("button").contains(TO_PD_BUTTON).click();
-            cy.get("[data-cy=pd-button]").should("not.exist");
-            cy.get("h3")
-              .should("not.have.text", WOL_HEADER)
-              .should("include.text", PD_HEADER);
-          });
-        });
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=evaluation]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
+
+        //     cy.get("[data-cy=save-note]").click();
+
+        //     // render first note
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=topic]")
+        //       .should("contain.text", testInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=objective]")
+        //       .should("contain.text", testInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=actions]")
+        //       .should("contain.text", testInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=notes]")
+        //       .should("contain.text", testInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=results]")
+        //       .should("contain.text", testInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=evaluation]")
+
+        //       .should("contain.text", testInput);
+
+        //     // create second note
+        //     const stub = cy.stub();
+        //     cy.on("window:alert", stub);
+
+        //     cy.get("button[cy-data=add-topic]")
+        //       .click()
+        //       .then(() => {
+        //         expect(stub.getCall(0)).to.be.calledWith(
+        //           "New note was created!"
+        //         );
+        //       });
+        //   });
+
+        //   it("should create and render first note, then successfully create second note, then save it it render both", () => {
+        //     const testInput = "This is first session note";
+        //     cy.get("button").contains(TO_PD_BUTTON).click();
+
+        //     // create and save first note
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=topic]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=objective]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=actions]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=notes]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=results]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=evaluation]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
+
+        //     cy.get("[data-cy=save-note]").click();
+
+        //     // render first note
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=topic]")
+        //       .should("contain.text", testInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=objective]")
+        //       .should("contain.text", testInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=actions]")
+        //       .should("contain.text", testInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=notes]")
+        //       .should("contain.text", testInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=results]")
+        //       .should("contain.text", testInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=evaluation]")
+
+        //       .should("contain.text", testInput);
+
+        //     // create second note
+        //     const stub = cy.stub();
+        //     cy.on("window:alert", stub);
+
+        //     cy.get("button[cy-data=add-topic]")
+        //       .click()
+        //       .then(() => {
+        //         expect(stub.getCall(0)).to.be.calledWith(
+        //           "New note was created!"
+        //         );
+        //       });
+        //     // fill second note and save
+        //     const secondInput = "This is the second note";
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=topic]")
+        //       .should("not.be.disabled")
+        //       .type(secondInput)
+        //       .should("have.value", secondInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=objective]")
+        //       .should("not.be.disabled")
+        //       .type(secondInput)
+        //       .should("have.value", secondInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=actions]")
+        //       .should("not.be.disabled")
+        //       .type(secondInput)
+        //       .should("have.value", secondInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=notes]")
+        //       .should("not.be.disabled")
+        //       .type(secondInput)
+        //       .should("have.value", secondInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=results]")
+        //       .should("not.be.disabled")
+        //       .type(secondInput)
+        //       .should("have.value", secondInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=evaluation]")
+        //       .should("not.be.disabled")
+        //       .type(secondInput)
+        //       .should("have.value", secondInput);
+
+        //     cy.get("[data-cy=save-note]").click();
+
+        //     // render first note again
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=topic]")
+        //       .should("contain.text", testInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=objective]")
+        //       .should("contain.text", testInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=actions]")
+        //       .should("contain.text", testInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=notes]")
+        //       .should("contain.text", testInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=results]")
+        //       .should("contain.text", testInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=evaluation]")
+
+        //       .should("contain.text", testInput);
+
+        //     // render second note
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=topic]")
+        //       .should("contain.text", secondInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=objective]")
+        //       .should("contain.text", secondInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=actions]")
+        //       .should("contain.text", secondInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=notes]")
+        //       .should("contain.text", secondInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=results]")
+        //       .should("contain.text", secondInput);
+
+        //     cy.get("[data-cy=session-note-read-mode]")
+        //       .find("div[id=evaluation]")
+
+        //       .should("contain.text", secondInput);
+        //   });
+
+        //   it("should create a new PD checkpoint with 2 notes", () => {
+        //     cy.get("button").contains(TO_PD_BUTTON).click();
+        //     const testInput = "This is first session note";
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=topic]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=objective]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=actions]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=notes]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=results]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=evaluation]")
+        //       .should("not.be.disabled")
+        //       .type(testInput)
+        //       .should("have.value", testInput);
+        //     cy.get("[data-cy=save-note]").click();
+
+        //     const stub = cy.stub();
+        //     cy.on("window:alert", stub);
+
+        //     cy.get("button[cy-data=add-topic]")
+        //       .click()
+        //       .then(() => {
+        //         expect(stub.getCall(0)).to.be.calledWith(
+        //           "New note was created!"
+        //         );
+        //       });
+
+        //     const secondInput = "This is the second note";
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=topic]")
+        //       .should("not.be.disabled")
+        //       .type(secondInput)
+        //       .should("have.value", secondInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=objective]")
+        //       .should("not.be.disabled")
+        //       .type(secondInput)
+        //       .should("have.value", secondInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=actions]")
+        //       .should("not.be.disabled")
+        //       .type(secondInput)
+        //       .should("have.value", secondInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=notes]")
+        //       .should("not.be.disabled")
+        //       .type(secondInput)
+        //       .should("have.value", secondInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=results]")
+        //       .should("not.be.disabled")
+        //       .type(secondInput)
+        //       .should("have.value", secondInput);
+
+        //     cy.get("[data-cy=session-note-edit-mode]")
+        //       .find("textarea[name=evaluation]")
+        //       .should("not.be.disabled")
+        //       .type(secondInput)
+        //       .should("have.value", secondInput);
+
+        //     cy.get("[data-cy=save-note]").click();
+
+        //     cy.get("[data-cy=pd-topic-card]").each(($card, index) => {
+        //       cy.wrap($card)
+        //         .find('span[data-cy="rating-input"]')
+        //         .first()
+        //         .click()
+        //         .should("have.class", "bg-blue-500 text-white");
+
+        //       cy.get("[data-cy=pd-button]").click();
+        //     });
+        //   });
+        //   it("checks that pd was saved", () => {
+        //     cy.get("button").contains(TO_PD_BUTTON).click();
+        //     cy.get("[data-cy=pd-button]").should("not.exist");
+        //     cy.get("h3")
+        //       .should("not.have.text", WOL_HEADER)
+        //       .should("include.text", PD_HEADER);
+        //   });
+        // });
       });
     });
   });
