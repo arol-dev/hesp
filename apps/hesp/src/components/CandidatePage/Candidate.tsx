@@ -187,7 +187,17 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
                       Email address
                     </dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      {person.email}
+                      {editMode ? 
+                        <div>
+                          <input
+                            type="text"
+                            name="email"
+                            value={personData.email}
+                            onChange={(e) => setPersonData({ ...personData, email: e.target.value})}
+                          />
+                        </div>
+                      : person.email  
+                      }
                     </dd>
                   </div>
                   <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3  xl:grid-cols-6 sm:gap-4 sm:px-6">
