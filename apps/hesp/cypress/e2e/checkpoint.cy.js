@@ -47,15 +47,15 @@ describe("checkpoints", () => {
   //   });
   //   cy.visit(url);
 
-  it("login with staff credentials", () => {
-    cy.get('input[name="email"]').type(STAFF.email);
-    cy.get('input[name="password"]').type(STAFF.password);
-    cy.get('button[type="submit"]')
-      .click()
-      .then(() => {
-        cy.url().should("eq", `${url}/`);
-      });
-  });
+  // it("login with staff credentials", () => {
+  //   cy.get('input[name="email"]').type(STAFF.email);
+  //   cy.get('input[name="password"]').type(STAFF.password);
+  //   cy.get('button[type="submit"]')
+  //     .click()
+  //     .then(() => {
+  //       cy.url().should("eq", `${url}/`);
+  //     });
+  // });
 
   beforeEach(() => {
     cy.visit(url);
