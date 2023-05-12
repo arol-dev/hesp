@@ -23,11 +23,33 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
 
 
   const [editMode, setEditMode] = useState(false);
+  const [personData, setPersonData] = useState({
+    firstName: person.firstName,
+    lastName: person.lastName,
+    phone: person.phone,
+    email: person.email,
+    about: person.about
+  }
+  )
 
+  useEffect(() => {
+    setPersonData({
+      firstName: person.firstName,
+      lastName: person.lastName,
+      phone: person.phone || "",
+      email: person.email || "",
+      about: person.about || "",
+    })
+  }, [person ])
+
+  console.log(`personData`, personData, 'personData.phone', personData.phone, `person.phone`, person.phone)
 
   function toggleEditMode() {
+    console.log('im inside toggleEditMode', 'editMode', editMode,)
     setEditMode(!editMode)
-     }
+
+    console.log('after setEditMode', 'editMode', editMode,)
+  }
 
 
   const router = useRouter();
@@ -121,7 +143,17 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
                       Telephone
                     </dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      {person.phone}
+                      {editMode ?
+                        <div>
+                          <input type="text"
+                            name="phone"
+                            value={personData.phone}
+                            onChange={(e) => setPersonData({ ...personData, phone: e.target.value })}
+
+                          /> </div>
+                        : person.phone
+                      }
+
                     </dd>
                   </div>
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3  xl:grid-cols-6 sm:gap-4 sm:px-6">
