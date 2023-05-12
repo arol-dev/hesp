@@ -26,7 +26,7 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
 
     const pdc = person.PDCcheckpoint;
 
-    if (pdc !== undefined) {
+    if (pdc !== undefined && pdc.length > 0) {
       const last = pdc[pdc.length - 1];
       const ago = moment(last.createdAt).startOf("day").fromNow();
       return ago;
