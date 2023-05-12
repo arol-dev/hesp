@@ -1,3 +1,6 @@
+import {
+  useState, useEffect
+} from "react";
 import Link from "next/link";
 import Navbar from "../Navbar";
 import Chart from "./RadarChart";
@@ -7,16 +10,26 @@ import AssignPerson from "./AssignCoach";
 import { ITrainee, IUser, IWOLcheckpoint } from "../../../types";
 import { PDCcheckpoint } from "@prisma/client";
 
- 
+
 interface IPageProps {
   person: ITrainee;
   WOLs: IWOLcheckpoint[];
   PDs: PDCcheckpoint[];
   decodedToken: Partial<IUser>;
 }
- 
+
 
 function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
+
+
+  const [editMode, setEditMode] = useState(false);
+
+
+  function toggleEditMode() {
+    setEditMode(!editMode)
+     }
+
+
   const router = useRouter();
   const { role } = decodedToken;
   function handleClickNewCheckpoint(event: React.MouseEvent) {
@@ -38,6 +51,7 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
             {role === "ADMIN" && <AssignPerson />}
             <span className="hidden sm:block">
               <button
+                onClick={toggleEditMode}
                 type="button"
                 className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
               >
@@ -49,7 +63,7 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
                 >
                   <path d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z" />
                 </svg>
-                Edit
+                {editMode ? 'Save' : 'Edit'}
               </button>
             </span>
 
@@ -129,11 +143,7 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3  xl:grid-cols-6 sm:gap-4 sm:px-6">
                     <dt className="text-sm font-medium text-gray-500">About</dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      Fugiat ipsum ipsum deserunt culpa aute sint do nostrud
-                      anim incididunt cillum culpa consequat. Excepteur qui
-                      ipsum aliquip consequat sint. Sit id mollit nulla mollit
-                      nostrud in ea officia proident. Irure nostrud pariatur
-                      mollit ad adipisicing reprehenderit deserunt qui eu.
+
                     </dd>
                   </div>
                 </dl>
