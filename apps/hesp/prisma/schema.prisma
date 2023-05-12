@@ -82,6 +82,7 @@ model Trainee {
   lastName           String
   email              String?
   phone              String?
+  about              String?
   registerNumber     String?
   PDCcheckpoint      PDCcheckpoint[]
   WOLcheckpoint      WOLcheckpoint[]
