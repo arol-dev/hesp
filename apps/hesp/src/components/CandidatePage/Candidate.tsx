@@ -28,7 +28,8 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
     lastName: person.lastName,
     phone: person.phone,
     email: person.email,
-    about: person.about
+    about: person.about,
+    registerNumber: person.registerNumber
   }
   )
 
@@ -39,6 +40,7 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
       phone: person.phone || "",
       email: person.email || "",
       about: person.about || "",
+      registerNumber : person.registerNumber ||"",
     })
   }, [person])
 
@@ -193,7 +195,19 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
                       Reference
                     </dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      {person.registerNumber}
+
+                      {editMode ? 
+                        <div>
+                        <input
+                          type="text"
+                          name="registerNumber"
+                          value={personData.registerNumber}
+                          onChange={(e)=> setPersonData({...personData, registerNumber: e.target.value })}
+                        ></input>
+                        </div>
+                        : person.registerNumber
+                        }
+                      
                     </dd>
                   </div>
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3  xl:grid-cols-6 sm:gap-4 sm:px-6">
