@@ -77,7 +77,7 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
-                          {dataToMap.map((person: ITrainee, index: number) => (
+                          {Trainees.map((person: ITrainee, index: number) => (
                             <tr data-cy="trainee-row" key={index}>
 
                               <td className="flex whitespace-nowrap py-4 pl-4  pr-80 text-sm font-medium text-gray-900 sm:pl-6">

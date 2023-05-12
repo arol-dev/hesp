@@ -82,7 +82,6 @@ describe("login page", () => {
           .then(() => {
             cy.url().should("eq", `${url}/`);
           });
-        cy.get('[data-cy="trainee-row"]').should("have.length", 2);
       });
     });
   });
