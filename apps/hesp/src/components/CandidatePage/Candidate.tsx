@@ -40,17 +40,13 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
       phone: person.phone || "",
       email: person.email || "",
       about: person.about || "",
-      registerNumber : person.registerNumber ||"",
+      registerNumber: person.registerNumber || "",
     })
   }, [person])
 
-  console.log(`personData`, personData, 'personData.phone', personData.phone, `person.phone`, person.phone)
 
   function toggleEditMode() {
-    console.log('im inside toggleEditMode', 'editMode', editMode,)
     setEditMode(!editMode)
-
-    console.log('after setEditMode', 'editMode', editMode,)
   }
 
 
@@ -135,7 +131,7 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 xl:grid-cols-6">
                     <dt className="text-sm font-medium text-gray-500">
                       Full name
-                    </dt> 
+                    </dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                       {editMode ?
                         <div>
@@ -163,7 +159,7 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
 
 
                     </dd>
-                   </div> 
+                  </div>
                   <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3  xl:grid-cols-6 sm:gap-4 sm:px-6">
                     <dt className="text-sm font-medium text-gray-500">
                       Telephone
@@ -187,16 +183,16 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
                       Email address
                     </dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      {editMode ? 
+                      {editMode ?
                         <div>
                           <input
                             type="text"
                             name="email"
                             value={personData.email}
-                            onChange={(e) => setPersonData({ ...personData, email: e.target.value})}
+                            onChange={(e) => setPersonData({ ...personData, email: e.target.value })}
                           />
                         </div>
-                      : person.email  
+                        : person.email
                       }
                     </dd>
                   </div>
@@ -206,18 +202,18 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
                     </dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
 
-                      {editMode ? 
+                      {editMode ?
                         <div>
-                        <input
-                          type="text"
-                          name="registerNumber"
-                          value={personData.registerNumber}
-                          onChange={(e)=> setPersonData({...personData, registerNumber: e.target.value })}
-                        ></input>
+                          <input
+                            type="text"
+                            name="registerNumber"
+                            value={personData.registerNumber}
+                            onChange={(e) => setPersonData({ ...personData, registerNumber: e.target.value })}
+                          ></input>
                         </div>
                         : person.registerNumber
-                        }
-                      
+                      }
+
                     </dd>
                   </div>
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3  xl:grid-cols-6 sm:gap-4 sm:px-6">
