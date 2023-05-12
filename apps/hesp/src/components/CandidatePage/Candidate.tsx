@@ -40,7 +40,7 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
       email: person.email || "",
       about: person.about || "",
     })
-  }, [person ])
+  }, [person])
 
   console.log(`personData`, personData, 'personData.phone', personData.phone, `person.phone`, person.phone)
 
@@ -133,11 +133,35 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 xl:grid-cols-6">
                     <dt className="text-sm font-medium text-gray-500">
                       Full name
-                    </dt>
+                    </dt> 
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      {person.firstName + " " + person.lastName}
+                      {editMode ?
+                        <div>
+                          <div>
+                            <input
+                              type="text"
+                              name="firstName"
+                              value={personData.firstName}
+                              onChange={(e) => setPersonData({ ...personData, firstName: e.target.value })}
+
+                            /> </div>
+                          <div>
+                            <input
+                              type="text"
+                              name="lastName"
+                              value={personData.lastName}
+                              onChange={(e) => setPersonData({ ...personData, lastName: e.target.value })}
+
+                            /> </div>
+
+                        </div> :
+                        person.firstName + " " + person.lastName
+
+                      }
+
+
                     </dd>
-                  </div>
+                   </div> 
                   <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3  xl:grid-cols-6 sm:gap-4 sm:px-6">
                     <dt className="text-sm font-medium text-gray-500">
                       Telephone
