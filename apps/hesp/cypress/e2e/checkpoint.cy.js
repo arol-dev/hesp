@@ -47,19 +47,27 @@ describe("checkpoints", () => {
   //   });
   //   cy.visit(url);
 
-  beforeEach(() => {
-    cy.visit(url);
-    cy.get('input[name="email"]').type(STAFF.email);
-    cy.get('input[name="password"]').type(STAFF.password);
-    cy.get('button[type="submit"]').click();
-  });
+  // beforeEach(() => {
+  //   cy.visit(url);
+  //   cy.get('input[name="email"]').type(STAFF.email);
+  //   cy.get('input[name="password"]').type(STAFF.password);
+  //   cy.get('button[type="submit"]').click();
+  // });
 
-  // describe("home page", () => {
-  it("has 2 trainees", () => {
-    cy.get('[data-cy="trainee-row"]').should("have.length", 2);
+  describe("home page", () => {
+    it("has 2 trainees", () => {
+      cy.visit(url);
+      cy.get('input[name="email"]').type(STAFF.email);
+      cy.get('input[name="password"]').type(STAFF.password);
+      cy.get('button[type="submit"]')
+        .click()
+        .then(() => {
+          cy.url().should("eq", `${url}/`);
+        });
+      cy.get('[data-cy="trainee-row"]').should("have.length", 2);
+    });
   });
 });
-// });
 
 //     describe("trainee-table", () => {
 //       it("render the checkpoint", () => {
