@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
-import "tailwindcss/tailwind.css";
-import { IUser } from "../../../types";
+import React, { useState, useEffect, useCallback, ChangeEvent } from 'react';
+import 'tailwindcss/tailwind.css';
+import { IUser } from '../../../types';
 
 const AssignPerson = () => {
   const [people, setPeople] = useState<IUser[]>([]);
@@ -17,7 +17,7 @@ const AssignPerson = () => {
           const data = await response.json();
           setPeople(data);
         } else {
-          throw new Error("Failed to fetch data");
+          throw new Error('Failed to fetch data');
         }
       } catch (error) {
         console.error(error);
@@ -42,14 +42,14 @@ const AssignPerson = () => {
     if (selectedPerson) {
       // get the last part of the path
       const path = window.location.pathname;
-      const id = path.split("/").pop();
+      const id = path.split('/').pop();
       const host = window.location.host;
 
       // send the data to the api
       const response = await fetch(`http://${host}/api/he/${id}`, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ coachId: selectedPerson.id }),
       });
@@ -59,7 +59,7 @@ const AssignPerson = () => {
           `Assigned ${selectedPerson.firstName} ${selectedPerson.lastName} successfully.`
         );
         setTimeout(() => {
-          setSuccessMessage("");
+          setSuccessMessage('');
         }, 5000);
       } else {
         setSuccessMessage(
@@ -72,9 +72,9 @@ const AssignPerson = () => {
   };
 
   return (
-    <div className="mr-3 ">
+    <div className='mr-3 '>
       <button
-        className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        className='inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
         onClick={handleClick}
       >
         Assign Coach
@@ -82,15 +82,15 @@ const AssignPerson = () => {
       {showSelect && (
         <>
           <select
-            className="block mt-2 mb-2 bg-white border-gray-300 w-auto rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            defaultValue=""
+            className='block mt-2 mb-2 bg-white border-gray-300 w-auto rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500'
+            defaultValue=''
             onChange={handleSelectChange}
           >
-            <option value="" disabled hidden>
+            <option value='' disabled hidden>
               Select a Coach to assign.
             </option>
             {people
-              .filter((person: IUser) => person.role === "STAFF")
+              .filter((person: IUser) => person.role === 'STAFF')
               .map((person: IUser, index: number) => (
                 <option
                   key={index}
@@ -101,7 +101,7 @@ const AssignPerson = () => {
               ))}
           </select>
           <button
-            className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className='inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
             onClick={handleConfirmAssignment}
           >
             Confirm Assignment
@@ -109,7 +109,7 @@ const AssignPerson = () => {
         </>
       )}
       {successMessage && (
-        <div className="mt-2 text-green-500">{successMessage}</div>
+        <div className='mt-2 text-green-500'>{successMessage}</div>
       )}
     </div>
   );
