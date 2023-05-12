@@ -136,6 +136,7 @@ export interface ITrainee {
   lastName: string;
   email?: string;
   phone?: string;
+  about?: string;
   registerNumber?: string;
   TraineeMetaData: ITraineeMetaData[];
   userId?: number;
