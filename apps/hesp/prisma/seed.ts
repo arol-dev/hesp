@@ -37,6 +37,7 @@ async function main() {
       email: "bob@prisma.io",
       phone: "+3497867853",
       registerNumber: "023/1234",
+      about: "Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.",
     }
   })
 
