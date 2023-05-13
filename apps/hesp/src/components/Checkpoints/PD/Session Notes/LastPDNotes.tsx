@@ -60,7 +60,7 @@ function LastPDNotes({ lastPDCheckpoint }: LastPDNotesProps) {
         </div>
         <div className="col-span-2 ">
           {sessionNotes.map((note) =>
-          (<div className="grid justify-self-end bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl  mb-5">
+          (<div key={note.id} className="grid justify-self-end bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl  mb-5">
             <div className="px-4 py-6 sm:p-8">
               <div className="">
                 <div className="">

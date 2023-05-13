@@ -61,6 +61,7 @@ function LastPD({ lastPDCheckpoint }: LastPDProps) {
     <div>
       {ratings.map((rating, index) => (
         <div
+          data-cy="last-pd-card"
           key={index}
           className="space-y-10 divide-y divide-gray-900/10 pl-5 pr-5 pb-10"
         >
@@ -109,6 +110,7 @@ function LastPD({ lastPDCheckpoint }: LastPDProps) {
                                 className="hidden"
                               />
                               <span
+                                data-cy="last-rating"
                                 className={`${rating.value === number
                                   ? "bg-blue-500 text-white"
                                   : "bg-white text-gray-900"

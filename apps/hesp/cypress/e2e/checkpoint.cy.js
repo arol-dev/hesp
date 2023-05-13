@@ -33,6 +33,51 @@ const WOL_HEADER = "New WOL Checkpoint";
 const TO_PD_BUTTON = "Switch to Professional Development";
 const TO_WOL_BUTTON = "Switch to WOL";
 
+const ratings = [
+  {
+    name: "Trust",
+    body: "trust",
+    description: "The trainee trust in the established action plan",
+    value: 4,
+  },
+  {
+    name: "Follow",
+    body: "willFollow",
+    description: "He will follow the action plan",
+    value: 2,
+  },
+  {
+    name: "Task retention",
+    body: "retention",
+    description: "He will remember what he should do",
+    value: 2,
+  },
+  {
+    name: "Plan commitment",
+    body: "commitment",
+    description: "He is committed with the formation",
+    value: 5,
+  },
+  {
+    name: "CV",
+    body: "cv",
+    description: "His CV (resume) is done",
+    value: 1,
+  },
+  {
+    name: "Interviews",
+    body: "readyForInterviews",
+    description: "He is ready to job interviews",
+    value: 2,
+  },
+  {
+    name: "Advancement",
+    body: "advancement",
+    description: "He is advancing well",
+    value: 3,
+  },
+];
+
 describe("checkpoints", () => {
   beforeEach(() => {
     cy.session([STAFF.email, STAFF.password], () => {
@@ -72,51 +117,84 @@ describe("checkpoints", () => {
         cy.get(`[data-cy-target=${bob.firstName}]`).click();
       });
 
-      describe("renders the checkpoint info", () => {
-        it("starts in WOL", () => {
-          cy.get("h3").should("have.text", WOL_HEADER);
-          cy.get("h3").should("not.have.text", PD_HEADER);
-        });
+      // describe("renders the WOL checkpoint and dont allow to edit it", () => {
+      //   it("starts in WOL", () => {
+      //     cy.get("h3").should("have.text", WOL_HEADER);
+      //     cy.get("h3").should("not.have.text", PD_HEADER);
+      //   });
 
-        it("wol checkpoint create disabled", () => {
-          cy.get("[data-cy=wol-button]").should("not.exist");
-        });
+      //   it("wol checkpoint create disabled", () => {
+      //     cy.get("[data-cy=wol-button]").should("not.exist");
+      //   });
 
-        it("switches to PD and back to WOL and check that save button does not exist", () => {
-          cy.get("[data-cy=wol-button]").should("not.exist");
+      //   it("switches to PD and back to WOL and check that save button does not exist", () => {
+      //     cy.get("[data-cy=wol-button]").should("not.exist");
+      //     cy.get("button").contains(TO_PD_BUTTON).click();
+      //     cy.get("[data-cy=pd-button]").should("not.exist");
+      //     cy.get("h3")
+      //       .should("not.have.text", WOL_HEADER)
+      //       .should("include.text", PD_HEADER);
+      //     cy.get("button").contains(TO_WOL_BUTTON).click();
+      //     cy.get("h3")
+      //       .should("not.have.text", PD_HEADER)
+      //       .should("include.text", WOL_HEADER);
+      //   });
+
+      //   it('should not allow input in the "What makes you feel this way" textarea', () => {
+      //     cy.get("[data-cy=last-wol-topic-card]").each(($card, index) => {
+      //       cy.wrap($card).find('textarea[name="feel"]').should("be.disabled");
+      //     });
+      //   });
+
+      //   it('should not allow input in the "What can you do to improve your satisfaction level?', () => {
+      //     cy.get("[data-cy=last-wol-topic-card]").each(($card, index) => {
+      //       cy.wrap($card)
+      //         .find('textarea[name="improve"]')
+      //         .should("be.disabled");
+      //     });
+      //   });
+
+      //   it("should not allow checkbox to be clicked", () => {
+      //     cy.get("[data-cy=last-wol-topic-card]").each(($card, index) => {
+      //       cy.wrap($card).find("input[type=checkbox]").should("be.disabled");
+      //     });
+      //   });
+      // });
+
+      describe("renders the PD checkpoint and dont allow to edit it", () => {
+        it("should navigate to PD form and check that there is no save button", () => {
           cy.get("button").contains(TO_PD_BUTTON).click();
           cy.get("[data-cy=pd-button]").should("not.exist");
           cy.get("h3")
             .should("not.have.text", WOL_HEADER)
             .should("include.text", PD_HEADER);
-          cy.get("button").contains(TO_WOL_BUTTON).click();
-          cy.get("h3")
-            .should("not.have.text", PD_HEADER)
-            .should("include.text", WOL_HEADER);
         });
 
-        it('should not allow input in the "What makes you feel this way" textarea', () => {
-          cy.get("[data-cy=last-wol-topic-card]").each(($card, index) => {
-            cy.wrap($card).find('textarea[name="feel"]').should("be.disabled");
+        it("should display the names of the ratings topics correctly", () => {
+          cy.get("button").contains(TO_PD_BUTTON).click();
+          cy.get("[data-cy=last-pd-card]").each(($card, index) => {
+            cy.wrap($card, index)
+              .find("h2")
+              .should("contain", ratings[index].name);
           });
         });
 
-        it('should not allow input in the "What can you do to improve your satisfaction level?', () => {
-          cy.get("[data-cy=last-wol-topic-card]").each(($card, index) => {
-            cy.wrap($card)
-              .find('textarea[name="improve"]')
-              .should("be.disabled");
+        it("should display the ratings with correct values", () => {
+          cy.get("button").contains(TO_PD_BUTTON).click();
+          cy.get("[data-cy=last-pd-card]").each(($card, index) => {
+            cy.wrap($card, index)
+              .find('span[data-cy="last-rating"]')
+              .should("contain", ratings[index].value);
           });
         });
 
-        it("should not allow checkbox to be clicked", () => {
-          cy.get("[data-cy=last-wol-topic-card]").each(($card, index) => {
-            cy.wrap($card).find("input[type=checkbox]").should("be.disabled");
-          });
-        });
+        // should check the rating change is disabled
+
+        // should render the session note correctly
+
+        // should check the sessiont note change is disabled
       });
     });
-
     ////////////////// JOHN ////////////////////////////
     describe("john checkpoint page", () => {
       beforeEach(() => {
