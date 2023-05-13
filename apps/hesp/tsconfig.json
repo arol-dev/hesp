@@ -28,7 +28,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/pages/api/soloutionoptions"
+    "src/pages/api/soloutionoptions",
+    "__test__/example.test.js"
   ],
   "exclude": ["node_modules"]
 }
