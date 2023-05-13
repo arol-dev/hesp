@@ -78,7 +78,7 @@ model SessionNotes {
 
 model Trainee {
   id                 Int                  @id @default(autoincrement())
-  firstName          String
+  firstName           String
   lastName           String
   email              String?
   phone              String?
