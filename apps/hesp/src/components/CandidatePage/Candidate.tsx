@@ -219,6 +219,23 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
                       )}
                     </dd>
                   </div>
+                  <div className='bg-white px-4 py-5 sm:grid sm:grid-cols-3  xl:grid-cols-6 sm:gap-4 sm:px-6'>
+                    <dt className='text-sm font-medium text-gray-500'>
+                      About
+                    </dt>
+                    <dd className='mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>
+                      {isEditing ? (
+                        <input
+                          type='text'
+                          value={registerNumber}
+                          onChange={(e) => setRegisterNumber(e.target.value)}
+                          className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md'
+                        />
+                      ) : (
+                        person?.registerNumber
+                      )}
+                    </dd>
+                  </div>
                 </dl>
               </div>
             </div>

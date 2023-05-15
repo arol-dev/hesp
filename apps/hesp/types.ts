@@ -147,6 +147,7 @@ export interface ITrainee {
   email?: string;
   phone?: string;
   registerNumber?: string;
+  about?: string;
   TraineeMetaData: ITraineeMetaData[];
   userId?: number;
   User?: IUser;
