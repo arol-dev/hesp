@@ -46,6 +46,8 @@ jobs:
           npx ts-node "${{ env.SEED_DATA_FILE }}"
 
       - name: Start server and run e2e tests
+        env:
+         JWT_SECRET: ${{ env.JWT_SECRET }}
         working-directory: apps/hesp
         run: |
           npm run dev &
