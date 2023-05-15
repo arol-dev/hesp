@@ -35,22 +35,12 @@ jobs:
         working-directory: apps/hesp
         run: npm run build
 
-      - name: Run migrations
-        working-directory: apps/hesp
-        run: |
-          prisma migrate deploy
-
-      - name: Seed test database
-        working-directory: apps/hesp
-        run: |
-          npx ts-node "${{ env.SEED_DATA_FILE }}"
-
       - name: Start server and run e2e tests
         env:
          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         working-directory: apps/hesp
         run: |
-          npm run dev & sleep 10 && prisma migrate deploy && npx ts-node "${{ env.SEED_DATA_FILE }}" && yarn e2e-test-local
+          npm run dev & sleep 10 && prisma migrate reset && npx ts-node "${{ env.SEED_DATA_FILE }}" && yarn e2e-test-local
 
  
 
