@@ -25,7 +25,7 @@ jobs:
       - name: Set up test database
         run: |
           sudo apt-get -yqq install libpq-dev
-          echo "DATABASE_URL=postgresql://postgres:postgres@localhost:5432/test_db" > apps/hesp/.env
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > apps/hesp/.env
 
       - name: Install dependencies
         working-directory: apps/hesp
