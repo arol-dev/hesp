@@ -8,6 +8,7 @@ import { ITrainee, IUser, IWOLcheckpoint } from '../../../types';
 import { PDCcheckpoint } from '@prisma/client';
 import { useState } from 'react';
 import { last } from 'cypress/types/lodash';
+import React from 'react';
 
 interface IPageProps {
   person: ITrainee;
