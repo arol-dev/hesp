@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   db:
@@ -6,12 +6,27 @@ services:
     image: postgres:13-alpine
     restart: always
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=mynewdb
     volumes:
       - db_data:/var/lib/postgresql/data
+
+  test_db:
+    container_name: postgres_test_db
+    image: postgres:13-alpine
+    restart: always
+    ports:
+      - '5433:5432'
+    environment:
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=testpassword
+      - POSTGRES_DB=testdb
+    volumes:
+      - test_db_data:/var/lib/postgresql/data
+
 volumes:
   db_data:
+  test_db_data:

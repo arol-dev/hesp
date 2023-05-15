@@ -1,10 +1,10 @@
 import { authenticateAndGetToken } from "../../lib/auth/authUtils";
 import Navbar from "@/components/Navbar";
 import List from "@/components/MainPage";
-import serverToDb from "../../lib/helperFuntions/serverToDb";
+import serverToDb from "../../lib/helperFunctions/serverToDb";
 import { props } from "cypress/types/bluebird";
 import { ITrainee, IUser } from "../../types";
-import dateToISOString from "../../lib/helperFuntions/dataToIsoString";
+import dateToISOString from "../../lib/helperFunctions/dataToIsoString";
 
 interface props {
   user: IUser[];
