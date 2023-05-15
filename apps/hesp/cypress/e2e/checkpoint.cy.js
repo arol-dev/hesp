@@ -1,6 +1,8 @@
 /// <reference types="cypress" />
 
-let url = Cypress.env("host") ?? "http://localhost:3000";
+// let url = Cypress.env("host") ?? "http://localhost:3000";
+
+let url = "http://localhost:3000";
 
 const STAFF = {
   firstName: "Alice",
@@ -117,49 +119,49 @@ describe("checkpoints", () => {
         cy.get(`[data-cy-target=${bob.firstName}]`).click();
       });
 
-      // describe("renders the WOL checkpoint and dont allow to edit it", () => {
-      //   it("starts in WOL", () => {
-      //     cy.get("h3").should("have.text", WOL_HEADER);
-      //     cy.get("h3").should("not.have.text", PD_HEADER);
-      //   });
+      describe("renders the WOL checkpoint and dont allow to edit it", () => {
+        it("starts in WOL", () => {
+          cy.get("h3").should("have.text", WOL_HEADER);
+          cy.get("h3").should("not.have.text", PD_HEADER);
+        });
 
-      //   it("wol checkpoint create disabled", () => {
-      //     cy.get("[data-cy=wol-button]").should("not.exist");
-      //   });
+        it("wol checkpoint create disabled", () => {
+          cy.get("[data-cy=wol-button]").should("not.exist");
+        });
 
-      //   it("switches to PD and back to WOL and check that save button does not exist", () => {
-      //     cy.get("[data-cy=wol-button]").should("not.exist");
-      //     cy.get("button").contains(TO_PD_BUTTON).click();
-      //     cy.get("[data-cy=pd-button]").should("not.exist");
-      //     cy.get("h3")
-      //       .should("not.have.text", WOL_HEADER)
-      //       .should("include.text", PD_HEADER);
-      //     cy.get("button").contains(TO_WOL_BUTTON).click();
-      //     cy.get("h3")
-      //       .should("not.have.text", PD_HEADER)
-      //       .should("include.text", WOL_HEADER);
-      //   });
+        it("switches to PD and back to WOL and check that save button does not exist", () => {
+          cy.get("[data-cy=wol-button]").should("not.exist");
+          cy.get("button").contains(TO_PD_BUTTON).click();
+          cy.get("[data-cy=pd-button]").should("not.exist");
+          cy.get("h3")
+            .should("not.have.text", WOL_HEADER)
+            .should("include.text", PD_HEADER);
+          cy.get("button").contains(TO_WOL_BUTTON).click();
+          cy.get("h3")
+            .should("not.have.text", PD_HEADER)
+            .should("include.text", WOL_HEADER);
+        });
 
-      //   it('should not allow input in the "What makes you feel this way" textarea', () => {
-      //     cy.get("[data-cy=last-wol-topic-card]").each(($card, index) => {
-      //       cy.wrap($card).find('textarea[name="feel"]').should("be.disabled");
-      //     });
-      //   });
+        it('should not allow input in the "What makes you feel this way" textarea', () => {
+          cy.get("[data-cy=last-wol-topic-card]").each(($card, index) => {
+            cy.wrap($card).find('textarea[name="feel"]').should("be.disabled");
+          });
+        });
 
-      //   it('should not allow input in the "What can you do to improve your satisfaction level?', () => {
-      //     cy.get("[data-cy=last-wol-topic-card]").each(($card, index) => {
-      //       cy.wrap($card)
-      //         .find('textarea[name="improve"]')
-      //         .should("be.disabled");
-      //     });
-      //   });
+        it('should not allow input in the "What can you do to improve your satisfaction level?', () => {
+          cy.get("[data-cy=last-wol-topic-card]").each(($card, index) => {
+            cy.wrap($card)
+              .find('textarea[name="improve"]')
+              .should("be.disabled");
+          });
+        });
 
-      //   it("should not allow checkbox to be clicked", () => {
-      //     cy.get("[data-cy=last-wol-topic-card]").each(($card, index) => {
-      //       cy.wrap($card).find("input[type=checkbox]").should("be.disabled");
-      //     });
-      //   });
-      // });
+        it("should not allow checkbox to be clicked", () => {
+          cy.get("[data-cy=last-wol-topic-card]").each(($card, index) => {
+            cy.wrap($card).find("input[type=checkbox]").should("be.disabled");
+          });
+        });
+      });
 
       describe("renders the PD checkpoint and dont allow to edit it", () => {
         it("should navigate to PD form and check that there is no save button", () => {
