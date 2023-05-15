@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env: 
-      SEED_DATA_FILE: /apps/hesp/prisma/seed.ts
+      SEED_DATA_FILE: prisma/seed.ts
 
     steps:
       - name: Checkout repository
