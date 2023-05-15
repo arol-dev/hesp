@@ -45,6 +45,11 @@ jobs:
         run: |
           npx ts-node "${{ env.SEED_DATA_FILE }}"
 
+      - name: Start server
+        working-directory: apps/hesp
+        run: |
+          yarn dev    
+
       - name: Run e2e tests
         working-directory: apps/hesp
         run: |
