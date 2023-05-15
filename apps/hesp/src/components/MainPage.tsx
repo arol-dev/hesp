@@ -16,6 +16,7 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
   const showIHe = jwt.role === "STAFF";
 
   const matchingUser = user.filter((user: IUser) => {
+    console.log(user.id);
     return user.id == jwt.id;
   });
 
@@ -28,9 +29,9 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
       const ago = moment(last.createdAt).startOf("day").fromNow();
       return ago;
     } else {
-      return "No checkpoint has been created";
+      return 'No checkpoint has been created'
     }
-  };
+  }
 
   return (
     <div className="h-screen">
@@ -58,29 +59,17 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                       <table className="min-w-full divide-y divide-gray-300">
                         <thead className="bg-gray-50">
                           <tr>
-                            <th
-                              scope="col"
-                              className="py-3.5 pl-4 pr-80 text-left text-sm font-medium text-gray-500 sm:pl-6"
-                            >
+                            <th scope="col" className="py-3.5 pl-4 pr-80 text-left text-sm font-medium text-gray-500 sm:pl-6">
                               NAME
                             </th>
-                            <th
-                              scope="col"
-                              className="px-3 py-3.5 text-left text-sm font-medium text-gray-500"
-                            >
+                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-medium text-gray-500">
                               LAST CHECKPOINT
                             </th>
 
-                            <th
-                              scope="col"
-                              className="relative py-3.5 pl-3 pr-4 sm:pr-6"
-                            >
+                            <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                               <span className="sr-only">Edit</span>
                             </th>
-                            <th
-                              scope="col"
-                              className="relative py-3.5 pl-3 pr-4 sm:pr-6"
-                            >
+                            <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                               <span className="sr-only">New Checkpoint</span>
                             </th>
                           </tr>
@@ -88,6 +77,7 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                         <tbody className="divide-y divide-gray-200 bg-white">
                           {dataToMap.map((person: ITrainee, index: number) => (
                             <tr key={index}>
+
                               <td className="flex whitespace-nowrap py-4 pl-4  pr-80 text-sm font-medium text-gray-900 sm:pl-6">
                                 <div className="mr-3">
                                   <img
@@ -106,33 +96,27 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                                   </p>
                                 </Link>
                               </td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
-                                {" "}
-                                {lastCheckpoint(person)}
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">   {lastCheckpoint(person)}</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> <a
+                                href="#"
+                                className="text-indigo-600 hover:text-indigo-900"
+                              >
+                                Edit
+                                <span className="sr-only">
+                                  , {person.firstName + " " + person.lastName}
+                                </span>
+                              </a></td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a
+                                href={`/candidates/${person.id}/checkpoint`}
+                                className="text-indigo-600 hover:text-indigo-900"
+                              >
+                                New Checkpoint
+                                <span className="sr-only">
+                                  , {person.firstName + " " + person.lastName}
+                                </span>
+                              </a>
                               </td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                {" "}
-                                <a
-                                  href="#"
-                                  className="text-indigo-600 hover:text-indigo-900"
-                                >
-                                  Edit
-                                  <span className="sr-only">
-                                    , {person.firstName + " " + person.lastName}
-                                  </span>
-                                </a>
-                              </td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                <a
-                                  href={`/candidates/${person.id}/checkpoint`}
-                                  className="text-indigo-600 hover:text-indigo-900"
-                                >
-                                  New Checkpoint
-                                  <span className="sr-only">
-                                    , {person.firstName + " " + person.lastName}
-                                  </span>
-                                </a>
-                              </td>
+
                             </tr>
                           ))}
                         </tbody>
@@ -142,7 +126,7 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                 </div>
               </div>
             </div>
-          ) : (
+          ) :
             <div className="px-4 py-5 sm:px-6">
               <h3 className="text-lg leading-6 font-medium text-gray-900">
                 No candidates
@@ -151,9 +135,10 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                 You currently don't have any candidates assigned to you.
               </p>
             </div>
-          )}
-        </div>
-      </div>
+
+          }
+        </div >
+      </div >
     </div>
   );
 };
