@@ -51,7 +51,7 @@ jobs:
          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         working-directory: apps/hesp
         run: |
-          npm run dev & sleep 10 && npx ts-node "${{ env.SEED_DATA_FILE }}" && yarn e2e-test-local
+          npm run dev & sleep 10 && prisma migrate deploy && npx ts-node "${{ env.SEED_DATA_FILE }}" && yarn e2e-test-local
 
  
 
