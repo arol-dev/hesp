@@ -47,7 +47,7 @@ jobs:
 
       - name: Start server
         run: |
-          docker-compose up -d && turbo run dev   
+          npm run dev   
 
       - name: Run e2e tests
         working-directory: apps/hesp
