@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 interface AddCoachProps {
-  closeForm: () => void
-  showForm: boolean
+  closeForm: () => void;
+  showForm: boolean;
 }
 
 function AddCoach({ closeForm, showForm }: AddCoachProps) {
@@ -15,8 +15,8 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
     lastName: "",
     role: "STAFF",
     email: "",
-    password: "12345"
-  })
+    password: "12345",
+  });
 
   function handleInputChange(event: any) {
     const { name, value } = event.target;
@@ -27,21 +27,20 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
     event.preventDefault();
 
     const response = await fetch("/api/staff/createCoach", {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData)
+      body: JSON.stringify(formData),
     });
 
     const result = await response.json();
 
     if (response.ok) {
-      console.log('Form submitted successfully:', result);
       closeForm();
-      window.location.reload()
+      window.location.reload();
     } else {
-      console.error('Error submitting form:', result);
+      console.error("Error submitting form:", result);
     }
   }
 
@@ -55,7 +54,10 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
               <div className="grid grid-cols-1 gap-x-8 gap-y-10">
                 <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-3">
-                    <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label
+                      htmlFor="first-name"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
                       Name
                     </label>
                     <div className="mt-2">
@@ -71,7 +73,10 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
                   </div>
 
                   <div className="sm:col-span-3">
-                    <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label
+                      htmlFor="last-name"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
                       Surname
                     </label>
                     <div className="mt-2">
@@ -86,13 +91,27 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
                     </div>
                   </div>
                   <div className="sm:col-span-6">
-                    <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
                       Email
                     </label>
                     <div className="mt-2">
                       <div className="relative">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                          />
                         </svg>
                         <input
                           id="email"
@@ -110,8 +129,11 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
               </div>
             </div>
             <div className="mt-6 px-6 py-4 flex items-center justify-end gap-x-6">
-              <button onClick={closeForm} type="button" className="text-sm font-semibold leading-6 text-gray">
-
+              <button
+                onClick={closeForm}
+                type="button"
+                className="text-sm font-semibold leading-6 text-gray"
+              >
                 Cancel
               </button>
               <button
@@ -125,8 +147,8 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
           </div>
         </div>
       </div>
-    </form >
-  )
+    </form>
+  );
 }
 
-export default AddCoach
+export default AddCoach;
