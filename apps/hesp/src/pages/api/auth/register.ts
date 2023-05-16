@@ -2,7 +2,7 @@ import { InviteLink, PrismaClient, User } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt";
 import { generateJWTToken } from "../../../../lib/auth/jwt";
-import serverToDb from "../../../../lib/helperFunctions/serverToDb";
+import serverToDb from "../../../../lib/helperFuntions/serverToDb";
 
 const prisma = new PrismaClient();
 
@@ -51,49 +51,47 @@ export default async function handler(
 
     const linksFromDb = await serverToDb("InviteLink", "get", undefined);
 
-    if (Array.isArray(linksFromDb)) {
-      const link: InviteLink[] = linksFromDb.filter(
-        (link: InviteLink) => link.id === incomingLinkToCheck
+    const link: InviteLink[] = linksFromDb.filter(
+      (link: InviteLink) => link.id === incomingLinkToCheck
+    );
+
+    if (!link) {
+      res.status(401).json({ error: "Invalid link" });
+      return;
+    }
+
+    const now = new Date();
+    if (link[0].used || link[0].expiresAt <= now) {
+      res.status(401).json({ error: "Link is already used or expired" });
+      return;
+    }
+    const { role } = link[0];
+
+    if (role === null) {
+      res.status(401).json({ error: "Invalid role" });
+      return;
+    }
+
+    const { firstName, lastName, email, password } = req.body;
+    const newUser: User = await createUser(
+      firstName,
+      lastName,
+      email,
+      password,
+      role
+    );
+
+    if (newUser) {
+      await setLinkAsUsed(link[0].id);
+
+      const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30); // Set the cookie to expire in 24 hours
+      const token = generateJWTToken(newUser);
+
+      res.setHeader(
+        "Set-Cookie",
+        `token=${token}; Path=/; Expires=${expires.toUTCString()}; HttpOnly; SameSite=Lax`
       );
-
-      if (!link) {
-        res.status(401).json({ error: "Invalid link" });
-        return;
-      }
-
-      const now = new Date();
-      if (link[0].used || link[0].expiresAt <= now) {
-        res.status(401).json({ error: "Link is already used or expired" });
-        return;
-      }
-      const { role } = link[0];
-
-      if (role === null) {
-        res.status(401).json({ error: "Invalid role" });
-        return;
-      }
-
-      const { firstName, lastName, email, password } = req.body;
-      const newUser: User = await createUser(
-        firstName,
-        lastName,
-        email,
-        password,
-        role
-      );
-
-      if (newUser) {
-        await setLinkAsUsed(link[0].id);
-
-        const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30); // Set the cookie to expire in 24 hours
-        const token = generateJWTToken(newUser);
-
-        res.setHeader(
-          "Set-Cookie",
-          `token=${token}; Path=/; Expires=${expires.toUTCString()}; HttpOnly; SameSite=Lax`
-        );
-        res.status(201).json({ user: newUser });
-      }
+      res.status(201).json({ user: newUser });
     } else {
       res.status(500).json({ error: "Failed to create user" });
     }

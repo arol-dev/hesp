@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import serverToDb from "../../../../lib/helperFunctions/serverToDb";
+import serverToDb from "../../../../lib/helperFuntions/serverToDb";
 import { Prisma } from "@prisma/client";
 import { hash } from "bcrypt";
 

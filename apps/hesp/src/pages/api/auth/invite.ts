@@ -1,14 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import serverToDb from "../../../../lib/helperFuntions/serverToDb";
 import { decodeToken } from "../../../../lib/auth/jwt";
 import { PrismaClient } from "@prisma/client";
 import { IUser } from "../../../../types";
-import serverToDb from "../../../../lib/helperFunctions/serverToDb";
 
 const prisma = new PrismaClient();
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<any>
 ) {
   try {
     if (req.method === "POST") {
