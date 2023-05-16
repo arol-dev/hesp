@@ -14,6 +14,7 @@ const WOLTopicCard: React.FC<WOLTopicCardProps> = ({ topic, index, onRatingChang
   return (
     <>
       <div
+        data-cy="wol-topic-card"
         key={index}
         className="space-y-10 divide-y divide-gray-900/10 pl-5 pr-5 pb-10"
       >
@@ -45,6 +46,7 @@ const WOLTopicCard: React.FC<WOLTopicCardProps> = ({ topic, index, onRatingChang
                     <div className="flex rounded-md  focus-within:ring-indigo-600 sm:max-w-md">
                       <div className="flex items-center space-x-2">
                         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
+
                           <label
                             htmlFor={`${topic.name}-${number}`}
                             key={`${index}-${number}`}
@@ -62,6 +64,7 @@ const WOLTopicCard: React.FC<WOLTopicCardProps> = ({ topic, index, onRatingChang
                               className="hidden"
                             />
                             <span
+                              data-cy='bar-input'
                               className={`${topic.value === number
                                 ? "bg-blue-500 text-white"
                                 : "bg-white text-gray-900"

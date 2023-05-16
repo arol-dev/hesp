@@ -6,6 +6,55 @@ on:
       - main
 
 jobs:
+
+
+  run_e2e_tests_locally:
+    needs: test_migration_and_seed
+    runs-on: ubuntu-latest
+
+    env: 
+      SEED_DATA_FILE: prisma/seed.ts
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: password
+            POSTGRES_DB: mynewdb
+        ports:
+            - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Prisma CLI
+        run: npm i -g prisma
+
+      - name: Set up test database
+        run: |
+          sudo apt-get -yqq install libpq-dev
+          echo "DATABASE_URL=${{ secrets.TESTS_DATABASE_URL }}" > apps/hesp/.env
+
+      - name: Install dependencies
+        working-directory: apps/hesp
+        run: npm install
+
+      - name: Build the project
+        working-directory: apps/hesp
+        run: npm run build
+
+      - name: Start server and run e2e tests
+        env:
+         JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        working-directory: apps/hesp
+        run: |
+          npm run dev & sleep 10 && prisma migrate deploy && npx ts-node "${{ env.SEED_DATA_FILE }}" && yarn e2e-test-local
+
+ 
+
   test_migration_and_seed:
     runs-on: ubuntu-latest
     services:
@@ -89,12 +138,7 @@ jobs:
         run: |
           VERCEL_DEPLOYMENT=$(curl -s -H "Authorization: Bearer $VERCEL_TOKEN" "https://api.vercel.com/v5/now/deployments?teamId=$(vercel --token $VERCEL_TOKEN --yes whoami)" | jq -r 'first(.deployments[] | select(.state == "READY")) | .url')
           echo "::set-output name=url::https://$VERCEL_DEPLOYMENT"
-      - name: set up and run e2e tests
-        run: | 
-          cd apps;
-          cd hesp;
-          export VERCEL_PREVIEW_OUTPUT=${{steps.deployment.outputs.url}};
-          yarn e2e-test
+      
       - name: Add comment with preview URL
         uses: actions/github-script@v3
         env:

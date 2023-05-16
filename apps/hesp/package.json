@@ -11,6 +11,7 @@
     "migrate": "prisma migrate deploy",
     "test": "cypress open --config viewportWidth=1280,viewportHeight=720 ",
     "e2e-test": "cypress run --env host=$VERCEL_PREVIEW_OUTPUT --browser chrome",
+    "e2e-test-local": "cypress run",
     "test:unit": "prisma migrate dev && jest"
   },
   "dependencies": {

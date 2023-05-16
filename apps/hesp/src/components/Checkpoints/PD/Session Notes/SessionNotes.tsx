@@ -45,7 +45,7 @@ function SessionNotes({ onSessionNotesChange, PDSaved, lastPDCheckpoint }: Sessi
       setSessionNotes([...sessionNotes, newNote])
     }
   }
-
+  console.log('note', sessionNotes)
 
   const handleInputChange = (event: any, noteToChange: SessionNote) => {
     setSessionNotes((prevsessionNotes) =>
@@ -77,7 +77,7 @@ function SessionNotes({ onSessionNotesChange, PDSaved, lastPDCheckpoint }: Sessi
           evaluation: noteToSave.evaluation
         };
       }
-      return noteToSave;
+      return note;
     });
     setSessionNotes(updatedsessionNotes)
   }
@@ -108,7 +108,7 @@ function SessionNotes({ onSessionNotesChange, PDSaved, lastPDCheckpoint }: Sessi
             </div>
             <div className="mt-5 flex lg:ml-4 lg:mt-0">
               <span className="sm:ml-3">
-                <button disabled={PDSaved} onClick={addNote} type="submit" className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <button cy-data='add-topic' disabled={PDSaved} onClick={addNote} type="submit" className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   + Add Topic
                 </button>
               </span>

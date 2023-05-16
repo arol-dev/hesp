@@ -62,6 +62,8 @@ function WOLForm({ onDataChange, WOLSaved, lastWOLCheckpoint }: WOLCheckpointPro
     }
   ])
 
+
+
   useEffect(() => {
     onDataChange(WOLformdata);
   }, [WOLformdata, onDataChange]);
@@ -83,8 +85,6 @@ function WOLForm({ onDataChange, WOLSaved, lastWOLCheckpoint }: WOLCheckpointPro
     newFormData[index].improve = event.target.value;
     setWOLformdata(newFormData);
   }, [WOLformdata])
-
-
 
   return (
     <>
