@@ -1,13 +1,13 @@
-import Candidate from "@/components/CandidatePage/Candidate";
-import { GetServerSideProps } from "next";
-import { authenticateAndGetToken } from "../../../lib/auth/authUtils";
+import Candidate from '@/components/CandidatePage/Candidate';
+import { GetServerSideProps } from 'next';
+import { authenticateAndGetToken } from '../../../lib/auth/authUtils';
 import {
   ITrainee,
   IUser,
   IWOLcheckpoint,
   WOLCheckpointProps,
-} from "../../../types";
-import { PDCcheckpoint } from "@prisma/client";
+} from '../../../types';
+import { PDCcheckpoint } from '@prisma/client';
 
 interface IPageProps {
   person: ITrainee;
@@ -35,7 +35,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   if (!cookies) {
     return {
       redirect: {
-        destination: "/login",
+        destination: '/login',
         permanent: false,
       },
     };
