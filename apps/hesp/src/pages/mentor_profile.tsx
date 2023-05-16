@@ -1,8 +1,5 @@
 function Mentor() {
-  return (
-    <div>
-      Mentor profile should be here
-    </div>
-  )
+  return <div>Mentor profile should be here</div>;
 }
-export default Mentor
+
+export default Mentor;

@@ -1,17 +1,24 @@
-import Checkpoints from "@/components/Checkpoints/AllCheckpoints"
-import { GetServerSideProps } from "next"
+import Checkpoints from '@/components/Checkpoints/AllCheckpoints';
+import { GetServerSideProps } from 'next';
+import { authenticateAndGetToken } from '../../../../lib/auth/authUtils';
 
 function AllCheckpoints({ id, WOLs, PDs }: any) {
-  return (
-    <Checkpoints id={id} WOLs={WOLs} PDs={PDs}></Checkpoints>
-
-  )
+  return <Checkpoints id={id} WOLs={WOLs} PDs={PDs}></Checkpoints>;
 }
-export default AllCheckpoints
+export default AllCheckpoints;
 
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
+  const decodedToken = await authenticateAndGetToken(context);
+  const cookies = context.req.headers.cookie;
 
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
+  if (!cookies || !decodedToken) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
   const { id }: any = context.query;
 
   const domainName = context.req.headers.host;
@@ -24,13 +31,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     res.json()
   );
 
-
-
   return {
     props: {
       id,
       WOLs,
-      PDs
+      PDs,
     },
   };
 };
