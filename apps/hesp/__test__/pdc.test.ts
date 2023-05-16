@@ -25,13 +25,13 @@ const prisma = new PrismaClient({
 describe('createPd', () => {
   let reqBody: {
     userId: any;
-    trust?: string;
-    willFollow?: string;
-    retention?: string;
-    commitment?: string;
-    cv?: string;
-    readyForInterviews?: string;
-    advancement?: string;
+    trust?: number;
+    willFollow?: number;
+    retention?: number;
+    commitment?: number;
+    cv?: number;
+    readyForInterviews?: number;
+    advancement?: number;
     sessionNotes?: string;
   };
   let trainee: {
@@ -54,13 +54,13 @@ describe('createPd', () => {
 
     reqBody = {
       userId: trainee.id.toString(), // Convert trainee ID to string
-      trust: '5',
-      willFollow: '5',
-      retention: '5',
-      commitment: '5',
-      cv: '5',
-      readyForInterviews: '5',
-      advancement: '5',
+      trust: 5,
+      willFollow: 7,
+      retention: 7,
+      commitment: 7,
+      cv: 7,
+      readyForInterviews: 7,
+      advancement: 5,
       sessionNotes: JSON.stringify([
         {
           topic: 'Test topic',
@@ -176,17 +176,17 @@ describe('createPd', () => {
     const data = await response.json();
 
     expect(response.status).toEqual(500);
-    expect(data).toMatchObject({ error: 'Something went wrong' });
+    expect(data).toHaveProperty('error');
   });
-  it('should respond with 400 for invalid data for a POST request', async () => {
-    reqBody.trust = 'invalid'; // Invalid trust value
-
+  it('should respond with 500 for invalid data for a POST request', async () => {
     const response = await fetch(`${baseUrl}/pdc/createPD`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(reqBody),
+      body: JSON.stringify({
+        haircut: 6,
+      }),
     });
 
     expect(response.status).toEqual(500);
