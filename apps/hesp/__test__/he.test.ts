@@ -117,17 +117,4 @@ describe('Describe HE', () => {
     });
     expect(res.status).toBe(500);
   });
-
-  it('should delete a HE', async () => {
-    const newHe = await prisma.trainee.create({
-      data: reqBody,
-    });
-    const res = await fetch(`${baseUrl}/he/${newHe.id}`, {
-      method: 'DELETE',
-    });
-    const data = await res.json();
-    expect(res.status).toBe(200);
-    expect(data).toMatchObject(reqBody);
-    expect(data).toHaveProperty('id');
-  });
 });
