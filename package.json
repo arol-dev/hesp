@@ -10,7 +10,8 @@
     "build": "turbo run build",
     "dev": "docker-compose up -d && turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "test:unit": "yarn build && (cd apps/hesp && yarn dev &) && (cd apps/hesp && prisma migrate dev) && sleep 10 && (cd apps/hesp && jest)"
   },
   "devDependencies": {
     "prettier": "latest",
