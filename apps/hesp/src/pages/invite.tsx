@@ -111,7 +111,7 @@ export async function getServerSideProps(context: {
   const decodedToken = await authenticateAndGetToken(context);
   const cookies = context.req.headers.cookie;
 
-  if (!cookies) {
+  if (!cookies || !decodedToken) {
     return {
       redirect: {
         destination: "/login",

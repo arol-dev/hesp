@@ -1,8 +1,7 @@
 import jwt from "jsonwebtoken";
+import { AuthContext } from "../../types";
 
-export async function authenticateAndGetToken(context: {
-  req: { headers: { host: string; cookie: string } };
-}) {
+export async function authenticateAndGetToken(context: AuthContext) {
   const cookies = context.req.headers.cookie;
   if (!cookies) {
     return;
