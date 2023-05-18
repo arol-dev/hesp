@@ -128,8 +128,8 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
             </span>
           </div>
         </div>
-        <div className='flex '>
-          <div className='overflow-hidden bg-white shadow sm:rounded-lg'>
+        <div className='flex justify-between items-center'>
+          <div className=' w-4/5 overflow-hidden bg-white shadow sm:rounded-lg'>
             <div>
               <div className='px-4 py-5 sm:px-6'>
                 <h3 className='text-base font-semibold leading-6 text-gray-900'>
