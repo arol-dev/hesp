@@ -2,7 +2,7 @@ import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { IUser } from "../../../types";
 import { useState } from "react";
 import { useRouter } from "next/router";
-
+import { uploadAvatarImage } from "../UploadAvatarImage";
 interface CoachProfilePageProps {
   person: IUser;
 }
@@ -51,9 +51,15 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
     updatedCoach.append("lastName", formData.lastName);
     updatedCoach.append("email", formData.email);
 
-    // if (selectedPicFile) {
-    //   updatedCoach.append('picture', selectedPicFile);
-    // }
+    if (selectedPicFile) {
+      try {
+        const avatarUrl = await uploadAvatarImage(selectedPicFile);
+        updatedCoach.append("picture", avatarUrl);
+      } catch (uploadError) {
+        console.error("Error uploading image:", uploadError);
+        return;
+      }
+    }
 
     const response = await fetch("/api/staff/updateCoach", {
       method: "PUT",
