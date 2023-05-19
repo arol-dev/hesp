@@ -13,7 +13,7 @@ export default async function handler(
   try {
     if (req.method === "POST") {
       const cookie = req.cookies;
-      const { role } = req.body;
+      const { role, email } = req.body;
 
       const token = cookie.token;
 
@@ -45,6 +45,11 @@ export default async function handler(
             },
           });
 
+          // get the the referral hostname from the request
+          const inviteLinkUrl = `http://${req.headers.host}/signup/${inviteLink.id}`;
+
+          await sendEmail(email, inviteLinkUrl);
+
           res.status(200).json(inviteLink);
         }
       }
@@ -56,5 +61,48 @@ export default async function handler(
     }
   } catch (error) {
     res.status(500).json({ error: (error as Error).message });
+  }
+}
+
+async function sendEmail(email: string, inviteLinkUrl: string) {
+  try {
+    const url = "https://api.courier.com/send";
+    const payload = {
+      message: {
+        to: { email: email },
+        content: {
+          title:
+            "You have been invited to join the Homeless Entrepreneurs Program",
+          body: `
+            You are receiving this email because you have been invited to join the Homeless Entrepreneurs Program.
+            Click the link below to sign up:
+
+
+            ${inviteLinkUrl}
+
+            If you did not sign up, please ignore this email.
+
+            Thanks
+
+            The Homeless Entrepreneurs Program
+            
+            `,
+        },
+      },
+    };
+    const options = {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer pk_prod_4E9HD6GD66MED8HF7GTFGP8SZFDP",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    };
+    const response = await fetch(url, options);
+    const result = await response.json();
+
+    return result;
+  } catch (error) {
+    console.log(error);
   }
 }

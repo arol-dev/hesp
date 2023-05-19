@@ -7,11 +7,14 @@ import Navbar from "../Navbar";
 
 interface TeampageProps {
   coaches: IUser[];
+  jwt: IUser;
 }
 
-function Teampage({ coaches }: TeampageProps) {
+function Teampage({ coaches, jwt }: TeampageProps) {
   const [showAddCoachForm, setShowAddCoachForm] = useState(false);
   const [showDeleteCoach, setShowDeleteCoach] = useState(false);
+
+  const isAdmin = jwt.role === "ADMIN";
 
   function handleAddNewCoach() {
     setShowAddCoachForm(true);
@@ -33,8 +36,8 @@ function Teampage({ coaches }: TeampageProps) {
       <Navbar headerText={"Admin"}></Navbar>
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
-          <div className="sm:flex-auto">    </div>
-          <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none ">
+          <div className="sm:flex-auto"> </div>
+          {isAdmin && (
             <button
               onClick={handleAddNewCoach}
               type="button"
@@ -42,7 +45,8 @@ function Teampage({ coaches }: TeampageProps) {
             >
               + Add new coach
             </button>
-          </div>
+          )}
+          <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none "></div>
         </div>
         <AddCoach
           showForm={showAddCoachForm}
@@ -56,16 +60,28 @@ function Teampage({ coaches }: TeampageProps) {
                   <table className="min-w-full divide-y divide-gray-300">
                     <thead className="bg-gray-50">
                       <tr>
-                        <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                        <th
+                          scope="col"
+                          className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                        >
                           NAME
                         </th>
-                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                        <th
+                          scope="col"
+                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                        >
                           ASSIGNED HES
                         </th>
-                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                        <th
+                          scope="col"
+                          className="relative py-3.5 pl-3 pr-4 sm:pr-6"
+                        >
                           <span className="sr-only">Edit</span>
                         </th>
-                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                        <th
+                          scope="col"
+                          className="relative py-3.5 pl-3 pr-4 sm:pr-6"
+                        >
                           <span className="sr-only">Remove</span>
                         </th>
                       </tr>
