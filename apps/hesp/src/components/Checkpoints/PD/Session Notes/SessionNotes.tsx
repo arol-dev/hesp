@@ -1,36 +1,43 @@
-import { useEffect, useState } from "react"
-import { v4 as uuidv4 } from 'uuid'
-import { SessionNote, SessiontNotes, SessionNotesProps } from "../../../../../types";
+import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import {
+  SessionNote,
+  SessiontNotes,
+  SessionNotesProps,
+} from "../../../../../types";
 import NoteEditMode from "./NoteEditMode";
 import NoteReadMode from "./NoteReadMode";
 import LastPDNotes from "./LastPDNotes";
 
-function SessionNotes({ onSessionNotesChange, PDSaved, lastPDCheckpoint }: SessionNotesProps) {
-
-  const [sessionNotes, setSessionNotes] = useState<SessiontNotes>([{
-    id: uuidv4(),
-    edit: true,
-    saved: false,
-    topic: "",
-    objective: "",
-    actions: "",
-    notes: "",
-    results: "",
-    evaluation: ""
-  }])
+function SessionNotes({
+  onSessionNotesChange,
+  PDSaved,
+  lastPDCheckpoint,
+}: SessionNotesProps) {
+  const [sessionNotes, setSessionNotes] = useState<SessiontNotes>([
+    {
+      id: uuidv4(),
+      edit: true,
+      saved: false,
+      topic: "",
+      objective: "",
+      actions: "",
+      notes: "",
+      results: "",
+      evaluation: "",
+    },
+  ]);
 
   useEffect(() => {
     onSessionNotesChange(sessionNotes);
   }, [sessionNotes, onSessionNotesChange]);
 
-
   const addNote = () => {
-    let last = sessionNotes.length - 1
+    let last = sessionNotes.length - 1;
     if (!sessionNotes[last].saved) {
-      window.alert("Please save the previous topic before adding a new one")
-    }
-    else {
-      window.alert("New note was created!")
+      window.alert("Please save the previous topic before adding a new one");
+    } else {
+      window.alert("New note was created!");
       const newNote = {
         id: uuidv4(),
         edit: true,
@@ -40,12 +47,11 @@ function SessionNotes({ onSessionNotesChange, PDSaved, lastPDCheckpoint }: Sessi
         actions: "",
         notes: "",
         results: "",
-        evaluation: ""
-      }
-      setSessionNotes([...sessionNotes, newNote])
+        evaluation: "",
+      };
+      setSessionNotes([...sessionNotes, newNote]);
     }
-  }
-  console.log('note', sessionNotes)
+  };
 
   const handleInputChange = (event: any, noteToChange: SessionNote) => {
     setSessionNotes((prevsessionNotes) =>
@@ -74,14 +80,13 @@ function SessionNotes({ onSessionNotesChange, PDSaved, lastPDCheckpoint }: Sessi
           actions: noteToSave.actions,
           notes: noteToSave.notes,
           results: noteToSave.results,
-          evaluation: noteToSave.evaluation
+          evaluation: noteToSave.evaluation,
         };
       }
       return note;
     });
-    setSessionNotes(updatedsessionNotes)
-  }
-
+    setSessionNotes(updatedsessionNotes);
+  };
 
   const handleEditNote = async (noteToEdit: SessionNote) => {
     const updatedsessionNotes = sessionNotes.map((note) => {
@@ -89,49 +94,64 @@ function SessionNotes({ onSessionNotesChange, PDSaved, lastPDCheckpoint }: Sessi
         return {
           ...note,
           edit: !noteToEdit.edit,
-          saved: !noteToEdit.saved
+          saved: !noteToEdit.saved,
         };
       }
       return note;
     });
-    setSessionNotes(updatedsessionNotes)
-
-  }
-  return (
-
-    lastPDCheckpoint ? <LastPDNotes lastPDCheckpoint={lastPDCheckpoint} /> :
-      (
-        <div className="space-y-10 pl-5 pr-5 pb-10" >
-          <div className="lg:flex lg:items-center lg:justify-between pl-5 pr-5 pb-10">
-            <div className="min-w-0 flex-1 pb-8">
-              <h3 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Session Notes</h3>
-            </div>
-            <div className="mt-5 flex lg:ml-4 lg:mt-0">
-              <span className="sm:ml-3">
-                <button cy-data='add-topic' disabled={PDSaved} onClick={addNote} type="submit" className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                  + Add Topic
-                </button>
-              </span>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
-            <div className="px-4 sm:px-0 col-span-1">
-              <h2 className="text-base font-semibold leading-7 text-gray-900">Topics</h2>
-              <p className="mt-1 text-sm leading-6 text-gray-600">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
-            </div>
-            <div className="col-span-2 ">
-              {sessionNotes.map((note) =>
-                note.edit === true ?
-                  (<NoteEditMode note={note} handleInputChange={handleInputChange} handleSaveNote={handleSaveNote} PDSaved={PDSaved} />) :
-                  (<NoteReadMode note={note} handleEditNote={handleEditNote} />)
-              )}
-            </div>
-          </div>
-        </div >)
-
-  )
+    setSessionNotes(updatedsessionNotes);
+  };
+  return lastPDCheckpoint ? (
+    <LastPDNotes lastPDCheckpoint={lastPDCheckpoint} />
+  ) : (
+    <div className="space-y-10 pl-5 pr-5 pb-10">
+      <div className="lg:flex lg:items-center lg:justify-between pl-5 pr-5 pb-10">
+        <div className="min-w-0 flex-1 pb-8">
+          <h3 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+            Session Notes
+          </h3>
+        </div>
+        <div className="mt-5 flex lg:ml-4 lg:mt-0">
+          <span className="sm:ml-3">
+            <button
+              cy-data="add-topic"
+              disabled={PDSaved}
+              onClick={addNote}
+              type="submit"
+              className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              + Add Topic
+            </button>
+          </span>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
+        <div className="px-4 sm:px-0 col-span-1">
+          <h2 className="text-base font-semibold leading-7 text-gray-900">
+            Topics
+          </h2>
+          <p className="mt-1 text-sm leading-6 text-gray-600">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </p>
+        </div>
+        <div className="col-span-2 ">
+          {sessionNotes.map((note) =>
+            note.edit === true ? (
+              <NoteEditMode
+                note={note}
+                handleInputChange={handleInputChange}
+                handleSaveNote={handleSaveNote}
+                PDSaved={PDSaved}
+              />
+            ) : (
+              <NoteReadMode note={note} handleEditNote={handleEditNote} />
+            )
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default SessionNotes
+export default SessionNotes;
