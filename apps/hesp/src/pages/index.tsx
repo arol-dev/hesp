@@ -1,10 +1,12 @@
 import { authenticateAndGetToken } from "../../lib/auth/authUtils";
-import Navbar from "@/components/Navbar";
 import List from "@/components/MainPage";
-import serverToDb from "../../lib/helperFuntions/serverToDb";
 import { props } from "cypress/types/bluebird";
 import { ITrainee, IUser } from "../../types";
 import dateToISOString from "../../lib/helperFuntions/dataToIsoString";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
+import { AuthContext } from "../../types";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
 interface props {
   user: IUser[];
@@ -17,31 +19,49 @@ const Main: React.FC<props> = ({ user, jwt, Trainees }) => {
     <div className="h-screen">
       <List user={user} jwt={jwt} Trainees={Trainees}></List>
     </div>
-
   );
 };
 
-export async function getServerSideProps(context: any) {
-  const decodedToken = await authenticateAndGetToken(context);
-  const cookies = context.req.headers.cookie;
+export const getServerSideProps: GetServerSideProps<props> = async (
+  context: GetServerSidePropsContext
+) => {
+  try {
+    const decodedToken = await authenticateAndGetToken(context as AuthContext);
+    const cookies = context.req.headers.cookie;
 
-  if (!cookies) {
+    if (!cookies) {
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false,
+        },
+      };
+    }
+
+    const HEs = await prisma.trainee.findMany();
+
+    const user = await prisma.user.findMany({
+      include: {
+        Trainee: true,
+      },
+    });
+
+    return {
+      props: {
+        user: dateToISOString(user),
+        jwt: decodedToken,
+        Trainees: dateToISOString(HEs),
+      },
+    };
+  } catch (error) {
+    console.error(error);
     return {
       redirect: {
-        destination: "/login",
+        destination: "/error",
         permanent: false,
       },
     };
   }
-  const user = await serverToDb("User", "get");
-  const HEs = await serverToDb("Trainee", "get");
-  return {
-    props: {
-      user: user,
-      jwt: decodedToken,
-      Trainees: dateToISOString(HEs),
-    },
-  };
-}
+};
 
 export default Main;
