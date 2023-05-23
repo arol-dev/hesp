@@ -1,25 +1,25 @@
-import Navbar from '@/components/Navbar';
-import Teampage from '@/components/Team/Teampage';
-import { GetServerSideProps } from 'next';
-import { IUser } from '../../types';
-import { authenticateAndGetToken } from '../../lib/auth/authUtils';
-import serverToDb from '../../lib/helperFuntions/serverToDb';
+import Teampage from "@/components/Team/Teampage";
+import { GetServerSideProps } from "next";
+import { authenticateAndGetToken } from "../../lib/auth/authUtils";
+import serverToDb from "../../lib/helperFuntions/serverToDb";
+import { IUser } from "../../types";
 
 interface ITeamProps {
   coaches: IUser[];
+  jwt: IUser;
 }
 
-function Team({ coaches }: ITeamProps) {
+function Team({ coaches, jwt }: ITeamProps) {
   return (
     <>
-      <Teampage coaches={coaches}></Teampage>
+      <Teampage jwt={jwt} coaches={coaches}></Teampage>
     </>
   );
 }
 export default Team;
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
-  const coaches = await serverToDb('User', 'get');
+  const coaches = await serverToDb("User", "get");
 
   const decodedToken = await authenticateAndGetToken(context);
   const cookies = context.req.headers.cookie;
@@ -27,15 +27,18 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   if (!decodedToken || !cookies) {
     return {
       redirect: {
-        destination: '/login',
+        destination: "/login",
         permanent: false,
       },
     };
   }
 
+  const jwt = decodedToken;
+
   return {
     props: {
       coaches,
+      jwt,
     },
   };
 };

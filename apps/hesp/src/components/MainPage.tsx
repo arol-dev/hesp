@@ -58,7 +58,7 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
           closeForm={() => setShowAddCandidateForm(false)}
         />
         <div className="mt-8 flow-root">
-          {matchingUser && matchingUser.length > 0 && dataToMap.length > 0 ? (
+          {dataToMap && dataToMap.length > 0 && dataToMap.length > 0 ? (
             <div className="px-4 sm:px-6 lg:px-8 pb-12">
               <div className="mt-8 flow-root">
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -95,7 +95,8 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
-                          {Trainees.map((person: ITrainee, index: number) => (
+                          {dataToMap.map((person: ITrainee, index: number) => (
+
                             <tr data-cy="trainee-row" key={index}>
                               <td className="flex whitespace-nowrap py-4 pl-4  pr-80 text-sm font-medium text-gray-900 sm:pl-6">
                                 <div className="mr-3">
@@ -121,15 +122,17 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                               </td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 {" "}
-                                <a
-                                  href="#"
+                                <Link
+                                  href={`/candidates/${person.id}?edit`}
+
                                   className="text-indigo-600 hover:text-indigo-900"
                                 >
                                   Edit
                                   <span className="sr-only">
                                     , {person.firstName + " " + person.lastName}
                                   </span>
-                                </a>
+                                </Link>
+
                               </td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 <a

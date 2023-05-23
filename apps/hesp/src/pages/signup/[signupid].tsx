@@ -4,7 +4,6 @@ import { FormEvent, useState } from "react";
 
 export default function SignupPage() {
   const router = useRouter();
-  const { dynamicID } = router.query;
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -13,9 +12,8 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: FormEvent<HTMLElement>) => {
     e.preventDefault();
-    const host = window.location.host;
 
-    const res = await fetch(`http://${host}}/api/auth/register`, {
+    const res = await fetch(`/api/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +28,7 @@ export default function SignupPage() {
 
     const data = await res.json();
 
-    if (data.user.role) {
+    if (data && data.user && data.user.role) {
       router.push("/");
     } else {
       console.error("Error:", data.error);
@@ -48,7 +46,6 @@ export default function SignupPage() {
           <h2 className="text-2xl font-bold mb-4">Signup</h2>
 
           <form onSubmit={handleSubmit}>
-            {/* First Name */}
             <div className="mb-4">
               <label
                 htmlFor="firstName"
@@ -66,7 +63,6 @@ export default function SignupPage() {
               />
             </div>
 
-            {/* Last Name */}
             <div className="mb-4">
               <label
                 htmlFor="lastName"
@@ -84,7 +80,6 @@ export default function SignupPage() {
               />
             </div>
 
-            {/* Email */}
             <div className="mb-4">
               <label htmlFor="email" className="block text-sm font-medium mb-2">
                 Email
@@ -99,7 +94,6 @@ export default function SignupPage() {
               />
             </div>
 
-            {/* Password */}
             <div className="mb-4">
               <label
                 htmlFor="password"
@@ -117,7 +111,6 @@ export default function SignupPage() {
               />
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               className="w-full p-2 bg-blue-600 text-white font-bold rounded-md"
