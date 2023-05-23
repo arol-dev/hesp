@@ -19,14 +19,12 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
   const [showAddCandidateForm, setShowAddCandidateForm] = useState(false);
 
   const matchingUser = user.filter((user: IUser) => {
-    console.log(user.id);
     return user.id == jwt.id;
   });
 
   const dataToMap = showIHe ? matchingUser[0].Trainee : Trainees;
 
   const lastCheckpoint = (person: ITrainee) => {
-
     const pdc = person.PDCcheckpoint;
 
     if (pdc !== undefined && pdc.length > 0) {
@@ -34,9 +32,9 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
       const ago = moment(last.createdAt).startOf("day").fromNow();
       return ago;
     } else {
-      return 'No checkpoint has been created'
+      return "No checkpoint has been created";
     }
-  }
+  };
 
   return (
     <div className="h-screen">
@@ -48,6 +46,7 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
             <button
               type="button"
               onClick={() => setShowAddCandidateForm(true)}
+
               className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               + Add new candidate
@@ -116,31 +115,35 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                                   </p>
                                 </Link>
                               </td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">   {lastCheckpoint(person)}</td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> <a
-                                href="#"
-                                className="text-indigo-600 hover:text-indigo-900"
-                              >
-                                Edit
-                                <span className="sr-only">
-                                  , {person.firstName + " " + person.lastName}
-                                </span>
-                              </a></td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a
-                                href={`/candidates/${person.id}/checkpoint`}
-                                className="text-indigo-600 hover:text-indigo-900"
-                                 data-cy='trainee-new-checkpoint'
-                                data-cy-target={`${person.firstName}`}
- 
-                              >
-                                New Checkpoint
-                                <span className="sr-only">
-                                  , {person.firstName + " " + person.lastName}
-                                </span>
-                              </a>
- 
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                                {" "}
+                                {lastCheckpoint(person)}
                               </td>
-
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                {" "}
+                                <a
+                                  href="#"
+                                  className="text-indigo-600 hover:text-indigo-900"
+                                >
+                                  Edit
+                                  <span className="sr-only">
+                                    , {person.firstName + " " + person.lastName}
+                                  </span>
+                                </a>
+                              </td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                <a
+                                  href={`/candidates/${person.id}/checkpoint`}
+                                  className="text-indigo-600 hover:text-indigo-900"
+                                  data-cy="trainee-new-checkpoint"
+                                  data-cy-target={`${person.firstName}`}
+                                >
+                                  New Checkpoint
+                                  <span className="sr-only">
+                                    , {person.firstName + " " + person.lastName}
+                                  </span>
+                                </a>
+                              </td>
                             </tr>
                           ))}
                         </tbody>
