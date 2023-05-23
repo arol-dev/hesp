@@ -63,8 +63,7 @@ export const getServerSideProps: GetServerSideProps<props> = async (
       },
     };
   }
-  const user = await serverToDb("User", "get");
-  const HEs = await serverToDb("Trainee", "get");
+
   return {
     props: {
       user: user,
