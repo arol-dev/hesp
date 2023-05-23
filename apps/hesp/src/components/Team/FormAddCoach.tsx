@@ -82,7 +82,7 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
                         </label>
                         <select
                           id="role"
-                          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                          className="w-full p-2 border-1 bg-gray-100 border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
                           value={role}
                           onChange={(e) => setRole(e.target.value)}
                           required
@@ -120,7 +120,7 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
                             onChange={handleInputChange}
                             type="email"
                             autoComplete="email"
-                            className="block w-full pl-8 rounded-md border-0 py-1.5 text-gray-900"
+                            className="block w-full pl-8 rounded-md border-1 mt-1 border-gray-500 bg-gray-100 py-1.5 text-gray-900"
                             placeholder="frodo.baggins@thefellowship.com"
                           />
                         </div>
