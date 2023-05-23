@@ -401,7 +401,6 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
             <Radar data={dataWOL} options={optionsWOL} />
           )}
         </div>
-      </div>
     </>
   );
 }
