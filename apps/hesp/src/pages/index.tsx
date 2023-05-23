@@ -3,7 +3,6 @@ import List from "@/components/MainPage";
 import { props } from "cypress/types/bluebird";
 import { ITrainee, IUser } from "../../types";
 import dateToISOString from "../../lib/helperFuntions/dataToIsoString";
-
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 import { AuthContext } from "../../types";
@@ -14,6 +13,7 @@ interface props {
   jwt: IUser;
   Trainees: ITrainee[];
 }
+
 const Main: React.FC<props> = ({ user, jwt, Trainees }) => {
   return (
     <div className="h-screen">
@@ -21,7 +21,6 @@ const Main: React.FC<props> = ({ user, jwt, Trainees }) => {
     </div>
   );
 };
-
 
 export const getServerSideProps: GetServerSideProps<props> = async (
   context: GetServerSidePropsContext
@@ -63,14 +62,6 @@ export const getServerSideProps: GetServerSideProps<props> = async (
       },
     };
   }
-
-  return {
-    props: {
-      user: user,
-      jwt: decodedToken,
-      Trainees: dateToISOString(HEs),
-    },
-  };
-}
+};
 
 export default Main;
