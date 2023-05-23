@@ -3,6 +3,7 @@ import Navbar from "../Navbar";
 import Chart from "./RadarChart";
 import { useRouter } from "next/router";
 
+
 import AssignPerson from "./AssignCoach";
 import {
   ITrainee,
@@ -11,7 +12,7 @@ import {
   IPDCcheckpoint,
 } from "../../../types";
 import { PDCcheckpoint } from "@prisma/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { last } from "cypress/types/lodash";
 import React from "react";
 
@@ -21,16 +22,13 @@ interface IPageProps {
   PDs: IPDCcheckpoint[];
   decodedToken: Partial<IUser>;
 }
-
 function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
   const router = useRouter();
   const { role } = decodedToken;
-
   function handleClickNewCheckpoint(event: React.MouseEvent) {
     event.preventDefault();
     router.push(`/candidates/${person.id}/checkpoint`);
   }
-
   const [fullName, setFullName] = useState(
     person.firstName + " " + person.lastName
   );
@@ -38,7 +36,14 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
   const [email, setEmail] = useState(person.email);
   const [registerNumber, setRegisterNumber] = useState(person.registerNumber);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-
+  // get the full url including parameters
+  const path = router.asPath;
+  useEffect(() => {
+    const clickedEditFromIndex = path.includes("edit");
+    if (clickedEditFromIndex) {
+      setIsEditing(true);
+    }
+  }, []);
   async function handleSave() {
     const [firstName, lastName] = fullName.split(" ");
 
@@ -50,6 +55,7 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
       registerNumber: registerNumber,
     };
 
+
     const path = window.location.pathname;
     const id = path.split("/").pop();
 
@@ -60,7 +66,6 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
       },
       body: JSON.stringify(data),
     });
-
     if (response.ok) {
       window.alert(
         "Personal information of the candidate updated successfully"
@@ -68,10 +73,8 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
       // window.location.reload()
       router.push(`/candidates/${id}`);
     } else window.alert("Personal information can't be updated");
-
     setIsEditing(!isEditing);
   }
-
   return (
     <div>
       <Navbar headerText={"HESP Program"}></Navbar>
@@ -92,7 +95,6 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
               >
                 {isEditing ? "Cancel" : "Edit"}
               </button>
-
               {isEditing ? (
                 <button
                   onClick={handleSave}
@@ -104,7 +106,6 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
                 <></>
               )}
             </span>
-
             <span className="sm:ml-3">
               <button
                 onClick={(event) => handleClickNewCheckpoint(event)}
@@ -133,7 +134,7 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
             </span>
           </div>
         </div>
- 
+
         <div className='flex justify-between items-center'>
           <div className=' w-4/5 overflow-hidden bg-white shadow sm:rounded-lg'>
  
