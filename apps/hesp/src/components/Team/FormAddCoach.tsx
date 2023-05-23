@@ -7,6 +7,7 @@ interface AddCoachProps {
 }
 
 interface FormData {
+
   firstName?: string;
   lastName?: string;
   role?: string;
@@ -25,6 +26,7 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
   const teamPage = path.includes("team");
   const formFields = teamPage
     ? {
+
         role: "STAFF",
         email: "",
       }
@@ -39,6 +41,7 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   }
+
 
   async function handleSubmit(e: any) {
     e.preventDefault();

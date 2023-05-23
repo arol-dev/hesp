@@ -7,6 +7,7 @@ import Navbar from "../Navbar";
 
 interface TeampageProps {
   coaches: IUser[];
+
   jwt: IUser;
 }
 
@@ -45,6 +46,7 @@ function Teampage({ coaches, jwt }: TeampageProps) {
             >
               + Add new coach
             </button>
+
           )}
           <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none "></div>
         </div>
