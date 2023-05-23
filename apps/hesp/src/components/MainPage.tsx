@@ -2,6 +2,8 @@ import Link from "next/link";
 import { ITrainee, IUser } from "../../types";
 import moment from "moment";
 import Navbar from "./Navbar";
+import { useState } from "react";
+import AddCoach from "./Team/FormAddCoach";
 
 interface props {
   user: IUser[];
@@ -14,6 +16,7 @@ interface props {
 
 const List: React.FC<props> = ({ user, jwt, Trainees }) => {
   const showIHe = jwt.role === "STAFF";
+  const [showAddCandidateForm, setShowAddCandidateForm] = useState(false);
 
   const matchingUser = user.filter((user: IUser) => {
     return user.id == jwt.id;
@@ -42,12 +45,18 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
           <div className="mt-4 pr-8 sm:ml-16 sm:mt-0 sm:flex-none">
             <button
               type="button"
+              onClick={() => setShowAddCandidateForm(true)}
+
               className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               + Add new candidate
             </button>
           </div>
         </div>
+        <AddCoach
+          showForm={showAddCandidateForm}
+          closeForm={() => setShowAddCandidateForm(false)}
+        />
         <div className="mt-8 flow-root">
           {dataToMap && dataToMap.length > 0 && dataToMap.length > 0 ? (
             <div className="px-4 sm:px-6 lg:px-8 pb-12">
