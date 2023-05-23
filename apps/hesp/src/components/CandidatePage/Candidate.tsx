@@ -2,16 +2,24 @@ import Link from "next/link";
 import Navbar from "../Navbar";
 import Chart from "./RadarChart";
 import { useRouter } from "next/router";
+
+
 import AssignPerson from "./AssignCoach";
-import { ITrainee, IUser, IWOLcheckpoint } from "../../../types";
+import {
+  ITrainee,
+  IUser,
+  IWOLcheckpoint,
+  IPDCcheckpoint,
+} from "../../../types";
 import { PDCcheckpoint } from "@prisma/client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { last } from "cypress/types/lodash";
 import React from "react";
+
 interface IPageProps {
   person: ITrainee;
   WOLs: IWOLcheckpoint[];
-  PDs: PDCcheckpoint[];
+  PDs: IPDCcheckpoint[];
   decodedToken: Partial<IUser>;
 }
 function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
@@ -38,6 +46,7 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
   }, []);
   async function handleSave() {
     const [firstName, lastName] = fullName.split(" ");
+
     const data = {
       firstName: firstName,
       lastName: lastName,
@@ -45,7 +54,11 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
       email: email,
       registerNumber: registerNumber,
     };
+
+
+    const path = window.location.pathname;
     const id = path.split("/").pop();
+
     const response = await fetch(`/api/he/${id}`, {
       method: "PUT",
       headers: {
@@ -121,8 +134,10 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
             </span>
           </div>
         </div>
-        <div className="flex justify-between items-center">
-          <div className=" w-4/5 overflow-hidden bg-white shadow sm:rounded-lg">
+
+        <div className='flex justify-between items-center'>
+          <div className=' w-4/5 overflow-hidden bg-white shadow sm:rounded-lg'>
+ 
             <div>
               <div className="px-4 py-5 sm:px-6">
                 <h3 className="text-base font-semibold leading-6 text-gray-900">

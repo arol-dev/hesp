@@ -42,7 +42,6 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
           <div className="mt-4 pr-8 sm:ml-16 sm:mt-0 sm:flex-none">
             <button
               type="button"
-              onClick={() => console.log(matchingUser)}
               className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               + Add new candidate
@@ -88,6 +87,7 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
                           {dataToMap.map((person: ITrainee, index: number) => (
+
                             <tr data-cy="trainee-row" key={index}>
                               <td className="flex whitespace-nowrap py-4 pl-4  pr-80 text-sm font-medium text-gray-900 sm:pl-6">
                                 <div className="mr-3">
@@ -115,6 +115,7 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                                 {" "}
                                 <Link
                                   href={`/candidates/${person.id}?edit`}
+
                                   className="text-indigo-600 hover:text-indigo-900"
                                 >
                                   Edit
@@ -122,6 +123,7 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                                     , {person.firstName + " " + person.lastName}
                                   </span>
                                 </Link>
+
                               </td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 <a
