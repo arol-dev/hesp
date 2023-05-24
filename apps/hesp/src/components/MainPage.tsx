@@ -22,7 +22,9 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
     return user.id == jwt.id;
   });
 
+
   const dataToMap = showIHe ? matchingUser[0]?.Trainee : Trainees;
+
 
   const lastCheckpoint = (person: ITrainee) => {
     const pdc = person.PDCcheckpoint;
