@@ -392,15 +392,6 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
           )}
         </div>
       </div>
-      <div className="ml-10 bg-white p-10">
-        <h3 className="px-5 py-5 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-          WOL CHECKPOINTS
-        </h3>
-
-        {Object.keys(dataWOL).length !== 0 && (
-          <Radar data={dataWOL} options={optionsWOL} />
-        )}
-      </div>
     </>
   );
 }
