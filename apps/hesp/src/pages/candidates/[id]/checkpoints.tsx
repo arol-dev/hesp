@@ -2,6 +2,7 @@ import Checkpoints from "@/components/Checkpoints/AllCheckpoints";
 import { GetServerSideProps } from "next";
 import { authenticateAndGetToken } from "../../../../lib/auth/authUtils";
 import { PrismaClient } from "@prisma/client";
+import dateToISOString from "../../../../lib/helperFuntions/dataToIsoString";
 
 const prisma = new PrismaClient();
 function AllCheckpoints({ id, WOLs, PDs }: any) {
@@ -41,8 +42,8 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     return {
       props: {
         id: parsedId,
-        WOLs,
-        PDs,
+        WOLs: dateToISOString(WOLs),
+        PDs: dateToISOString(PDs),
       },
     };
   } catch (error) {
