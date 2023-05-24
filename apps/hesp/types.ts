@@ -123,6 +123,7 @@ export interface IWOLcheckpoint {
   funImprove: string;
   userId?: string;
   User: IUser;
+  traineeId: string;
 }
 
 export interface IPDCcheckpoint {
@@ -138,6 +139,7 @@ export interface IPDCcheckpoint {
   user?: IUser;
   SessionNotes?: SessiontNotes;
   createdAt: Date;
+  traineeId: string;
 }
 
 export interface ITrainee {
@@ -231,6 +233,7 @@ export type SessionNotesProps = {
 };
 
 export type NewCheckpointProps = {
+  person: ITrainee;
   id: Number;
   lastPDCheckpoint: IPDCcheckpoint;
   lastWOLCheckpoint: IWOLcheckpoint;

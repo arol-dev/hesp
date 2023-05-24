@@ -12,7 +12,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const sessionNotes = JSON.parse(body.sessionNotes)
     const checkpoint = await prisma.pDCcheckpoint.create({
       data: {
-        traineeId: parseInt(body.userId),
         trust: parseInt(body.trust),
         willFollow: parseInt(body.willFollow),
         retention: parseInt(body.retention),
@@ -20,6 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         cv: parseInt(body.cv),
         readyForInterviews: parseInt(body.readyForInterviews),
         advancement: parseInt(body.advancement),
+        traineeId: parseInt(body.userId),
       }
     });
     const updatedCheckpoit = await prisma.pDCcheckpoint.update({
