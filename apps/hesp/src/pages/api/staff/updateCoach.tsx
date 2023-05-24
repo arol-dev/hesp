@@ -14,6 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         firstName: body.firstName,
         lastName: body.lastName,
         email: body.email,
+        picture: body.picture
       }
     })
     res.status(200).json({ data: coach });

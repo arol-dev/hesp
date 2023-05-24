@@ -1,8 +1,10 @@
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { IUser } from "../../../types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { uploadAvatarImage } from "../UploadAvatarImage";
+import { update } from "cypress/types/lodash";
+import { event } from "cypress/types/jquery";
 interface CoachProfilePageProps {
   person: IUser;
 }
@@ -20,6 +22,7 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
     firstName: person.firstName,
     lastName: person.lastName,
     email: person.email,
+    picture: person.picture,
   });
 
   function handleInputChange(event: any) {
@@ -42,38 +45,43 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
     setPicPreview(URL.createObjectURL(file));
   }
 
-  async function handleSubmit(event: any) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const updatedCoach = new FormData();
-    updatedCoach.append("id", formData.id.toString());
-    updatedCoach.append("firstName", formData.firstName);
-    updatedCoach.append("lastName", formData.lastName);
-    updatedCoach.append("email", formData.email);
+    let formDataForFetch = formData;
 
     if (selectedPicFile) {
       try {
-        const avatarUrl = await uploadAvatarImage(selectedPicFile);
-        updatedCoach.append("picture", avatarUrl);
+        const avatarUrl = await uploadAvatarImage(
+          selectedPicFile,
+          formData.id.toString()
+        );
+        console.log(
+          "avatarUrl",
+          avatarUrl,
+          "avatarUrl public",
+          avatarUrl.publicUrl
+        );
+        formDataForFetch = { ...formData, picture: avatarUrl.publicUrl };
+        // Update the formData state as well
+        setFormData(formDataForFetch);
       } catch (uploadError) {
         console.error("Error uploading image:", uploadError);
         return;
       }
     }
-
     const response = await fetch("/api/staff/updateCoach", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(formDataForFetch),
     });
 
     const result = await response.json();
 
     if (response.ok) {
       window.alert("Personal information of the coach updated successfully");
-      // window.location.reload()
       router.push(`/team`);
     } else {
       console.error("Error deleting coach:", result);
@@ -95,7 +103,10 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
                 better.
               </p>
             </div>
-            <form className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
+            <form
+              onSubmit={handleSubmit}
+              className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2"
+            >
               <div className="px-4 py-6 sm:p-8">
                 <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="col-span-2">
@@ -134,7 +145,6 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
                       />
                     </div>
                   </div>
-
                   <div className="col-span-full">
                     <label
                       htmlFor="email"
@@ -153,7 +163,6 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
                       />
                     </div>
                   </div>
-
                   <div className="col-span-full">
                     <label
                       htmlFor="photo"
@@ -168,7 +177,7 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
                         </div>
                       ) : (
                         <img
-                          src={picpreview ?? person.picture}
+                          src={formData.picture ?? person.picture}
                           alt="Profile"
                           className="h-12 w-12 rounded-full object-cover"
                         />
@@ -199,7 +208,6 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
                   Cancel
                 </button>
                 <button
-                  onClick={() => handleSubmit(event)}
                   type="submit"
                   className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
