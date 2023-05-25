@@ -8,6 +8,8 @@ interface LastPDProps {
 
 function LastPD({ lastPDCheckpoint }: LastPDProps) {
 
+
+  console.log('last pd', lastPDCheckpoint)
   const [ratings, setRatings] = useState([
     {
       name: "Trust",
