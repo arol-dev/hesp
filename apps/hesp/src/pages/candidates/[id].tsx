@@ -16,15 +16,17 @@ interface IPageProps {
   WOLs: IWOLcheckpoint[];
   PDs: IPDCcheckpoint[];
   decodedToken: Partial<IUser>;
+  coach: IUser,
 }
 
-export function Profile({ person, WOLs, PDs, decodedToken }: IPageProps) {
+export function Profile({ person, WOLs, PDs, decodedToken, coach }: IPageProps) {
   return (
     <Candidate
       WOLs={WOLs}
       person={person}
       PDs={PDs}
       decodedToken={decodedToken}
+      coach={coach}
     ></Candidate>
   );
 }
@@ -50,9 +52,19 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
       },
     });
 
+
+    const coach = await prisma.user.findUnique({
+      where: {
+        id: person?.coachId ?? undefined
+      }
+    })
+
+    ///// why do we need this? 
     const WOLs = await prisma.wOLcheckpoint.findMany();
 
     const PDs = await prisma.pDCcheckpoint.findMany();
+
+
 
     return {
       props: {
@@ -60,6 +72,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
         WOLs: dateToISOString(WOLs),
         PDs: dateToISOString(PDs),
         decodedToken,
+        coach
       },
     };
   } catch (error) {
