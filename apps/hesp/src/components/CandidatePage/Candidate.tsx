@@ -265,7 +265,7 @@ function Candidate({ person, WOLs, PDs, decodedToken, coach, lastPDCheckpoint, l
           </div>
           <img src="/profile_pic.png" className="pl-5" />
         </div>
-        <div className="px-5 py-5">
+        <div className=" py-5">
           <Chart person={person} PDs={PDs} WOLs={WOLs}></Chart>
         </div>
         {lastPD && lastWOL ? <LastCheckpointCard coach={coach} lastWOL={lastWOL} lastPD={lastPD} /> : <></>}
