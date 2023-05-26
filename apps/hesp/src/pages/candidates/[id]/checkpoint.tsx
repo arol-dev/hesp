@@ -43,14 +43,16 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     };
   }
 
-  const oneMonthAgo = new Date();
-  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
 
   const person = await prisma.trainee.findUnique({
     where: {
       id: parseInt(id),
     }
   })
+
+  const oneMonthAgo = new Date();
+  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
 
   const lastPDCheckpoint = await prisma.pDCcheckpoint.findFirst({
     where: {
@@ -78,6 +80,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
       createdAt: 'desc',
     },
   });
+
   return {
     props: {
       person,
