@@ -119,7 +119,8 @@ function Candidate({ person, WOLs, PDs, decodedToken, coach, lastPDCheckpoint, l
             </span>
 
             {lastPDCheckpoint && lastWOLCheckpoint ?
-              <span className="sm:ml-3">
+
+              <div className="relative flex flex-col items-center group sm:ml-3">
                 <button
                   disabled
                   type="button"
@@ -139,9 +140,11 @@ function Candidate({ person, WOLs, PDs, decodedToken, coach, lastPDCheckpoint, l
                   </svg>
                   New Checkpoint
                 </button>
-              </span>
-
-
+                <div className="absolute bottom-0   flex-col items-center hidden mb-6 group-hover:flex">
+                  <span className="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg">The last checkpoint was created less then 30 days ago</span>
+                  <div className="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
+                </div>
+              </div>
               :
               <span className="sm:ml-3">
                 <button
