@@ -370,7 +370,7 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
 
   return person.PDCcheckpoint.length === 0 &&
     person.WOLcheckpoint.length === 0 ? (
-    <> Nothing to show</>
+    <></>
   ) : (
     <>
       <div className="bg-white flex w-full justify-center ">
