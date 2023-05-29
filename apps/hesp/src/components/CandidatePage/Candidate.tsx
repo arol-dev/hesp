@@ -3,7 +3,6 @@ import Navbar from "../Navbar";
 import Chart from "./RadarChart";
 import { useRouter } from "next/router";
 
-
 import AssignPerson from "./AssignCoach";
 import {
   ITrainee,
@@ -13,18 +12,29 @@ import {
 } from "../../../types";
 import { PDCcheckpoint } from "@prisma/client";
 import { useEffect, useState } from "react";
-import { last } from "cypress/types/lodash";
 import React from "react";
+import lastCheckpointCard from "./LastCheckpointCard";
+import LastCheckpointCard from "./LastCheckpointCard";
 
 interface IPageProps {
   person: ITrainee;
   WOLs: IWOLcheckpoint[];
   PDs: IPDCcheckpoint[];
   decodedToken: Partial<IUser>;
+  coach: IUser;
+  lastPDCheckpoint: IPDCcheckpoint;
+  lastWOLCheckpoint: IWOLcheckpoint
+
 }
-function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
+function Candidate({ person, WOLs, PDs, decodedToken, coach, lastPDCheckpoint, lastWOLCheckpoint }: IPageProps) {
   const router = useRouter();
   const { role } = decodedToken;
+
+
+  const lastPD = person?.PDCcheckpoint[person.PDCcheckpoint.length - 1] || null
+  const lastWOL = person?.WOLcheckpoint[person.WOLcheckpoint.length - 1] || null
+
+
   function handleClickNewCheckpoint(event: React.MouseEvent) {
     event.preventDefault();
     router.push(`/candidates/${person.id}/checkpoint`);
@@ -77,6 +87,7 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
     } else window.alert("Personal information can't be updated");
     setIsEditing(!isEditing);
   }
+
   return (
     <div>
       <Navbar headerText={"HESP Program"}></Navbar>
@@ -108,15 +119,14 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
                 <></>
               )}
             </span>
-            <span className="sm:ml-3">
-              <button
-                onClick={(event) => handleClickNewCheckpoint(event)}
-                type="button"
-                className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                <a
-                  href={`/candidates/${person.id}/checkpoint`}
-                  className="inline-flex items-center"
+
+            {lastPDCheckpoint && lastWOLCheckpoint ?
+
+              <div className="relative flex flex-col items-center group sm:ml-3">
+                <button
+                  disabled
+                  type="button"
+                  className="cursor-not-allowed inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   <svg
                     className="-ml-0.5 mr-1.5 h-5 w-5"
@@ -131,15 +141,45 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
                     />
                   </svg>
                   New Checkpoint
-                </a>
-              </button>
-            </span>
+                </button>
+                <div className="absolute bottom-0   flex-col items-center hidden mb-6 group-hover:flex">
+                  <span className="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg">The last checkpoint was created less then 30 days ago</span>
+                  <div className="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
+                </div>
+              </div>
+              :
+              <span className="sm:ml-3">
+                <button
+                  onClick={(event) => handleClickNewCheckpoint(event)}
+                  type="button"
+                  className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  <a
+                    href={`/candidates/${person.id}/checkpoint`}
+                    className="inline-flex items-center"
+                  >
+                    <svg
+                      className="-ml-0.5 mr-1.5 h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    New Checkpoint
+                  </a>
+                </button>
+              </span>}
           </div>
         </div>
 
         <div className='flex justify-between items-center'>
           <div className=' w-4/5 overflow-hidden bg-white shadow sm:rounded-lg'>
- 
+
             <div>
               <div className="px-4 py-5 sm:px-6">
                 <h3 className="text-base font-semibold leading-6 text-gray-900">
@@ -244,36 +284,42 @@ function Candidate({ person, WOLs, PDs, decodedToken }: IPageProps) {
           </div>
           <img src="/profile_pic.png" className="pl-5" />
         </div>
-        <div className="px-5 py-5">
+        <div className="py-5">
           <Chart person={person} PDs={PDs} WOLs={WOLs}></Chart>
         </div>
-        <span className="sm:ml-3">
-          <button
-            type="button"
-            className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            <a
-              href={`/candidates/${person.id}/checkpoints`}
-              className="inline-flex items-center"
-            >
-              <svg
-                className="-ml-0.5 mr-1.5 h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
+        {lastPD && lastWOL ? <LastCheckpointCard coach={coach} lastWOL={lastWOL} lastPD={lastPD} /> : <></>}
+
+
+        {lastPD && lastWOL ? (
+          <div className="flex justify-center mt-5 mb-32">
+            <span className="sm:ml-3">
+              <button
+                type="button"
+                className="mt-5 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              See All Checkpoints{" "}
-            </a>
-          </button>
-        </span>
-      </div>
-    </div>
+                <a
+                  href={`/candidates/${person.id}/checkpoints`}
+                  className="inline-flex items-center"
+                >
+                  <svg
+                    className="-ml-0.5 mr-1.5 h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  See All Checkpoints{" "}
+                </a>
+              </button>
+            </span>
+          </div>) : <> </>}
+      </div >
+    </div >
   );
 }
 export default Candidate;

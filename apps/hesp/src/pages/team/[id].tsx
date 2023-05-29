@@ -3,6 +3,8 @@ import Navbar from "@/components/Navbar";
 import { GetServerSideProps } from "next";
 import { IUser } from "../../../types";
 import { authenticateAndGetToken } from "../../../lib/auth/authUtils";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
 interface CoachPageProps {
   person: IUser;

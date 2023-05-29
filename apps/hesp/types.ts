@@ -123,6 +123,7 @@ export interface IWOLcheckpoint {
   funImprove: string;
   userId?: string;
   User: IUser;
+  createdAt: Date;
   traineeId: string;
 }
 

@@ -5,8 +5,8 @@ import { PrismaClient } from "@prisma/client";
 import dateToISOString from "../../../../lib/helperFuntions/dataToIsoString";
 
 const prisma = new PrismaClient();
-function AllCheckpoints({ id, WOLs, PDs }: any) {
-  return <Checkpoints id={id} WOLs={WOLs} PDs={PDs}></Checkpoints>;
+function AllCheckpoints({ id, WOLs, PDs, person }: any) {
+  return <Checkpoints id={id} WOLs={WOLs} PDs={PDs} person={person}></Checkpoints>;
 }
 export default AllCheckpoints;
 
@@ -27,16 +27,24 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     const { id } = context.query;
     const parsedId = parseInt(id as string);
 
-    const WOLs = await prisma.wOLcheckpoint.findUnique({
+    const person = await prisma.trainee.findUnique({
       where: {
-        id: parsedId,
+        id: parsedId
+      }
+    })
+
+    const WOLs = await prisma.wOLcheckpoint.findMany({
+      where: {
+        traineeId: parsedId,
       },
     });
 
-    const PDs = await prisma.pDCcheckpoint.findUnique({
+    const PDs = await prisma.pDCcheckpoint.findMany({
       where: {
-        id: parsedId,
+        traineeId: parsedId,
       },
+      include:
+        { SessionNotes: true }
     });
 
     return {
@@ -44,6 +52,8 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
         id: parsedId,
         WOLs: dateToISOString(WOLs),
         PDs: dateToISOString(PDs),
+        person
+ 
       },
     };
   } catch (error) {

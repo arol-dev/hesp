@@ -16,15 +16,21 @@ interface IPageProps {
   WOLs: IWOLcheckpoint[];
   PDs: IPDCcheckpoint[];
   decodedToken: Partial<IUser>;
+  coach: IUser;
+  lastPDCheckpoint: IPDCcheckpoint
+  lastWOLCheckpoint: IWOLcheckpoint
 }
 
-export function Profile({ person, WOLs, PDs, decodedToken }: IPageProps) {
+export function Profile({ person, WOLs, PDs, decodedToken, coach, lastPDCheckpoint, lastWOLCheckpoint }: IPageProps) {
   return (
     <Candidate
       WOLs={WOLs}
       person={person}
       PDs={PDs}
       decodedToken={decodedToken}
+      coach={coach}
+      lastPDCheckpoint={lastPDCheckpoint}
+      lastWOLCheckpoint={lastWOLCheckpoint}
     ></Candidate>
   );
 }
@@ -50,9 +56,48 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
       },
     });
 
+
+    const coach = await prisma.user.findUnique({
+      where: {
+        id: person?.coachId ?? undefined
+      }
+    })
+
+    ///// why do we need this? 
     const WOLs = await prisma.wOLcheckpoint.findMany();
 
     const PDs = await prisma.pDCcheckpoint.findMany();
+
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+    const lastPDCheckpoint = await prisma.pDCcheckpoint.findFirst({
+      where: {
+        traineeId: parseInt(id),
+        createdAt: {
+          gte: oneMonthAgo,
+        },
+      },
+      include: {
+        SessionNotes: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    const lastWOLCheckpoint = await prisma.wOLcheckpoint.findFirst({
+      where: {
+        traineeId: parseInt(id),
+        createdAt: {
+          gte: oneMonthAgo,
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
 
     return {
       props: {
@@ -60,6 +105,9 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
         WOLs: dateToISOString(WOLs),
         PDs: dateToISOString(PDs),
         decodedToken,
+        coach,
+        lastPDCheckpoint: dateToISOString(lastPDCheckpoint),
+        lastWOLCheckpoint: dateToISOString(lastWOLCheckpoint)
       },
     };
   } catch (error) {
