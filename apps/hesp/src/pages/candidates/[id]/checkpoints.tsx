@@ -53,6 +53,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
         WOLs: dateToISOString(WOLs),
         PDs: dateToISOString(PDs),
         person
+ 
       },
     };
   } catch (error) {
