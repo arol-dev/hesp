@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Navbar from "../Navbar";
 import Chart from "./RadarChart";
 import { useRouter } from "next/router";
@@ -7,32 +6,41 @@ import AssignPerson from "./AssignCoach";
 import {
   ITrainee,
   IUser,
-  IWOLcheckpoint,
-  IPDCcheckpoint,
 } from "../../../types";
-import { PDCcheckpoint } from "@prisma/client";
 import { useEffect, useState } from "react";
 import React from "react";
-import lastCheckpointCard from "./LastCheckpointCard";
 import LastCheckpointCard from "./LastCheckpointCard";
 
 interface IPageProps {
   person: ITrainee;
-  WOLs: IWOLcheckpoint[];
-  PDs: IPDCcheckpoint[];
   decodedToken: Partial<IUser>;
   coach: IUser;
-  lastPDCheckpoint: IPDCcheckpoint;
-  lastWOLCheckpoint: IWOLcheckpoint
-
 }
-function Candidate({ person, WOLs, PDs, decodedToken, coach, lastPDCheckpoint, lastWOLCheckpoint }: IPageProps) {
+
+function Candidate({ person, decodedToken, coach }: IPageProps) {
   const router = useRouter();
   const { role } = decodedToken;
 
-
   const lastPD = person?.PDCcheckpoint[person.PDCcheckpoint.length - 1] || null
   const lastWOL = person?.WOLcheckpoint[person.WOLcheckpoint.length - 1] || null
+
+  const thirtyDaysPassed = () => {
+    const currentDate = new Date();
+    const lastPDDate = new Date(lastPD.createdAt);
+
+    const currentDateTimestamp = currentDate.getTime();
+    const lastPDTimestamp = lastPDDate.getTime();
+
+    // Calculate the difference in milliseconds
+    const millisecondsPerDay = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
+    const thirtyDaysMilliseconds = 30 * millisecondsPerDay; // Number of milliseconds in 30 days
+    const timeDifference = currentDateTimestamp - lastPDTimestamp;
+
+    // Check if 30 days have passed
+    if (timeDifference >= thirtyDaysMilliseconds) {
+      return true
+    }
+  }
 
 
   function handleClickNewCheckpoint(event: React.MouseEvent) {
@@ -47,6 +55,7 @@ function Candidate({ person, WOLs, PDs, decodedToken, coach, lastPDCheckpoint, l
   const [registerNumber, setRegisterNumber] = useState(person.registerNumber);
   const [about, setAbout] = useState(person.about);
   const [isEditing, setIsEditing] = useState<boolean>(false);
+
   // get the full url including parameters
   const path = router.asPath;
   useEffect(() => {
@@ -120,7 +129,7 @@ function Candidate({ person, WOLs, PDs, decodedToken, coach, lastPDCheckpoint, l
               )}
             </span>
 
-            {lastPDCheckpoint && lastWOLCheckpoint ?
+            {!thirtyDaysPassed() ?
 
               <div className="relative flex flex-col items-center group sm:ml-3">
                 <button
@@ -274,7 +283,7 @@ function Candidate({ person, WOLs, PDs, decodedToken, coach, lastPDCheckpoint, l
                           className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md'
                         />
                       ) : (
-                          person?.about
+                        person?.about
                       )}
                     </dd>
                   </div>
@@ -285,7 +294,7 @@ function Candidate({ person, WOLs, PDs, decodedToken, coach, lastPDCheckpoint, l
           <img src="/profile_pic.png" className="pl-5" />
         </div>
         <div className="py-5">
-          <Chart person={person} PDs={PDs} WOLs={WOLs}></Chart>
+          <Chart person={person}></Chart>
         </div>
         {lastPD && lastWOL ? <LastCheckpointCard coach={coach} lastWOL={lastWOL} lastPD={lastPD} /> : <></>}
 

@@ -37,6 +37,26 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
     }
   };
 
+  const thirtyDaysPassed = (person: ITrainee) => {
+    if (person.PDCcheckpoint.length === 0) { return true }
+    const currentDate = new Date();
+    const lastPDDate = new Date(person.PDCcheckpoint[person.PDCcheckpoint.length - 1]?.createdAt);
+
+    const currentDateTimestamp = currentDate.getTime();
+    const lastPDTimestamp = lastPDDate.getTime();
+
+    // Calculate the difference in milliseconds
+    const millisecondsPerDay = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
+    const thirtyDaysMilliseconds = 30 * millisecondsPerDay; // Number of milliseconds in 30 days
+    const timeDifference = currentDateTimestamp - lastPDTimestamp;
+
+    // Check if 30 days have passed
+    if (timeDifference >= thirtyDaysMilliseconds) {
+      return true
+    }
+  }
+
+
   return (
     <div className="h-screen">
       <Navbar headerText={"HESP Program"}></Navbar>
@@ -133,21 +153,39 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                                     , {person.firstName + " " + person.lastName}
                                   </span>
                                 </Link>
+                              </td>
+                              {thirtyDaysPassed(person) ? (
+                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                  <a
+                                    href={`/candidates/${person.id}/checkpoint`}
+                                    className="text-indigo-600 hover:text-indigo-900"
+                                    data-cy="trainee-new-checkpoint"
+                                    data-cy-target={`${person.firstName}`}
+                                  >
+                                    New Checkpoint
+                                    <span className="sr-only">
+                                      , {person.firstName + " " + person.lastName}
+                                    </span>
+                                  </a>
+                                </td>) : (
+                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                  <div className="relative group">
+                                    <a
+                                      href={`/candidates/${person.id}/checkpoint`}
+                                      className="pointer-events-none text-gray-300 hover:text-indigo-900"
+                                      data-cy="trainee-new-checkpoint"
+                                      data-cy-target={`${person.firstName}`}
+                                    >
+                                      New Checkpoint
 
-                              </td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                <a
-                                  href={`/candidates/${person.id}/checkpoint`}
-                                  className="text-indigo-600 hover:text-indigo-900"
-                                  data-cy="trainee-new-checkpoint"
-                                  data-cy-target={`${person.firstName}`}
-                                >
-                                  New Checkpoint
-                                  <span className="sr-only">
-                                    , {person.firstName + " " + person.lastName}
-                                  </span>
-                                </a>
-                              </td>
+                                    </a>
+                                    <div className="absolute bottom-0   flex-col items-center hidden mb-6 group-hover:flex">
+                                      <span className="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg">The last checkpoint was created less then 30 days ago</span>
+                                      <div className="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
+                                    </div>
+                                  </div>
+                                </td>
+                              )}
                             </tr>
                           ))}
                         </tbody>

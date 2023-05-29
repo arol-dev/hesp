@@ -6,25 +6,15 @@ import {
   Tooltip,
   Legend,
   RadialLinearScale,
-  Filler,
-  ChartDataset,
-  ChartDataCustomTypesPerDataset,
-  ChartDatasetProperties,
-  ChartData,
-  RadarController,
-  RadarControllerChartOptions,
+  Filler
 } from "chart.js";
-import { ITrainee, IWOLcheckpoint, IPDCcheckpoint } from "../../../types";
-import { PDCcheckpoint } from "@prisma/client";
-import { IUser } from "../../../types";
+import { ITrainee } from "../../../types";
 
 interface ChartProps {
   person: ITrainee;
-  WOLs: IWOLcheckpoint[];
-  PDs: IPDCcheckpoint[];
 }
 
-function Chart({ person, PDs, WOLs }: ChartProps) {
+function Chart({ person }: ChartProps) {
   chartjs.register(
     LineElement,
     PointElement,
