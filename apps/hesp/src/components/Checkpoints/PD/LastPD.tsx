@@ -114,7 +114,7 @@ function LastPD({ lastPDCheckpoint }: LastPDProps) {
                                 className={`${rating.value === number
                                   ? "bg-blue-500 text-white"
                                   : "bg-white text-gray-900"
-                                  } inline-flex items-center justify-center rounded-md px-3 py-1.5 border border-gray-300 shadow-sm cursor-pointer hover:bg-gray-50`}
+                                  } inline-flex items-center justify-center rounded-md px-3 py-1.5 border border-gray-300 shadow-sm pointer-events-none`}
                               >
                                 {number}
                               </span>
