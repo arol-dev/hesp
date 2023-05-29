@@ -38,13 +38,25 @@ export const getServerSideProps: GetServerSideProps<props> = async (
       };
     }
 
-    const HEs = await prisma.trainee.findMany();
+    const HEs = await prisma.trainee.findMany({
+      include: {
+        PDCcheckpoint: true,
+        WOLcheckpoint: true
+      }
+    });
+
 
     const user = await prisma.user.findMany({
       include: {
-        Trainee: true,
+        Trainee: {
+          include: {
+            PDCcheckpoint: true,
+            WOLcheckpoint: true
+          }
+        }
       },
     });
+
 
     return {
       props: {

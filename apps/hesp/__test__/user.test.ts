@@ -6,30 +6,30 @@ import {
   it,
   beforeEach,
   afterEach,
-} from '@jest/globals';
-import { all } from 'cypress/types/bluebird';
-import fetch from 'node-fetch';
+} from "@jest/globals";
+import { all } from "cypress/types/bluebird";
+import fetch from "node-fetch";
 
-const baseUrl = 'http://localhost:3000/api';
+const baseUrl = "http://localhost:3000/api";
 
-describe('user endpoints', () => {
+describe("user endpoints", () => {
   let reqBody: any;
 
   beforeEach(async () => {
     reqBody = {
-      firstName: 'Test',
-      lastName: 'User',
+      firstName: "Test",
+      lastName: "User",
       email: `test${Date.now()}@test.com`,
-      role: 'STAFF',
-      password: 'password',
+      role: "STAFF",
+      password: "password",
     };
   });
-  it('should create a user', async () => {
+  it("should create a user", async () => {
     const res: any = await fetch(`${baseUrl}/staff/createCoach`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(reqBody),
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 
@@ -43,9 +43,9 @@ describe('user endpoints', () => {
     expect(data.password).toBeTruthy();
   });
 
-  it('should get all users', async () => {
+  it("should get all users", async () => {
     const res = await fetch(`${baseUrl}/staff/staff`, {
-      method: 'GET',
+      method: "GET",
     });
 
     let allUsers: any = await res.json();
@@ -53,21 +53,21 @@ describe('user endpoints', () => {
     expect(res.status).toBe(200);
     expect(Array.isArray(allUsers)).toBe(true);
     allUsers.forEach((item: any) => {
-      expect(item).toHaveProperty('id');
-      expect(item).toHaveProperty('firstName');
-      expect(item).toHaveProperty('lastName');
-      expect(item).toHaveProperty('email');
-      expect(item).toHaveProperty('role');
-      expect(item).toHaveProperty('password');
+      expect(item).toHaveProperty("id");
+      expect(item).toHaveProperty("firstName");
+      expect(item).toHaveProperty("lastName");
+      expect(item).toHaveProperty("email");
+      expect(item).toHaveProperty("role");
+      expect(item).toHaveProperty("password");
     });
   });
 
-  it('should update a user', async () => {
+  it("should update a user", async () => {
     const newUser: any = await fetch(`${baseUrl}/staff/createCoach`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(reqBody),
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 
@@ -76,16 +76,16 @@ describe('user endpoints', () => {
 
     const updatedData = {
       id: user.id,
-      firstName: 'Test123',
-      lastName: 'User123',
+      firstName: "Test123",
+      lastName: "User123",
     };
 
     const res: any = await fetch(`${baseUrl}/staff/updateCoach`, {
       // updated the endpoint
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(updatedData),
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 

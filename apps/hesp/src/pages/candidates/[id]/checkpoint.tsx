@@ -1,10 +1,11 @@
 import Checkpoint from '@/components/Checkpoints/NewCheckpoint';
 import { GetServerSideProps } from 'next';
-import { IWOLcheckpoint, IPDCcheckpoint } from '../../../../types';
+import { IWOLcheckpoint, IPDCcheckpoint, ITrainee } from '../../../../types';
 import { PrismaClient } from '@prisma/client';
 import { authenticateAndGetToken } from '../../../../lib/auth/authUtils';
 
 type INewCheckpointProps = {
+  person: ITrainee;
   id: number;
   lastPDCheckpoint: IPDCcheckpoint;
   lastWOLCheckpoint: IWOLcheckpoint;
@@ -12,12 +13,14 @@ type INewCheckpointProps = {
 const prisma = new PrismaClient();
 
 function NewCheckpoint({
+  person,
   id,
   lastPDCheckpoint,
   lastWOLCheckpoint,
 }: INewCheckpointProps) {
   return (
     <Checkpoint
+      person={person}
       id={id}
       lastPDCheckpoint={lastPDCheckpoint}
       lastWOLCheckpoint={lastWOLCheckpoint}
@@ -42,6 +45,12 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   const oneMonthAgo = new Date();
   oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+  const person = await prisma.trainee.findUnique({
+    where: {
+      id: parseInt(id),
+    }
+  })
 
   const lastPDCheckpoint = await prisma.pDCcheckpoint.findFirst({
     where: {
@@ -71,18 +80,19 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   });
   return {
     props: {
+      person,
       id,
       lastPDCheckpoint: lastPDCheckpoint
         ? {
-            ...lastPDCheckpoint,
-            createdAt: lastPDCheckpoint.createdAt.toISOString(),
-          }
+          ...lastPDCheckpoint,
+          createdAt: lastPDCheckpoint.createdAt.toISOString(),
+        }
         : null,
       lastWOLCheckpoint: lastWOLCheckpoint
         ? {
-            ...lastWOLCheckpoint,
-            createdAt: lastWOLCheckpoint.createdAt.toISOString(),
-          }
+          ...lastWOLCheckpoint,
+          createdAt: lastWOLCheckpoint.createdAt.toISOString(),
+        }
         : null,
     },
   };
