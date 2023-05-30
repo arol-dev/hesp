@@ -13,24 +13,16 @@ import dateToISOString from "../../../lib/helperFuntions/dataToIsoString";
 
 interface IPageProps {
   person: ITrainee;
-  WOLs: IWOLcheckpoint[];
-  PDs: IPDCcheckpoint[];
   decodedToken: Partial<IUser>;
   coach: IUser;
-  lastPDCheckpoint: IPDCcheckpoint
-  lastWOLCheckpoint: IWOLcheckpoint
 }
 
-export function Profile({ person, WOLs, PDs, decodedToken, coach, lastPDCheckpoint, lastWOLCheckpoint }: IPageProps) {
+export function Profile({ person, decodedToken, coach }: IPageProps) {
   return (
     <Candidate
-      WOLs={WOLs}
       person={person}
-      PDs={PDs}
       decodedToken={decodedToken}
       coach={coach}
-      lastPDCheckpoint={lastPDCheckpoint}
-      lastWOLCheckpoint={lastWOLCheckpoint}
     ></Candidate>
   );
 }
@@ -56,7 +48,6 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
       },
     });
 
-
     const coach = await prisma.user.findUnique({
       where: {
         id: person?.coachId ?? undefined
@@ -68,46 +59,13 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
     const PDs = await prisma.pDCcheckpoint.findMany();
 
-    const oneMonthAgo = new Date();
-    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-
-    const lastPDCheckpoint = await prisma.pDCcheckpoint.findFirst({
-      where: {
-        traineeId: parseInt(id),
-        createdAt: {
-          gte: oneMonthAgo,
-        },
-      },
-      include: {
-        SessionNotes: true,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
-
-    const lastWOLCheckpoint = await prisma.wOLcheckpoint.findFirst({
-      where: {
-        traineeId: parseInt(id),
-        createdAt: {
-          gte: oneMonthAgo,
-        },
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
-
-
     return {
       props: {
         person: dateToISOString(person),
         WOLs: dateToISOString(WOLs),
         PDs: dateToISOString(PDs),
         decodedToken,
-        coach,
-        lastPDCheckpoint: dateToISOString(lastPDCheckpoint),
-        lastWOLCheckpoint: dateToISOString(lastWOLCheckpoint)
+        coach
       },
     };
   } catch (error) {
