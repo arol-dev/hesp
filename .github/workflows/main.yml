@@ -8,7 +8,6 @@ on:
 jobs:
   run_e2e_tests_locally:
     if: github.event_name == 'pull_request_target' && github.event.action != 'closed'
-    needs: test_migration_and_seed
     runs-on: ubuntu-latest
 
     env:
@@ -99,7 +98,6 @@ jobs:
   vercel_preview:
     if: github.event_name == 'pull_request_target' && github.event.action == 'closed' && github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    needs: test_migration_and_seed
 
     steps:
       - name: Checkout repository
