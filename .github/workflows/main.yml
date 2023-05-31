@@ -95,25 +95,3 @@ jobs:
         working-directory: apps/hesp
         run: |
           npx ts-node prisma/seed.ts
-
-  vercel_preview:
-    runs-on: ubuntu-latest
-    needs: test_migration_and_seed
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Install Vercel CLI
-        run: npm i -g vercel
-
-      - name: Install Prisma CLI
-        run: npm i -g prisma
-
-      - name: Prisma generate and migrate
-        working-directory: apps/hesp
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: |
-          prisma generate
-          prisma migrate deploy
