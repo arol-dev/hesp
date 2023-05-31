@@ -2,15 +2,18 @@ name: hesp deployment
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, closed]
+    types: [opened, synchronize, reopened]
     branches:
       - main
+  pull_request_target:
+    types: [closed]
+    branches:
+      - main
+
 jobs:
   run_e2e_tests_locally:
     if: github.event_name == 'pull_request' && github.event.action != 'closed'
-    needs: test_migration_and_seed
     runs-on: ubuntu-latest
-
     env:
       SEED_DATA_FILE: prisma/seed.ts
 
@@ -97,9 +100,8 @@ jobs:
           npx ts-node prisma/seed.ts
 
   vercel_preview:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+    if: github.event_name == 'pull_request_target' && github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    needs: test_migration_and_seed
 
     steps:
       - name: Checkout repository
