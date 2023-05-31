@@ -1,4 +1,4 @@
-name: hesp deployment
+name: pre deployment actions
 
 on:
   pull_request:

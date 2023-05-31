@@ -1,12 +1,12 @@
 name: hesp deployment
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types: [closed]
 
 jobs:
   vercel_preview:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
