@@ -6,12 +6,26 @@ on:
 
 jobs:
   vercel_preview:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Check if PR was merged
+        id: check
+        run: |
+          MERGED=$(git log --pretty=format:"%H" | grep ${{ github.event.pull_request.merge_commit_sha }})
+          echo "MERGED=$MERGED"
+          if [[ -z "$MERGED" ]]; then
+            echo "Not a merged PR, skipping steps..."
+            echo "::set-output name=skipped::true"
+          else
+            echo "Merged PR, running steps..."
+            echo "::set-output name=skipped::false"
+          fi
 
       - name: Install Vercel CLI
         run: npm i -g vercel
