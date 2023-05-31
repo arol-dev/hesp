@@ -5,14 +5,13 @@ on:
     types: [opened, synchronize, reopened]
     branches:
       - main
-  pull_request_target:
-    types: [closed]
+  push:
     branches:
       - main
 
 jobs:
   run_e2e_tests_locally:
-    if: github.event_name == 'pull_request' && github.event.action != 'closed'
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     env:
       SEED_DATA_FILE: prisma/seed.ts
@@ -56,7 +55,7 @@ jobs:
           npm run dev & sleep 10 && prisma migrate deploy && npx ts-node "${{ env.SEED_DATA_FILE }}" && yarn e2e-test-local
 
   test_migration_and_seed:
-    if: github.event_name == 'pull_request' && github.event.action != 'closed'
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -99,59 +98,46 @@ jobs:
         run: |
           npx ts-node prisma/seed.ts
 
-  vercel_preview:
-    if: github.event_name == 'pull_request_target' && github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
+          vercel_preview:
+            if: github.event_name == 'push'
+            runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+            steps:
+              - name: Checkout repository
+                uses: actions/checkout@v2
 
-      - name: Install Vercel CLI
-        run: npm i -g vercel
+              - name: Install Vercel CLI
+                run: npm i -g vercel
 
-      - name: Install Prisma CLI
-        run: npm i -g prisma
+              - name: Install Prisma CLI
+                run: npm i -g prisma
 
-      - name: Prisma generate and migrate
-        working-directory: apps/hesp
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: |
-          prisma generate
-          prisma migrate deploy
+              - name: Prisma generate and migrate
+                working-directory: apps/hesp
+                env:
+                  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+                run: |
+                  prisma generate
+                  prisma migrate deploy
 
-      - name: Deploy to Vercel
-        working-directory: apps/hesp
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: |
-          vercel --token $VERCEL_TOKEN --yes
+              - name: Deploy to Vercel
+                working-directory: apps/hesp
+                env:
+                  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+                run: |
+                  vercel --token $VERCEL_TOKEN --yes
 
-      - name: Install jq
-        run: sudo apt-get install -y jq
+              - name: Install jq
+                run: sudo apt-get install -y jq
 
-      - name: Get deployment preview URL
-        id: deployment
-        working-directory: apps/hesp
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: |
-          VERCEL_DEPLOYMENT=$(curl -s -H "Authorization: Bearer $VERCEL_TOKEN" "https://api.vercel.com/v5/now/deployments?teamId=$(vercel --token $VERCEL_TOKEN --yes whoami)" | jq -r 'first(.deployments[] | select(.state == "READY")) | .url')
-          echo "::set-output name=url::https://$VERCEL_DEPLOYMENT"
+              - name: Get deployment preview URL
+                id: deployment
+                working-directory: apps/hesp
+                env:
+                  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+                run: |
+                  VERCEL_DEPLOYMENT=$(curl -s -H "Authorization: Bearer $VERCEL_TOKEN" "https://api.vercel.com/v5/now/deployments?teamId=$(vercel --token $VERCEL_TOKEN --yes whoami)" | jq -r 'first(.deployments[] | select(.state == "READY")) | .url')
+                  echo "::set-output name=url::https://$VERCEL_DEPLOYMENT"
 
-      - name: Add comment with preview URL
-        uses: actions/github-script@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const url = '${{ steps.deployment.outputs.url }}'
-            const comment = `🚀 Deployment preview: ${url}`
-            await github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: comment
-            })
+              - name: Echo deployment preview URL
+                run: echo "Deployment preview URL: ${{ steps.deployment.outputs.url }}"
