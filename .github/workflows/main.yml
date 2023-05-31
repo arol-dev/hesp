@@ -1,7 +1,7 @@
 name: hesp deployment
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
@@ -97,7 +97,7 @@ jobs:
           npx ts-node prisma/seed.ts
 
   vercel_preview:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     needs: test_migration_and_seed
 
