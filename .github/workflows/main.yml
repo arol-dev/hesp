@@ -95,6 +95,10 @@ jobs:
 
       - name: Build the project
         working-directory: apps/hesp
+
+        env:
+          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" >> apps/hesp/.env
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" >> apps/hesp/.env
         run: npm run build
 
       - name: Run migrations
