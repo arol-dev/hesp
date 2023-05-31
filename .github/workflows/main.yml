@@ -36,6 +36,12 @@ jobs:
         run: |
           sudo apt-get -yqq install libpq-dev
           echo "DATABASE_URL=${{ secrets.TESTS_DATABASE_URL }}" > apps/hesp/.env
+          
+      - name: Set up Supabase
+        run: |
+          echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> apps/hesp/.env
+          echo "SUPABASE_PUBLIC_KEY=${{ secrets.SUPABASE_PUBLIC_KEY }}" >> apps/hesp/.env
+          echo "SUPABASE_SECRET_KEY=${{ secrets.SUPABASE_SECRET_KEY }}" >> apps/hesp/.env
 
       - name: Install dependencies
         working-directory: apps/hesp
@@ -153,3 +159,4 @@ jobs:
               repo: context.repo.repo,
               body: comment
             })
+       
