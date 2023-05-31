@@ -39,6 +39,12 @@ jobs:
           sudo apt-get -yqq install libpq-dev
           echo "DATABASE_URL=${{ secrets.TESTS_DATABASE_URL }}" > apps/hesp/.env
 
+      - name: Set up Supabase
+        run: |
+          echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> apps/hesp/.env
+          echo "SUPABASE_PUBLIC_KEY=${{ secrets.SUPABASE_PUBLIC_KEY }}" >> apps/hesp/.env
+          echo "SUPABASE_SECRET_KEY=${{ secrets.SUPABASE_SECRET_KEY }}" >> apps/hesp/.env
+
       - name: Install dependencies
         working-directory: apps/hesp
         run: npm install
@@ -139,5 +145,18 @@ jobs:
           VERCEL_DEPLOYMENT=$(curl -s -H "Authorization: Bearer $VERCEL_TOKEN" "https://api.vercel.com/v5/now/deployments?teamId=$(vercel --token $VERCEL_TOKEN --yes whoami)" | jq -r 'first(.deployments[] | select(.state == "READY")) | .url')
           echo "::set-output name=url::https://$VERCEL_DEPLOYMENT"
 
-          - name: Echo deployment preview URL
-          run: echo "Deployment preview URL: ${{ steps.deployment.outputs.url }}"
+      - name: Add comment with preview URL
+        uses: actions/github-script@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const url = '${{ steps.deployment.outputs.url }}'
+            const comment = `🚀 Deployment preview: ${url}`
+            await github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            })
