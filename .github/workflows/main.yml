@@ -41,8 +41,8 @@ jobs:
 
       - name: Set up Supabase
         run: |
-          echo "SUPABASE_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" >> apps/hesp/.env
-          echo "SUPABASE_SECRET_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_URL}}" >> apps/hesp/.env
+          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" >> apps/hesp/.env
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" >> apps/hesp/.env
 
       - name: Install dependencies
         working-directory: apps/hesp
@@ -51,8 +51,8 @@ jobs:
       - name: Build the project
         working-directory: apps/hesp
         env:
-          SUPABASE_PUBLIC_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-          SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
 
         run: npm run build
 
