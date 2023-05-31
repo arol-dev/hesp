@@ -6,25 +6,15 @@ import {
   Tooltip,
   Legend,
   RadialLinearScale,
-  Filler,
-  ChartDataset,
-  ChartDataCustomTypesPerDataset,
-  ChartDatasetProperties,
-  ChartData,
-  RadarController,
-  RadarControllerChartOptions,
+  Filler
 } from "chart.js";
-import { ITrainee, IWOLcheckpoint, IPDCcheckpoint } from "../../../types";
-import { PDCcheckpoint } from "@prisma/client";
-import { IUser } from "../../../types";
+import { ITrainee } from "../../../types";
 
 interface ChartProps {
   person: ITrainee;
-  WOLs: IWOLcheckpoint[];
-  PDs: IPDCcheckpoint[];
 }
 
-function Chart({ person, PDs, WOLs }: ChartProps) {
+function Chart({ person }: ChartProps) {
   chartjs.register(
     LineElement,
     PointElement,
@@ -370,37 +360,31 @@ function Chart({ person, PDs, WOLs }: ChartProps) {
 
   return person.PDCcheckpoint.length === 0 &&
     person.WOLcheckpoint.length === 0 ? (
-    <> Nothing to show</>
+    <></>
   ) : (
     <>
-      <div className="flex justify-center ">
-        <div className=" bg-white  p-10">
-          <h3 className="px-5 py-5 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+      <div className="bg-white flex w-full justify-center ">
+
+        <div className=" flex flex-col p-10  w-1/3 ">
+          <h3 className="flex justify-center px-5 py-5 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
             PD CHECKPOINTS
           </h3>
           {Object.keys(dataPD).length !== 0 && (
             <Radar data={dataPD} options={optionsPD} />
-          )}{" "}
+          )}
+
         </div>
-        <div className="ml-10 bg-white p-10">
-          <h3 className="px-5 py-5 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+
+        <div className="  flex flex-col p-10  w-1/3 ">
+          <h3 className="flex justify-center px-5 py-5 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
             WOL CHECKPOINTS
           </h3>
-
           {Object.keys(dataWOL).length !== 0 && (
             <Radar data={dataWOL} options={optionsWOL} />
           )}
         </div>
       </div>
-      <div className="ml-10 bg-white p-10">
-        <h3 className="px-5 py-5 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-          WOL CHECKPOINTS
-        </h3>
 
-        {Object.keys(dataWOL).length !== 0 && (
-          <Radar data={dataWOL} options={optionsWOL} />
-        )}
-      </div>
     </>
   );
 }

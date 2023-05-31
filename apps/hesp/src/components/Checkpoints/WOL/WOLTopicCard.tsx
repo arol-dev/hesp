@@ -31,7 +31,7 @@ const WOLTopicCard: React.FC<WOLTopicCardProps> = ({ topic, index, onRatingChang
                     ? "bg-gradient-to-r from-yellow-400 to-yellow-600"
                     : "bg-gradient-to-r from-red-400 to-red-600"
                   }`}
-                style={{ width: `${(topic.value / 9) * 100}%` }}
+                style={{ width: `${(topic.value / 9) * 100}%`, transition: 'width 0.5s ease-in-out' }}
               ></div>
             </div>
           </div>

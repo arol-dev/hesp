@@ -2,15 +2,17 @@ name: hesp deployment
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+  push:
     branches:
       - main
 
 jobs:
   run_e2e_tests_locally:
     if: github.event_name == 'pull_request'
-    needs: test_migration_and_seed
     runs-on: ubuntu-latest
-
     env:
       SEED_DATA_FILE: prisma/seed.ts
 
@@ -97,9 +99,8 @@ jobs:
           npx ts-node prisma/seed.ts
 
   vercel_preview:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
-    needs: test_migration_and_seed
 
     steps:
       - name: Checkout repository
@@ -138,18 +139,5 @@ jobs:
           VERCEL_DEPLOYMENT=$(curl -s -H "Authorization: Bearer $VERCEL_TOKEN" "https://api.vercel.com/v5/now/deployments?teamId=$(vercel --token $VERCEL_TOKEN --yes whoami)" | jq -r 'first(.deployments[] | select(.state == "READY")) | .url')
           echo "::set-output name=url::https://$VERCEL_DEPLOYMENT"
 
-      - name: Add comment with preview URL
-        uses: actions/github-script@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const url = '${{ steps.deployment.outputs.url }}'
-            const comment = `🚀 Deployment preview: ${url}`
-            await github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: comment
-            })
+          - name: Echo deployment preview URL
+          run: echo "Deployment preview URL: ${{ steps.deployment.outputs.url }}"

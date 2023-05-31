@@ -8,7 +8,6 @@ interface LastPDNotesProps {
 
 function LastPDNotes({ lastPDCheckpoint }: LastPDNotesProps) {
 
-
   const [sessionNotes, setSessionNotes] = useState<SessiontNotes>([{
     id: uuidv4(),
     edit: true,
@@ -39,6 +38,7 @@ function LastPDNotes({ lastPDCheckpoint }: LastPDNotesProps) {
       setSessionNotes(notes);
     }
   }, [lastPDCheckpoint]);
+
 
   return (
     <div className="space-y-10 pl-5 pr-5 pb-10" >

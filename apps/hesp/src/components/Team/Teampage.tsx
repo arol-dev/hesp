@@ -46,7 +46,6 @@ function Teampage({ coaches, jwt }: TeampageProps) {
             >
               + Add new coach
             </button>
-
           )}
           <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none "></div>
         </div>
@@ -121,27 +120,32 @@ function Teampage({ coaches, jwt }: TeampageProps) {
                               {" "}
                               {coach.Trainee.length}
                             </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              <a
-                                className="text-indigo-600 hover:text-indigo-900"
-                                href={`/team/${coach.id}`}
-                              >
-                                Edit{" "}
-                                <span className="sr-only">{`, ${coach.firstName} ${coach.lastName}`}</span>
-                              </a>
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              {" "}
-                              <button
-                                className="text-indigo-600 hover:text-indigo-900"
-                                onClick={() => handleDeleteCoach()}
-                              >
-                                Remove
-                                <span className="sr-only">
-                                  , {coach.firstName + " " + coach.lastName}
-                                </span>
-                              </button>
-                            </td>
+
+                            {isAdmin && (
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                <a
+                                  className="text-indigo-600 hover:text-indigo-900"
+                                  href={`/team/${coach.id}`}
+                                >
+                                  Edit{" "}
+                                  <span className="sr-only">{`, ${coach.firstName} ${coach.lastName}`}</span>
+                                </a>
+                              </td>
+                            )}
+                            {isAdmin && (
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                {" "}
+                                <button
+                                  className="text-indigo-600 hover:text-indigo-900"
+                                  onClick={() => handleDeleteCoach()}
+                                >
+                                  Remove
+                                  <span className="sr-only">
+                                    , {coach.firstName + " " + coach.lastName}
+                                  </span>
+                                </button>
+                              </td>
+                            )}
                           </tr>
                         </>
                       ))}

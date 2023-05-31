@@ -1,15 +1,10 @@
-const { PrismaClient } = require('@prisma/client')
-const bcrypt = require('bcrypt')
+const { PrismaClient } = require("@prisma/client");
+const bcrypt = require("bcrypt");
 
 const hashPsw = async (password: string) => await bcrypt.hash(password, 10);
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 async function main() {
- 
-
-
-
-
   const alice = await prisma.user.upsert({
     where: { email: "alice@prisma.io" },
     update: {},
@@ -18,9 +13,9 @@ async function main() {
       lastName: "Andrews",
       role: "STAFF",
       email: "alice@prisma.io",
-      password: await hashPsw('12345'),
-    }
-  })
+      password: await hashPsw("12345"),
+    },
+  });
 
   const mike = await prisma.user.upsert({
     where: { email: "mike@prisma.io" },
@@ -30,12 +25,9 @@ async function main() {
       lastName: "Wazowski",
       role: "ADMIN",
       email: "mike@prisma.io",
-      password: await hashPsw('12345')
-
-    }
-  })
-
-
+      password: await hashPsw("12345"),
+    },
+  });
 
   const bob = await prisma.trainee.create({
     data: {
@@ -44,9 +36,11 @@ async function main() {
       email: "bob@prisma.io",
       phone: "+3497867853",
       registerNumber: "023/1234",
-      coachId: Number(`${alice.id}`)
-    }
-  })
+      about:
+        "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+      coachId: Number(`${alice.id}`),
+    },
+  });
 
   const john = await prisma.trainee.create({
     data: {
@@ -55,10 +49,11 @@ async function main() {
       email: "john@prisma.io",
       phone: "+3497438963478853",
       registerNumber: "023/19764",
-      coachId: Number(`${alice.id}`)
-    }
-  })
-
+      about:
+        "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
+      coachId: Number(`${alice.id}`),
+    },
+  });
 
   const PDCcheckpoint = await prisma.PDCcheckpoint.create({
     data: {
@@ -70,8 +65,8 @@ async function main() {
       readyForInterviews: 2,
       advancement: 3,
       traineeId: Number(`${bob.id}`),
-    }
-  })
+    },
+  });
 
   const WOLcheckpoint = await prisma.WOLcheckpoint.create({
     data: {
@@ -99,14 +94,13 @@ async function main() {
       fun: 2,
       funFeel: "i cant have fun before I am able to find a job",
       funImprove: "find the job",
-      traineeId: Number(`${bob.id}`)
-    }
-  })
-
+      traineeId: Number(`${bob.id}`),
+    },
+  });
 
   const updatedPDCcheckpoint = await prisma.pDCcheckpoint.update({
     where: {
-      id: PDCcheckpoint.id
+      id: PDCcheckpoint.id,
     },
     data: {
       SessionNotes: {
@@ -117,22 +111,20 @@ async function main() {
           notes: "He is afraid of close contact with people",
           results: "Not yet",
           evaluation: "Lets see how it goes",
-        }
-      }
+        },
+      },
     },
     include: {
-      SessionNotes: true
-    }
-  })
-
-
-
+      SessionNotes: true,
+    },
+  });
 }
 main()
   .then(async () => {
-    await prisma.$disconnect()
-  }).catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
+    await prisma.$disconnect();
   })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });
