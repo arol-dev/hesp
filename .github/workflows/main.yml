@@ -2,10 +2,6 @@ name: hesp deployment
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
-    branches:
-      - main
-  push:
     branches:
       - main
 
@@ -98,46 +94,47 @@ jobs:
         run: |
           npx ts-node prisma/seed.ts
 
-  vercel_preview:
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
+          name: Vercel Deployment
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+          on:
+            pull_request:
+              types: [closed]
+              branches:
+                - main
 
-      - name: Install Vercel CLI
-        run: npm i -g vercel
-
-      - name: Install Prisma CLI
-        run: npm i -g prisma
-
-      - name: Prisma generate and migrate
-        working-directory: apps/hesp
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: |
-          prisma generate
-          prisma migrate deploy
-
-      - name: Deploy to Vercel
-        working-directory: apps/hesp
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: |
-          vercel --token $VERCEL_TOKEN --yes
-
-      - name: Install jq
-        run: sudo apt-get install -y jq
-
-      - name: Get deployment preview URL
-        id: deployment
-        working-directory: apps/hesp
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: |
-          VERCEL_DEPLOYMENT=$(curl -s -H "Authorization: Bearer $VERCEL_TOKEN" "https://api.vercel.com/v5/now/deployments?teamId=$(vercel --token $VERCEL_TOKEN --yes whoami)" | jq -r 'first(.deployments[] | select(.state == "READY")) | .url')
-          echo "::set-output name=url::https://$VERCEL_DEPLOYMENT"
-
-          - name: Echo deployment preview URL
-          run: echo "Deployment preview URL: ${{ steps.deployment.outputs.url }}"
+          jobs:
+            vercel_preview:
+              runs-on: ubuntu-latest
+              if: github.event.pull_request.merged == true
+              steps:
+                - name: Checkout repository
+                  uses: actions/checkout@v2
+                - name: Install Vercel CLI
+                  run: npm i -g vercel
+                - name: Install Prisma CLI
+                  run: npm i -g prisma
+                - name: Prisma generate and migrate
+                  working-directory: apps/hesp
+                  env:
+                    DATABASE_URL: ${{ secrets.DATABASE_URL }}
+                  run: |
+                    prisma generate
+                    prisma migrate deploy
+                - name: Deploy to Vercel
+                  working-directory: apps/hesp
+                  env:
+                    VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+                  run: |
+                    vercel --token $VERCEL_TOKEN --yes
+                - name: Install jq
+                  run: sudo apt-get install -y jq
+                - name: Get deployment preview URL
+                  id: deployment
+                  working-directory: apps/hesp
+                  env:
+                    VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+                  run: |
+                    VERCEL_DEPLOYMENT=$(curl -s -H "Authorization: Bearer $VERCEL_TOKEN" "https://api.vercel.com/v5/now/deployments?teamId=$(vercel --token $VERCEL_TOKEN --yes whoami)" | jq -r 'first(.deployments[] | select(.state == "READY")) | .url')
+                    echo "::set-output name=url::https://$VERCEL_DEPLOYMENT"
+                - name: Echo deployment preview URL
+                  run: echo "Deployment preview URL: ${{ steps.deployment.outputs.url }}"
