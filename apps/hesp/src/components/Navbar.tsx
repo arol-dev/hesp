@@ -1,12 +1,24 @@
 import { useState } from "react";
 
 interface NavbarProps {
-  headerText: string
+  headerText: string;
 }
 
 function Navbar({ headerText }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  async function signOut() {
+    console.log("signing out");
+    const response = await fetch("/api/auth/logout", {
+      method: "GET",
+    });
+
+    if (!response.ok) {
+      alert("Failed to sign out");
+    }
+
+    window.location.href = "/login";
+  }
 
   return (
     <div>
@@ -64,7 +76,7 @@ function Navbar({ headerText }: NavbarProps) {
 
                     {/* <!--
                   Dropdown menu, show/hide based on menu state.
-                  
+
                   Entering: "transition ease-out duration-100"
                   From: "transform opacity-0 scale-95"
                   To: "transform opacity-100 scale-100"
@@ -90,14 +102,14 @@ function Navbar({ headerText }: NavbarProps) {
                         >
                           Account
                         </a>
-                        <a
-                          href="#"
+                        <div
                           className="block px-4 py-2 text-sm text-gray-700"
                           role="menuitem"
                           id="user-menu-item-2"
+                          onClick={signOut}
                         >
                           Sign out
-                        </a>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -208,13 +220,15 @@ function Navbar({ headerText }: NavbarProps) {
 
         <header className="bg-white shadow">
           <div className="mx-auto px-4 py-6 sm:px-6 lg:px-8">
-            {headerText ? <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-              {headerText}
-            </h1> :
+            {headerText ? (
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+                {headerText}
+              </h1>
+            ) : (
               <h1 className="text-3xl font-bold tracking-tight text-gray-900">
                 HESP Program
               </h1>
-            }
+            )}
           </div>
         </header>
         <main>
