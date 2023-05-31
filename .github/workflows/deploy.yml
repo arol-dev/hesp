@@ -33,6 +33,11 @@ jobs:
       - name: Install Prisma CLI
         run: npm i -g prisma
 
+      - name: Set up Supabase
+        run: |
+          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" >> apps/hesp/.env
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" >> apps/hesp/.env
+
       - name: Prisma generate and migrate
         working-directory: apps/hesp
         env:
@@ -44,6 +49,8 @@ jobs:
       - name: Deploy to Vercel
         working-directory: apps/hesp
         env:
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           vercel --token $VERCEL_TOKEN --yes
