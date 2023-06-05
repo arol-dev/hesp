@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import { uploadAvatarImage } from "../UploadAvatarImage";
 import { update } from "cypress/types/lodash";
 import { event } from "cypress/types/jquery";
+import { toBase64 } from "../../../lib/helperFuntions/toBase64";
+
 interface CoachProfilePageProps {
   person: IUser;
 }
@@ -30,7 +32,9 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
     setFormData({ ...formData, [name]: value });
   }
 
-  function handleFileInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleFileInputChange(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
     const file = event.target.files ? event.target.files[0] : null;
 
     if (!file) {
@@ -41,6 +45,8 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
       return;
     }
 
+    const base64File = await toBase64(file);
+
     setSelectedPicFile(file);
     setPicPreview(URL.createObjectURL(file));
   }
@@ -48,34 +54,22 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    let formDataForFetch = formData;
+    let formDataForFetch = new FormData();
+    formDataForFetch.append("id", formData.id.toString());
+    formDataForFetch.append("firstName", formData.firstName);
+    formDataForFetch.append("lastName", formData.lastName);
+    formDataForFetch.append("email", formData.email);
 
     if (selectedPicFile) {
-      try {
-        const avatarUrl = await uploadAvatarImage(
-          selectedPicFile,
-          formData.id.toString()
-        );
-        console.log(
-          "avatarUrl",
-          avatarUrl,
-          "avatarUrl public",
-          avatarUrl.publicUrl
-        );
-        formDataForFetch = { ...formData, picture: avatarUrl.publicUrl };
-        // Update the formData state as well
-        setFormData(formDataForFetch);
-      } catch (uploadError) {
-        console.error("Error uploading image:", uploadError);
-        return;
-      }
+      formDataForFetch.append("picture", selectedPicFile);
+    } else {
+      formDataForFetch.append("picture", formData.picture);
     }
+
     const response = await fetch("/api/staff/updateCoach", {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formDataForFetch),
+
+      body: formDataForFetch,
     });
 
     const result = await response.json();
