@@ -21,7 +21,8 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.24.0"
+    "@supabase/supabase-js": "^2.24.0",
+    "multer": "^1.4.5-lts.1"
   },
   "packageManager": "yarn@1.22.19"
 }
