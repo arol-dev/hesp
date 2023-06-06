@@ -40,7 +40,7 @@ export default async function handler(
       const file = req.files[0];
 
       const { data, error } = await supabase.storage
-        .from("avatars")
+        .from("avatar images")
         .upload(file.originalname, file.buffer);
 
       if (error) {
@@ -64,6 +64,8 @@ export default async function handler(
     res.status(200).json({ data: coach });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Something went wrong" });
+    res.status(500).json({
+      error: (error as Error).message,
+    });
   }
 }
