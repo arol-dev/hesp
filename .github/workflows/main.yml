@@ -46,7 +46,9 @@ jobs:
 
       - name: Install dependencies
         working-directory: apps/hesp
-        run: npm install
+        run: |
+          npm install
+          npm install multer
 
       - name: Build the project
         working-directory: apps/hesp
@@ -91,7 +93,9 @@ jobs:
 
       - name: Install dependencies
         working-directory: apps/hesp
-        run: npm install
+        run: |
+          npm install
+          npm install multer
 
       - name: Build the project
         working-directory: apps/hesp
