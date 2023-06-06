@@ -26,14 +26,16 @@ async function uploadAvatarImage(file: MulterFile, id: string) {
   if (uploadError) {
     throw uploadError;
   }
+  let urlObject = supabase.storage.from(bucketName).getPublicUrl(filePath);
+  let url = urlObject?.data?.publicUrl; // Extract the URL from the object
 
-  let publicUrl = supabase.storage.from(bucketName).getPublicUrl(filePath);
+  console.log("URL:", url);
 
-  if (!publicUrl) {
+  if (!url) {
     throw new Error("Could not get public URL");
   }
 
-  return publicUrl;
+  return url;
 }
 
 export default uploadAvatarImage;
