@@ -53,8 +53,6 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    console.log("handling Submit");
-
     let formDataForFetch = new FormData();
     formDataForFetch.append("id", formData.id.toString());
     formDataForFetch.append("firstName", formData.firstName);
@@ -67,23 +65,11 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
       formDataForFetch.append("picture", formData.picture);
     }
 
-    Array.from(formDataForFetch.entries()).forEach((pair) => {
-      if (pair[1] instanceof File) {
-        console.log(
-          `${pair[0]} is a File with name ${pair[1].name} and size ${pair[1].size}`
-        );
-      } else {
-        console.log(pair[0] + ", " + pair[1]);
-      }
-    });
-
     const response = await fetch("/api/staff/updateCoach", {
       method: "PUT",
 
       body: formDataForFetch,
     });
-
-    console.log("API response:", response);
 
     const result = await response.json();
 

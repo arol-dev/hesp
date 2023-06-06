@@ -8,7 +8,6 @@ function Navbar({ headerText }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   async function signOut() {
-    console.log("signing out");
     const response = await fetch("/api/auth/logout", {
       method: "GET",
     });

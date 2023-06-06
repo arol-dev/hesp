@@ -15,8 +15,6 @@ const upload = multer({ storage: multer.memoryStorage() }).fields([
   { name: "picture" },
 ]);
 
-console.log("Upload fields:", Object.keys(upload).toString());
-
 interface NextApiRequestWithFiles extends NextApiRequest {
   files: {
     picture: Express.Multer.File[];
@@ -34,8 +32,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    console.log("Handling request");
-    // We'll do our form data parsing here. Multer will attach the files to req.files.
     await new Promise<void>((resolve, reject) =>
       (upload as any)(req, res, (err: any) => (err ? reject(err) : resolve()))
     );
@@ -45,15 +41,8 @@ export default async function handler(
 
     let picture;
 
-    console.log("Files:", req.files);
-
-    // If a file has been uploaded, we upload it to Supabase and get the URL.
     if (req.files && req.files.picture && req.files.picture.length > 0) {
       const file: any = req.files.picture[0];
-
-      console.log("Calling uploadAvatarImage"); // Add this line
-
-      console.log("File object:", file);
 
       const publicUrl = await uploadAvatarImage(file, id); // Call the uploadAvatarImage function
 
