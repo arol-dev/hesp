@@ -67,7 +67,15 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
       formDataForFetch.append("picture", formData.picture);
     }
 
-    console.log("Form data:", formDataForFetch);
+    Array.from(formDataForFetch.entries()).forEach((pair) => {
+      if (pair[1] instanceof File) {
+        console.log(
+          `${pair[0]} is a File with name ${pair[1].name} and size ${pair[1].size}`
+        );
+      } else {
+        console.log(pair[0] + ", " + pair[1]);
+      }
+    });
 
     const response = await fetch("/api/staff/updateCoach", {
       method: "PUT",

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { IUser } from "../../../types";
 import DeleteCoach from "./DeleteCoach";
 import Navbar from "../Navbar";
+import React from "react";
 
 interface TeampageProps {
   coaches: IUser[];
@@ -89,7 +90,7 @@ function Teampage({ coaches, jwt }: TeampageProps) {
                     </thead>
                     <tbody className="divide-y divide-gray-200 bg-white">
                       {coaches.map((coach, index) => (
-                        <>
+                        <React.Fragment key={index}>
                           <DeleteCoach
                             showWindow={showDeleteCoach}
                             closeWindow={handleDeleteCoachWindowClose}
@@ -100,7 +101,10 @@ function Teampage({ coaches, jwt }: TeampageProps) {
                               <div className="flex-shrink-0 mr-5">
                                 <img
                                   className="h-10 w-10 rounded-full"
-                                  src={coach.picture || "https://www.w3schools.com/howto/img_avatar.png"}
+                                  src={
+                                    coach.picture ||
+                                    "https://www.w3schools.com/howto/img_avatar.png"
+                                  }
                                   alt=""
                                 />
                               </div>
@@ -147,7 +151,7 @@ function Teampage({ coaches, jwt }: TeampageProps) {
                               </td>
                             )}
                           </tr>
-                        </>
+                        </React.Fragment>
                       ))}
                     </tbody>
                   </table>
