@@ -2,7 +2,6 @@ import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { IUser } from "../../../types";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { uploadAvatarImage } from "../UploadAvatarImage";
 import { update } from "cypress/types/lodash";
 import { event } from "cypress/types/jquery";
 import { toBase64 } from "../../../lib/helperFuntions/toBase64";
@@ -54,6 +53,8 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    console.log("handling Submit");
+
     let formDataForFetch = new FormData();
     formDataForFetch.append("id", formData.id.toString());
     formDataForFetch.append("firstName", formData.firstName);
@@ -66,11 +67,15 @@ function CoachProfilePage({ person }: CoachProfilePageProps) {
       formDataForFetch.append("picture", formData.picture);
     }
 
+    console.log("Form data:", formDataForFetch);
+
     const response = await fetch("/api/staff/updateCoach", {
       method: "PUT",
 
       body: formDataForFetch,
     });
+
+    console.log("API response:", response);
 
     const result = await response.json();
 
