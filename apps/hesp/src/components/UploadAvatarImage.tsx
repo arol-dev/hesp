@@ -1,11 +1,16 @@
 import { v4 as uuidv4 } from "uuid";
 import supabase from "../../lib/helperFuntions/supabaseClient";
 
-async function uploadAvatarImage(file: File, id: string) {
-  console.log("uploadAvatarImage called");
-  console.log("File:", file);
-  console.log("ID:", id);
+interface MulterFile {
+  fieldname: string;
+  originalname: string;
+  encoding: string;
+  mimetype: string;
+  buffer: Buffer;
+  size: number;
+}
 
+async function uploadAvatarImage(file: MulterFile, id: string) {
   const bucketName = "avatar images";
   const filePath = `${bucketName}/${id}/${uuidv4()}`;
 
@@ -14,15 +19,15 @@ async function uploadAvatarImage(file: File, id: string) {
 
   let { error: uploadError } = await supabase.storage
     .from(bucketName)
-    .upload(filePath, file);
+    .upload(filePath, file.buffer, {
+      contentType: file.mimetype, // specify content type
+    });
 
   if (uploadError) {
     throw uploadError;
   }
 
-  let { data: publicUrl } = supabase.storage
-    .from(bucketName)
-    .getPublicUrl(filePath);
+  let publicUrl = supabase.storage.from(bucketName).getPublicUrl(filePath);
 
   if (!publicUrl) {
     throw new Error("Could not get public URL");
