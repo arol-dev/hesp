@@ -18,7 +18,9 @@ const upload = multer({ storage: multer.memoryStorage() }).fields([
 console.log("Upload fields:", Object.keys(upload).toString());
 
 interface NextApiRequestWithFiles extends NextApiRequest {
-  files: Express.Multer.File[];
+  files: {
+    picture: Express.Multer.File[];
+  };
 }
 
 export const config = {
@@ -46,8 +48,8 @@ export default async function handler(
     console.log("Files:", req.files);
 
     // If a file has been uploaded, we upload it to Supabase and get the URL.
-    if (req.files && req.files.length > 0) {
-      const file: any = req.files[0];
+    if (req.files && req.files.picture && req.files.picture.length > 0) {
+      const file: any = req.files.picture[0];
 
       console.log("Calling uploadAvatarImage"); // Add this line
 
