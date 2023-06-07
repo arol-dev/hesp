@@ -6,7 +6,7 @@ import {
   Tooltip,
   Legend,
   RadialLinearScale,
-  Filler
+  Filler,
 } from "chart.js";
 import { ITrainee } from "../../../types";
 
@@ -118,6 +118,11 @@ function Chart({ person }: ChartProps) {
         },
         scales: {
           r: {
+            pointLabels: {
+              font: {
+                size: 20,
+              },
+            },
             ticks: {
               min: 1,
               max: 5,
@@ -153,6 +158,11 @@ function Chart({ person }: ChartProps) {
         },
         scales: {
           r: {
+            pointLabels: {
+              font: {
+                size: 20,
+              },
+            },
             ticks: {
               min: 1,
               max: 9,
@@ -299,6 +309,11 @@ function Chart({ person }: ChartProps) {
         },
         scales: {
           r: {
+            pointLabels: {
+              font: {
+                size: 20,
+              },
+            },
             ticks: {
               min: 1,
               max: 5,
@@ -334,6 +349,11 @@ function Chart({ person }: ChartProps) {
         },
         scales: {
           r: {
+            pointLabels: {
+              font: {
+                size: 20,
+              },
+            },
             ticks: {
               min: 1,
               max: 9,
@@ -364,7 +384,6 @@ function Chart({ person }: ChartProps) {
   ) : (
     <>
       <div className="bg-white flex w-full justify-center ">
-
         <div className=" flex flex-col p-10  w-1/3 ">
           <h3 className="flex justify-center px-5 py-5 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
             PD CHECKPOINTS
@@ -372,7 +391,6 @@ function Chart({ person }: ChartProps) {
           {Object.keys(dataPD).length !== 0 && (
             <Radar data={dataPD} options={optionsPD} />
           )}
-
         </div>
 
         <div className="  flex flex-col p-10  w-1/3 ">
@@ -384,7 +402,6 @@ function Chart({ person }: ChartProps) {
           )}
         </div>
       </div>
-
     </>
   );
 }
