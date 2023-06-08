@@ -10,7 +10,7 @@ import {
 import { all } from "cypress/types/bluebird";
 import fetch from "node-fetch";
 
-const baseUrl = "http://localhost:3000/api";
+const baseUrl = "http://localhost:4000/api";
 
 describe("user endpoints", () => {
   let reqBody: any;
