@@ -65,6 +65,7 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
           <div className="sm:flex-auto"></div>
           <div className="mt-4 pr-8 sm:ml-16 sm:mt-0 sm:flex-none">
             <button
+              data-cy="add-new-candidate"
               type="button"
               onClick={() => setShowAddCandidateForm(true)}
 
