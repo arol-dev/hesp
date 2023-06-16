@@ -134,8 +134,8 @@ function NewCheckpoint({ person, id, lastPDCheckpoint, lastWOLCheckpoint }: NewC
             </h3>
           </div>
           <div className="mt-5 flex lg:ml-4 lg:mt-0">
-            <SwitchButton onClick={() => setPD(!pd)} text="Switch to WOL"></SwitchButton>
-            {lastPDCheckpoint ? <></> : <SaveButton onClick={(event) => { handleSubmitPD(event) }} text="Save" ></SaveButton>}
+            <SwitchButton dataCy="switch-button" onClick={() => setPD(!pd)} text="Switch to WOL"></SwitchButton>
+            {lastPDCheckpoint ? <></> : <SaveButton dataCy="pd-button" onClick={(event) => { handleSubmitPD(event) }} text="Save" ></SaveButton>}
           </div>
         </div>
       ) :
@@ -146,8 +146,8 @@ function NewCheckpoint({ person, id, lastPDCheckpoint, lastWOLCheckpoint }: NewC
             </h3>
           </div>
           <div className="mt-5 flex lg:ml-4 lg:mt-0">
-            <SwitchButton onClick={() => setPD(!pd)} text=" Switch to Professional Development"></SwitchButton>
-            {lastWOLCheckpoint ? <></> : <SaveButton onClick={(event) => { handleSubmitWol(event) }} text="Save" ></SaveButton>}
+            <SwitchButton dataCy="switch-button" onClick={() => setPD(!pd)} text=" Switch to Professional Development"></SwitchButton>
+            {lastWOLCheckpoint ? <></> : <SaveButton dataCy="wol-button" onClick={(event) => { handleSubmitWol(event) }} text="Save" ></SaveButton>}
           </div>
         </div>
       }
@@ -156,11 +156,11 @@ function NewCheckpoint({ person, id, lastPDCheckpoint, lastWOLCheckpoint }: NewC
         pd ? <>
           <PDForm PDSaved={PDSaved} lastPDCheckpoint={lastPDCheckpoint} onRatingChange={handleRatingChange} />
           <SessionNotes PDSaved={PDSaved} lastPDCheckpoint={lastPDCheckpoint} onSessionNotesChange={handleSessionNotesChange} ></SessionNotes>
-          {lastPDCheckpoint ? <></> : <SaveButton onClick={(event) => { handleSubmitPD(event) }} text="Save" ></SaveButton>}
+          {lastPDCheckpoint ? <></> : <SaveButton dataCy="pd-button" onClick={(event) => { handleSubmitPD(event) }} text="Save" ></SaveButton>}
         </>
           : <>
             <WOLForm lastWOLCheckpoint={lastWOLCheckpoint} WOLSaved={WOLSaved} onDataChange={handleWOLDataChange}></WOLForm>
-            {lastWOLCheckpoint ? <></> : <SaveButton onClick={(event) => { handleSubmitWol(event) }} text="Save" ></SaveButton>}
+            {lastWOLCheckpoint ? <></> : <SaveButton dataCy="wol-button" onClick={(event) => { handleSubmitWol(event) }} text="Save" ></SaveButton>}
           </>
       }
     </div >

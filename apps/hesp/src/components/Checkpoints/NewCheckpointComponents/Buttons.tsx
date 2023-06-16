@@ -1,11 +1,13 @@
 interface IButton {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
   text: string
+  dataCy: string
 }
 
-export const SaveButton = ({ onClick, text }: IButton) => (
+export const SaveButton = ({ onClick, text, dataCy }: IButton) => (
   <span className="sm:ml-3">
     <button
+      data-cy={dataCy}
       onClick={onClick}
       type="button"
       className={`inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm'
@@ -13,7 +15,7 @@ export const SaveButton = ({ onClick, text }: IButton) => (
     >
       {text}
     </button>
-  </span>
+  </span >
 );
 
 
