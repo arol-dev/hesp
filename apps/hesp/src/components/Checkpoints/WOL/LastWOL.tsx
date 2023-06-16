@@ -1,5 +1,6 @@
 import { ReactNode, useState } from "react"
 import { IWOLcheckpoint, WOLTopic, WOLTopics } from "../../../../types"
+import moment from "moment";
 
 
 interface ILastWOLProps {
@@ -67,109 +68,65 @@ function LastWOL({ lastWOLCheckpoint }: ILastWOLProps) {
     }
   ])
 
+  const lastCheckpointDate = lastWOLCheckpoint?.createdAt
+  const dateToShow = moment(lastCheckpointDate).format('ll');
+
 
   return (
-    <>
-      {WOLformdata.map((topic: WOLTopic, index) => (
-        <div
-          data-cy="last-wol-topic-card"
-          key={index}
-          className="space-y-10 divide-y divide-gray-900/10 pl-5 pr-5 pb-10"
-        >
-          <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
-            <div className="px-4 sm:px-0">
-              <h2 className="text-base font-semibold leading-7 text-gray-900">
-                {topic.name}
-              </h2>
-              <div className="h-2 rounded-full bg-gray-300 w-1/2">
-                <div
-                  className={`h-full rounded-full ${topic.value >= 7
-                    ? "bg-gradient-to-r from-green-400 to-green-600"
-                    : topic.value >= 4
-                      ? "bg-gradient-to-r from-yellow-400 to-yellow-600"
-                      : "bg-gradient-to-r from-red-400 to-red-600"
-                    }`}
-                  style={{ width: `${(topic.value / 9) * 100}%` }}
-                ></div>
-              </div>
-            </div>
-            <form className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
-              <div className="px-4 py-6 sm:p-8">
-                <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                  <div className="sm:col-span-4">
-                    <label className="block text-sm font-medium leading-6 text-gray-900">
-                      Satisfaction level
-                    </label>
-                    <div className="mt-2">
-                      <div className="flex rounded-md  focus-within:ring-indigo-600 sm:max-w-md">
-                        <div className="flex items-center space-x-2">
-                          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
-                            <label
-                              htmlFor={`${topic.name}-${number}`}
-                              key={`${index}-${number}`}
-                            >
-                              <input
-                                disabled={true}
-                                type="checkbox"
-                                name={`${topic.name}`}
-                                id={`${topic.name}-${number}`}
-                                value={`${topic.value}`}
-                                // readOnly={topic.value === number}
-                                className="hidden"
-                              />
-                              <span
-                                className={`${topic.value === number
-                                  ? "bg-blue-500 text-white"
-                                  : "bg-white text-gray-900"
-                                  } inline-flex items-center justify-center rounded-md px-3 py-1.5 border border-gray-300 shadow-sm pointer-events-none`}
-                              >
-                                {number}
-                              </span>
-                            </label>
-                          ))}
+    <div className="pl-5 pr-5">
+      <div className='overflow-hidden bg-white shadow sm:rounded-lg'>
+        <div>
+          <div className="px-4 py-5 sm:px-6">
+            <h3 className="text-base font-semibold leading-6 text-gray-900">
+              Last WOL checkpoint
+            </h3>
+            <p className="mt-1 max-w-2xl text-sm text-gray-500">
+              {dateToShow}
+            </p>
+          </div>
+          {WOLformdata.map((topic: WOLTopic) => (
+            <div className="border-t border-gray-200">
+              <dl>
+                <div className="bg-gray-50 px-4 py-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6 xl:grid-cols-4">
+                  <dt className="text-sm font-medium  text-gray-500">
+                    {topic.name}
+                  </dt>
+                  <dd className="mt-1 text-sm text-gray-900  sm:mt-0">
+                    <div className="flex items-center">
+                      <div className="h-2 rounded-full bg-gray-300 w-40">
+                        <div
+                          className={` h-full rounded-full ${topic.value >= 7
+                            ? "bg-gradient-to-r from-green-400 to-green-600"
+                            : topic.value >= 4
+                              ? "bg-gradient-to-r from-yellow-400 to-yellow-600"
+                              : "bg-gradient-to-r from-red-400 to-red-600"
+                            }`}
+                          style={{ width: `${(topic.value / 9) * 100}%` }}
+                        >
                         </div>
                       </div>
+                      <div className="ml-5">
+                        {topic.value}
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-span-full">
-                    <label htmlFor="feel" className="block text-sm font-medium leading-6 text-gray-900">
-                      What makes you feel this way?
-                    </label>
-                    <div className="mt-2">
-                      <textarea
-                        disabled={true}
-                        id="feel"
-                        name="feel"
-                        rows={3}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        defaultValue={topic.feel}
-                      />
-                    </div>
-                    <p className="mt-3 text-sm leading-6 text-gray-400">Brief description for your profile. URLs are hyperlinked.</p>
-                  </div>
-                  <div className="col-span-full">
-                    <label htmlFor="improve" className="block text-sm font-medium leading-6 text-gray-900">
-                      What can you do to improve your satisfaction level?                  </label>
-                    <div className="mt-2">
-                      <textarea
-                        disabled={true}
-                        id="improve"
-                        name="improve"
-                        rows={3}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        defaultValue={topic.improve}
-                      />
-                    </div>
-                    <p className="mt-3 text-sm leading-6 text-gray-400">Brief description for your profile. URLs are hyperlinked.</p>
-                  </div>
+                  </dd>
+                  <dd className="mt-1 text-sm text-gray-900  sm:mt-0">
+                    {
+                      topic.feel
+                    }
+                  </dd>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0">
+                    {
+                      topic.improve
+                    }
+                  </dd>
                 </div>
-              </div>
-            </form>
-          </div>
+              </dl>
+            </div>
+          ))}
         </div>
-      ))}
-    </>
+      </div>
+    </div >
   )
 }
-
 export default LastWOL
