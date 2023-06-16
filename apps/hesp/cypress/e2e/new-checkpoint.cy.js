@@ -82,12 +82,14 @@ describe("checkpoint creation", () => {
 
         it("switches to PD and back to WOL and check that both WOl and PD save button exist", () => {
           cy.get("[data-cy=wol-button]").should("exist");
-          cy.get("button").contains(TO_PD_BUTTON).click();
+          cy.get("button").contains(TO_PD_BUTTON);
+          cy.get("[data-cy=switch-button]").click();
           cy.get("[data-cy=pd-button]").should("exist");
           cy.get("h3")
             .should("not.have.text", WOL_HEADER)
             .should("include.text", PD_HEADER);
-          cy.get("button").contains(TO_WOL_BUTTON).click();
+          cy.get("button").contains(TO_WOL_BUTTON);
+          cy.get("[data-cy=switch-button]").click();
           cy.get("h3")
             .should("not.have.text", PD_HEADER)
             .should("include.text", WOL_HEADER);
@@ -165,12 +167,14 @@ describe("checkpoint creation", () => {
             });
 
             cy.get("[data-cy=wol-button]").click();
-            cy.get("button").contains(TO_PD_BUTTON).click();
+            cy.get("button").contains(TO_PD_BUTTON);
+            cy.get("[data-cy=switch-button]").click();
             cy.get("[data-cy=pd-button]").should("exist");
             cy.get("h3")
               .should("not.have.text", WOL_HEADER)
               .should("include.text", PD_HEADER);
-            cy.get("button").contains(TO_WOL_BUTTON).click();
+            cy.get("button").contains(TO_WOL_BUTTON);
+            cy.get("[data-cy=switch-button]").click();
             cy.get("h3")
               .should("not.have.text", PD_HEADER)
               .should("include.text", WOL_HEADER);
@@ -201,14 +205,16 @@ describe("checkpoint creation", () => {
         });
         describe("PD from", () => {
           it("should navigate to PD form and check that there is save button", () => {
-            cy.get("button").contains(TO_PD_BUTTON).click();
+            cy.get("button").contains(TO_PD_BUTTON);
+            cy.get("[data-cy=switch-button]").click();
             cy.get("[data-cy=pd-button]").should("exist");
             cy.get("h3")
               .should("not.have.text", WOL_HEADER)
               .should("include.text", PD_HEADER);
           });
           it("should check the checkbox, change the color when clicked, and uncheck when another number is clicked", () => {
-            cy.get("button").contains(TO_PD_BUTTON).click();
+            cy.get("button").contains(TO_PD_BUTTON);
+            cy.get("[data-cy=switch-button]").click();
             cy.get("[data-cy=pd-topic-card]").each(($card, index) => {
               cy.wrap($card)
                 .find('span[data-cy="rating-input"]')
@@ -232,7 +238,8 @@ describe("checkpoint creation", () => {
           });
           it("should allow input in the first session note and save it", () => {
             const testInput = "This is first session note";
-            cy.get("button").contains(TO_PD_BUTTON).click();
+            cy.get("button").contains(TO_PD_BUTTON);
+            cy.get("[data-cy=switch-button]").click();
             cy.get("[data-cy=session-note-edit-mode]")
               .find("textarea[name=topic]")
               .should("not.be.disabled")
@@ -273,7 +280,8 @@ describe("checkpoint creation", () => {
           });
 
           it("should check that `add topic` button is disabled when the previous note is not saved", () => {
-            cy.get("button").contains(TO_PD_BUTTON).click();
+            cy.get("button").contains(TO_PD_BUTTON);
+            cy.get("[data-cy=switch-button]").click();
             const stub = cy.stub();
             cy.on("window:alert", stub);
 
@@ -289,7 +297,8 @@ describe("checkpoint creation", () => {
           it("should create and render first saved session note correctly", () => {
             //create a note and save it
             const testInput = "This is first session note";
-            cy.get("button").contains(TO_PD_BUTTON).click();
+            cy.get("button").contains(TO_PD_BUTTON);
+            cy.get("[data-cy=switch-button]").click();
             cy.get("[data-cy=session-note-edit-mode]")
               .find("textarea[name=topic]")
               .should("not.be.disabled")
@@ -439,7 +448,8 @@ describe("checkpoint creation", () => {
 
           it("should create and render first note, then successfully create second note, then save it it render both", () => {
             const testInput = "This is first session note";
-            cy.get("button").contains(TO_PD_BUTTON).click();
+            cy.get("button").contains(TO_PD_BUTTON);
+            cy.get("[data-cy=switch-button]").click();
 
             // create and save first note
             cy.get("[data-cy=session-note-edit-mode]")
@@ -712,7 +722,8 @@ describe("checkpoint creation", () => {
             });
           });
           it("checks that pd was saved", () => {
-            cy.get("button").contains(TO_PD_BUTTON).click();
+            cy.get("button").contains(TO_PD_BUTTON);
+            cy.get("[data-cy=switch-button]").click();
             cy.get("[data-cy=pd-button]").should("not.exist");
             cy.get("h3")
               .should("not.have.text", WOL_HEADER)
