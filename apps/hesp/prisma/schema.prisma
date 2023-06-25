@@ -46,7 +46,7 @@ model WOLcheckpoint {
   funFeel                    String
   funImprove                 String
   traineeId                  Int
-  trainee                    Trainee @relation(fields: [traineeId], references: [id])
+  trainee                    Trainee  @relation(fields: [traineeId], references: [id])
 }
 
 model PDCcheckpoint {
@@ -60,7 +60,7 @@ model PDCcheckpoint {
   readyForInterviews Int
   advancement        Int
   traineeId          Int
-  trainee            Trainee      @relation(fields: [traineeId], references: [id])
+  trainee            Trainee        @relation(fields: [traineeId], references: [id])
   SessionNotes       SessionNotes[]
 }
 

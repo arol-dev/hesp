@@ -44,9 +44,9 @@ export default async function handler(
     if (req.files && req.files.picture && req.files.picture.length > 0) {
       const file: any = req.files.picture[0];
 
-      const publicUrl = await uploadAvatarImage(file, id); // Call the uploadAvatarImage function
+      const pictureUrl = await uploadAvatarImage(file, id); // Call the uploadAvatarImage function
 
-      picture = publicUrl?.toString() ?? null;
+      picture = pictureUrl ?? null;
     }
 
     const coach = await prisma.user.update({
@@ -55,7 +55,7 @@ export default async function handler(
         firstName,
         lastName,
         email,
-        picture,
+        picture: picture,
       },
     });
 

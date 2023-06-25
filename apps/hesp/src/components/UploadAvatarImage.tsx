@@ -9,7 +9,6 @@ interface MulterFile {
   buffer: Buffer;
   size: number;
 }
-
 async function uploadAvatarImage(file: MulterFile, id: string) {
   const bucketName = "avatar images";
   const filePath = `${bucketName}/${id}/${uuidv4()}`;
@@ -23,8 +22,9 @@ async function uploadAvatarImage(file: MulterFile, id: string) {
   if (uploadError) {
     throw uploadError;
   }
+
   let urlObject = supabase.storage.from(bucketName).getPublicUrl(filePath);
-  let url = urlObject?.data?.publicUrl;
+  let url = urlObject.data.publicUrl;
 
   if (!url) {
     throw new Error("Could not get public URL");
