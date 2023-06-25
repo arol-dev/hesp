@@ -13,5 +13,18 @@ services:
       - POSTGRES_DB=mynewdb
     volumes:
       - db_data:/var/lib/postgresql/data
+  
+  supabase-storage:
+    container_name: supabase_storage
+    image: bitnami/supabase-storage:latest
+    restart: always
+    volumes:
+      - ./data:/bitnami
+    environment:
+      - SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
+      - SUPABASE_ANON_KEY=YOUR_ANON_KEY
+      - SUPABASE_JWT_SECRET=YOUR_JWT_SECRET
+      - SUPABASE_URL=YOUR_SUPABASE_URL
+
 volumes:
   db_data:
