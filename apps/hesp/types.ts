@@ -157,6 +157,7 @@ export interface ITrainee {
   ProvidedSoloutions: IProvidedSoloutions[];
   PDCcheckpoint: IPDCcheckpoint[];
   WOLcheckpoint: IWOLcheckpoint[];
+  picture?: string;
 }
 
 export interface IinviteLink {

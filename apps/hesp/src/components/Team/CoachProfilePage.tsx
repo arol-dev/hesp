@@ -45,8 +45,6 @@ function CoachProfilePage({ person, jwt }: CoachProfilePageProps) {
       return;
     }
 
-    const base64File = await toBase64(file);
-
     setSelectedPicFile(file);
     setPicPreview(URL.createObjectURL(file));
   }

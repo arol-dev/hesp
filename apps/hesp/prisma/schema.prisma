@@ -90,6 +90,7 @@ model Trainee {
   coachId            Int?
   User               User?                @relation(fields: [coachId], references: [id])
   TraineeMetaData    TraineeMetaData?
+  picture            String?
 }
 
 model TraineeMetaData {
