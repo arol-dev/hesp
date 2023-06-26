@@ -6,7 +6,7 @@ import Link from "next/link";
 
 interface NavbarProps {
   headerText: string;
-  user: Partial<IUser>;
+  user?: Partial<IUser>;
 }
 
 function Navbar({ headerText, user }: NavbarProps) {
