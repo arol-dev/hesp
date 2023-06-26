@@ -39,11 +39,6 @@ jobs:
           sudo apt-get -yqq install libpq-dev
           echo "DATABASE_URL=${{ secrets.TESTS_DATABASE_URL }}" > apps/hesp/.env
 
-      - name: Set up Supabase
-        run: |
-          echo "NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" >> apps/hesp/.env
-          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" >> apps/hesp/.env
-
       - name: Install dependencies
         working-directory: apps/hesp
         run: |
@@ -53,9 +48,9 @@ jobs:
       - name: Build the project
         working-directory: apps/hesp
         env:
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_BUCKET_NAME: ${{ secrets.SUPABASE_BUCKET_NAME }}
         run: npm run build
 
       - name: Start server and run e2e tests
@@ -100,8 +95,9 @@ jobs:
       - name: Build the project
         working-directory: apps/hesp
         env:
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_BUCKET_NAME: ${{ secrets.SUPABASE_BUCKET_NAME }}
         run: npm run build
 
       - name: Run migrations
