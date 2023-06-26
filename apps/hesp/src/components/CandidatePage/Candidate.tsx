@@ -90,8 +90,7 @@ function Candidate({ person, jwt, coach }: IPageProps) {
       window.alert(
         "Personal information of the candidate updated successfully"
       );
-      // window.location.reload()
-      router.push(`/candidates/${id}`);
+      router.replace(router.asPath);
     } else window.alert("Personal information can't be updated");
     setIsEditing(!isEditing);
   }
