@@ -21,10 +21,10 @@ services:
     volumes:
       - ./data:/bitnami
     environment:
+      - NEXT_PUBLIC_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVlbHlob3l5d2xmenBrbWVvZnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQyNTY5MjIsImV4cCI6MTk5OTgzMjkyMn0.P-gzhTGmL-0aRI_cS4S0PVQ7sfryltaU2meK6F_J7C0'
+      - NEXT_PUBLIC_SUPABASE_URL = 'https://eelyhoyywlfzpkmeofum.supabase.co'
       - SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
-      - NEXT_PUBLIC_SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVlbHlob3l5d2xmenBrbWVvZnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQyNTY5MjIsImV4cCI6MTk5OTgzMjkyMn0.P-gzhTGmL-0aRI_cS4S0PVQ7sfryltaU2meK6F_J7C0'
       - SUPABASE_JWT_SECRET=YOUR_JWT_SECRET
-      - NEXT_PUBLIC_SUPABASE_URL='https://eelyhoyywlfzpkmeofum.supabase.co'
 
 
 volumes:
