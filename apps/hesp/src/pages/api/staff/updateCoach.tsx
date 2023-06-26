@@ -1,9 +1,8 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import multer from "multer";
-import supabase from "../../../../lib/helperFuntions/supabaseClient";
-import fs from "fs";
 import uploadAvatarImage from "@/components/UploadAvatarImage";
+import { updateToken } from "../auth/login";
 
 const prisma = new PrismaClient();
 
@@ -40,15 +39,13 @@ export default async function handler(
     const { id, firstName, lastName, email } = req.body;
 
     let picture;
-
     if (req.files && req.files.picture && req.files.picture.length > 0) {
-      const file: any = req.files.picture[0];
+      const file = req.files.picture[0];
 
       const pictureUrl = await uploadAvatarImage(file, id); // Call the uploadAvatarImage function
 
       picture = pictureUrl ?? null;
     }
-
     const coach = await prisma.user.update({
       where: { id: parseInt(id) },
       data: {
@@ -58,10 +55,11 @@ export default async function handler(
         picture: picture,
       },
     });
+    updateToken(coach, res);
 
     res.status(200).json({ data: coach });
   } catch (error) {
-    console.error(error);
+    console.error("Error updating coach", error);
     res.status(500).json({
       error: (error as Error).message,
     });

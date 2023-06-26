@@ -35,7 +35,7 @@ function Teampage({ coaches, jwt }: TeampageProps) {
 
   return (
     <div>
-      <Navbar headerText={"Admin"}></Navbar>
+      <Navbar headerText={"Admin"} user={jwt}></Navbar>
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto"> </div>
@@ -124,32 +124,36 @@ function Teampage({ coaches, jwt }: TeampageProps) {
                               {" "}
                               {coach.Trainee.length}
                             </td>
-
-                            {isAdmin && (
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                <a
-                                  className="text-indigo-600 hover:text-indigo-900"
-                                  href={`/team/${coach.id}`}
-                                >
-                                  Edit{" "}
-                                  <span className="sr-only">{`, ${coach.firstName} ${coach.lastName}`}</span>
-                                </a>
-                              </td>
-                            )}
-                            {isAdmin && (
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                {" "}
-                                <button
-                                  className="text-indigo-600 hover:text-indigo-900"
-                                  onClick={() => handleDeleteCoach()}
-                                >
-                                  Remove
-                                  <span className="sr-only">
-                                    , {coach.firstName + " " + coach.lastName}
-                                  </span>
-                                </button>
-                              </td>
-                            )}
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              <a
+                                className={
+                                  isAdmin || coach.id === jwt.id
+                                    ? `text-indigo-600 hover:text-indigo-900`
+                                    : "text-gray-400 cursor-not-allowed"
+                                }
+                                href={isAdmin ? `/team/${coach.id}` : "#"}
+                              >
+                                Edit{" "}
+                                <span className="sr-only">{`, ${coach.firstName} ${coach.lastName}`}</span>
+                              </a>
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              {" "}
+                              <button
+                                className={`${
+                                  isAdmin
+                                    ? `text-indigo-600 hover:text-indigo-900 cursor-pointer`
+                                    : "text-gray-400 cursor-not-allowed"
+                                }`}
+                                onClick={() => handleDeleteCoach()}
+                                disabled={!isAdmin}
+                              >
+                                Remove
+                                <span className="sr-only">
+                                  , {coach.firstName + " " + coach.lastName}
+                                </span>
+                              </button>
+                            </td>
                           </tr>
                         </React.Fragment>
                       ))}

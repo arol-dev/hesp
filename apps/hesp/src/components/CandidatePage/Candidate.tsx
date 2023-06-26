@@ -3,26 +3,24 @@ import Chart from "./RadarChart";
 import { useRouter } from "next/router";
 
 import AssignPerson from "./AssignCoach";
-import {
-  ITrainee,
-  IUser,
-} from "../../../types";
+import { ITrainee, IUser } from "../../../types";
 import { useEffect, useState } from "react";
 import React from "react";
 import LastCheckpointCard from "./LastCheckpointCard";
 
 interface IPageProps {
   person: ITrainee;
-  decodedToken: Partial<IUser>;
+  jwt: Partial<IUser>;
   coach: IUser;
 }
 
-function Candidate({ person, decodedToken, coach }: IPageProps) {
+function Candidate({ person, jwt, coach }: IPageProps) {
   const router = useRouter();
-  const { role } = decodedToken;
+  const { role } = jwt;
 
-  const lastPD = person?.PDCcheckpoint[person.PDCcheckpoint.length - 1] || null
-  const lastWOL = person?.WOLcheckpoint[person.WOLcheckpoint.length - 1] || null
+  const lastPD = person?.PDCcheckpoint[person.PDCcheckpoint.length - 1] || null;
+  const lastWOL =
+    person?.WOLcheckpoint[person.WOLcheckpoint.length - 1] || null;
 
   const thirtyDaysPassed = () => {
     const currentDate = new Date();
@@ -38,10 +36,9 @@ function Candidate({ person, decodedToken, coach }: IPageProps) {
 
     // Check if 30 days have passed
     if (timeDifference >= thirtyDaysMilliseconds) {
-      return true
+      return true;
     }
-  }
-
+  };
 
   function handleClickNewCheckpoint(event: React.MouseEvent) {
     event.preventDefault();
@@ -76,7 +73,6 @@ function Candidate({ person, decodedToken, coach }: IPageProps) {
       about: about,
     };
 
-
     const path = window.location.pathname;
     const id = path.split("/").pop();
 
@@ -99,7 +95,7 @@ function Candidate({ person, decodedToken, coach }: IPageProps) {
 
   return (
     <div>
-      <Navbar headerText={"HESP Program"}></Navbar>
+      <Navbar headerText={"HESP Program"} user={jwt}></Navbar>
       <div className="pl-5 pr-5">
         <div className="lg:flex lg:items-center lg:justify-between ">
           <div className="min-w-0 flex-1 pb-8">
@@ -129,8 +125,7 @@ function Candidate({ person, decodedToken, coach }: IPageProps) {
               )}
             </span>
 
-            {!thirtyDaysPassed() ?
-
+            {!thirtyDaysPassed() ? (
               <div className="relative flex flex-col items-center group sm:ml-3">
                 <button
                   disabled
@@ -152,11 +147,13 @@ function Candidate({ person, decodedToken, coach }: IPageProps) {
                   New Checkpoint
                 </button>
                 <div className="absolute bottom-0   flex-col items-center hidden mb-6 group-hover:flex">
-                  <span className="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg">The last checkpoint was created less then 30 days ago</span>
+                  <span className="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg">
+                    The last checkpoint was created less then 30 days ago
+                  </span>
                   <div className="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
                 </div>
               </div>
-              :
+            ) : (
               <span className="sm:ml-3">
                 <button
                   onClick={(event) => handleClickNewCheckpoint(event)}
@@ -182,13 +179,13 @@ function Candidate({ person, decodedToken, coach }: IPageProps) {
                     New Checkpoint
                   </a>
                 </button>
-              </span>}
+              </span>
+            )}
           </div>
         </div>
 
-        <div className='flex justify-between items-center'>
-          <div className=' w-4/5 overflow-hidden bg-white shadow sm:rounded-lg'>
-
+        <div className="flex justify-between items-center">
+          <div className=" w-4/5 overflow-hidden bg-white shadow sm:rounded-lg">
             <div>
               <div className="px-4 py-5 sm:px-6">
                 <h3 className="text-base font-semibold leading-6 text-gray-900">
@@ -270,17 +267,15 @@ function Candidate({ person, decodedToken, coach }: IPageProps) {
                       )}
                     </dd>
                   </div>
-                  <div className='bg-white px-4 py-5 sm:grid sm:grid-cols-3  xl:grid-cols-6 sm:gap-4 sm:px-6'>
-                    <dt className='text-sm font-medium text-gray-500'>
-                      About
-                    </dt>
-                    <dd className='mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>
+                  <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3  xl:grid-cols-6 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium text-gray-500">About</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                       {isEditing ? (
                         <input
-                          type='text'
+                          type="text"
                           value={about}
                           onChange={(e) => setAbout(e.target.value)}
-                          className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md'
+                          className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
                         />
                       ) : (
                         person?.about
@@ -296,8 +291,11 @@ function Candidate({ person, decodedToken, coach }: IPageProps) {
         <div className="py-5">
           <Chart person={person}></Chart>
         </div>
-        {lastPD && lastWOL ? <LastCheckpointCard coach={coach} lastWOL={lastWOL} lastPD={lastPD} /> : <></>}
-
+        {lastPD && lastWOL ? (
+          <LastCheckpointCard coach={coach} lastWOL={lastWOL} lastPD={lastPD} />
+        ) : (
+          <></>
+        )}
 
         {lastPD && lastWOL ? (
           <div className="flex justify-center mt-5 mb-32">
@@ -326,9 +324,12 @@ function Candidate({ person, decodedToken, coach }: IPageProps) {
                 </a>
               </button>
             </span>
-          </div>) : <> </>}
-      </div >
-    </div >
+          </div>
+        ) : (
+          <> </>
+        )}
+      </div>
+    </div>
   );
 }
 export default Candidate;

@@ -78,7 +78,7 @@ function CoachProfilePage({ person, jwt }: CoachProfilePageProps) {
       window.alert("Personal information of the coach updated successfully");
       router.push(`/team`);
     } else {
-      console.error("Error deleting coach:", result);
+      console.error("Error updating coach:", result);
     }
   }
 

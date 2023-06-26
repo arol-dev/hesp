@@ -1,17 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
 import supabase from "../../lib/helperFuntions/supabaseClient";
+import { SUPABASE_BUCKET_NAME } from "../../lib/constants";
 
-interface MulterFile {
-  fieldname: string;
-  originalname: string;
-  encoding: string;
-  mimetype: string;
-  buffer: Buffer;
-  size: number;
-}
-async function uploadAvatarImage(file: MulterFile, id: string) {
-  const bucketName = "avatar images";
+async function uploadAvatarImage(file: Express.Multer.File, id: string) {
+  const bucketName = SUPABASE_BUCKET_NAME;
   const filePath = `${bucketName}/${id}/${uuidv4()}`;
+  console.log("filePath", filePath);
+
+  // setup supabase storage with a jwt
 
   let { error: uploadError } = await supabase.storage
     .from(bucketName)

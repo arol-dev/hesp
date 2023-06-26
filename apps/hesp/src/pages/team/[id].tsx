@@ -15,7 +15,7 @@ interface CoachPageProps {
 function CoachPage({ person, jwt }: CoachPageProps) {
   return (
     <>
-      <Navbar headerText="Profile"></Navbar>
+      <Navbar headerText="Profile" user={jwt}></Navbar>
       <CoachProfilePage jwt={jwt} person={person}></CoachProfilePage>
     </>
   );
