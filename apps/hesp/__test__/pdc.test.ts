@@ -10,7 +10,25 @@ import {
 import fetch from "node-fetch";
 
 let pdId: any;
-const baseUrl = "http://localhost:3000/api";
+const baseUrl = "http://localhost:4000/api";
+
+let cookie;
+
+beforeAll(async () => {
+  const response = await fetch(`${baseUrl}/login`, {
+    // replace with your login endpoint
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: "Mike", // replace with valid username
+      password: "Wazowski", // replace with valid password
+    }),
+  });
+
+  cookie = response.headers.get("set-cookie"); // adjust this line if your server sets the cookie header differently
+});
 
 import { PrismaClient } from "@prisma/client";
 
@@ -83,10 +101,6 @@ describe("createPd", () => {
 
     const { data } = await response.json(); // Destructure the data property from the response
     pdId = data.id;
-  });
-
-  afterEach(async () => {
-    await prisma.trainee.delete({ where: { id: trainee.id } });
   });
 
   it("should respond with 200 and return the updated checkpoint for a valid request", async () => {

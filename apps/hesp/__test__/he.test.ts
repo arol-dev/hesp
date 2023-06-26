@@ -1,16 +1,40 @@
-import { describe, beforeEach, it, expect } from "@jest/globals";
+import {
+  describe,
+  beforeEach,
+  it,
+  expect,
+  beforeAll,
+  afterAll,
+} from "@jest/globals";
 import fetch from "node-fetch";
 
-const baseUrl = "http://localhost:3000/api";
-
 import { PrismaClient } from "@prisma/client";
-
 const prisma = new PrismaClient({
   datasources: {
     db: {
       url: process.env.DATABASE_URL,
     },
   },
+});
+
+const baseUrl = "http://localhost:4000/api";
+
+let cookie;
+
+beforeAll(async () => {
+  const response = await fetch(`${baseUrl}/login`, {
+    // replace with your login endpoint
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: "Mike", // replace with valid username
+      password: "Wazowski", // replace with valid password
+    }),
+  });
+
+  cookie = response.headers.get("set-cookie"); // adjust this line if your server sets the cookie header differently
 });
 
 describe("Describe HE", () => {

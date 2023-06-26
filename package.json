@@ -11,19 +11,16 @@
     "dev": "docker-compose up -d && turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "test:unit": "yarn build"
+    "test:unit": "cd apps/hesp && concurrently --kill-others --success first --handle-input \"yarn build\" \"PORT=4000 yarn dev\" \"prisma migrate dev && jest\""
   },
   "devDependencies": {
+    "@types/concurrently": "^7.0.0",
+    "concurrently": "^8.1.0",
     "prettier": "latest",
     "turbo": "latest"
   },
   "engines": {
     "node": ">=18.0.0"
-  },
-  "dependencies": {
-    "@supabase/supabase-js": "^2.24.0",
-    "@types/multer": "^1.4.7",
-    "multer": "^1.4.5-lts.1"
   },
   "packageManager": "yarn@1.22.19"
 }
