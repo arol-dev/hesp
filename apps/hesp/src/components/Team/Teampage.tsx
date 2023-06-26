@@ -4,6 +4,7 @@ import { useState } from "react";
 import { IUser } from "../../../types";
 import DeleteCoach from "./DeleteCoach";
 import Navbar from "../Navbar";
+import React from "react";
 
 interface TeampageProps {
   coaches: IUser[];
@@ -34,7 +35,7 @@ function Teampage({ coaches, jwt }: TeampageProps) {
 
   return (
     <div>
-      <Navbar headerText={"Admin"}></Navbar>
+      <Navbar headerText={"Admin"} user={jwt}></Navbar>
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto"> </div>
@@ -89,7 +90,7 @@ function Teampage({ coaches, jwt }: TeampageProps) {
                     </thead>
                     <tbody className="divide-y divide-gray-200 bg-white">
                       {coaches.map((coach, index) => (
-                        <>
+                        <React.Fragment key={index}>
                           <DeleteCoach
                             showWindow={showDeleteCoach}
                             closeWindow={handleDeleteCoachWindowClose}
@@ -100,7 +101,10 @@ function Teampage({ coaches, jwt }: TeampageProps) {
                               <div className="flex-shrink-0 mr-5">
                                 <img
                                   className="h-10 w-10 rounded-full"
-                                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                  src={
+                                    coach.picture ||
+                                    "https://www.w3schools.com/howto/img_avatar.png"
+                                  }
                                   alt=""
                                 />
                               </div>
@@ -120,34 +124,38 @@ function Teampage({ coaches, jwt }: TeampageProps) {
                               {" "}
                               {coach.Trainee.length}
                             </td>
-
-                            {isAdmin && (
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                <a
-                                  className="text-indigo-600 hover:text-indigo-900"
-                                  href={`/team/${coach.id}`}
-                                >
-                                  Edit{" "}
-                                  <span className="sr-only">{`, ${coach.firstName} ${coach.lastName}`}</span>
-                                </a>
-                              </td>
-                            )}
-                            {isAdmin && (
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                {" "}
-                                <button
-                                  className="text-indigo-600 hover:text-indigo-900"
-                                  onClick={() => handleDeleteCoach()}
-                                >
-                                  Remove
-                                  <span className="sr-only">
-                                    , {coach.firstName + " " + coach.lastName}
-                                  </span>
-                                </button>
-                              </td>
-                            )}
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              <a
+                                className={
+                                  isAdmin || coach.id === jwt.id
+                                    ? `text-indigo-600 hover:text-indigo-900`
+                                    : "text-gray-400 cursor-not-allowed"
+                                }
+                                href={isAdmin ? `/team/${coach.id}` : "#"}
+                              >
+                                Edit{" "}
+                                <span className="sr-only">{`, ${coach.firstName} ${coach.lastName}`}</span>
+                              </a>
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                              {" "}
+                              <button
+                                className={`${
+                                  isAdmin
+                                    ? `text-indigo-600 hover:text-indigo-900 cursor-pointer`
+                                    : "text-gray-400 cursor-not-allowed"
+                                }`}
+                                onClick={() => handleDeleteCoach()}
+                                disabled={!isAdmin}
+                              >
+                                Remove
+                                <span className="sr-only">
+                                  , {coach.firstName + " " + coach.lastName}
+                                </span>
+                              </button>
+                            </td>
                           </tr>
-                        </>
+                        </React.Fragment>
                       ))}
                     </tbody>
                   </table>

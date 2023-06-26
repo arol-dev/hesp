@@ -22,9 +22,7 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
     return user.id == jwt.id;
   });
 
-
   const dataToMap = showIHe ? matchingUser[0]?.Trainee : Trainees;
-
 
   const lastCheckpoint = (person: ITrainee) => {
     const pdc = person.PDCcheckpoint;
@@ -38,9 +36,13 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
   };
 
   const thirtyDaysPassed = (person: ITrainee) => {
-    if (person.PDCcheckpoint.length === 0) { return true }
+    if (person.PDCcheckpoint.length === 0) {
+      return true;
+    }
     const currentDate = new Date();
-    const lastPDDate = new Date(person.PDCcheckpoint[person.PDCcheckpoint.length - 1]?.createdAt);
+    const lastPDDate = new Date(
+      person.PDCcheckpoint[person.PDCcheckpoint.length - 1]?.createdAt
+    );
 
     const currentDateTimestamp = currentDate.getTime();
     const lastPDTimestamp = lastPDDate.getTime();
@@ -52,14 +54,13 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
 
     // Check if 30 days have passed
     if (timeDifference >= thirtyDaysMilliseconds) {
-      return true
+      return true;
     }
-  }
-
+  };
 
   return (
     <div className="h-screen">
-      <Navbar headerText={"HESP Program"}></Navbar>
+      <Navbar headerText={"HESP Program"} user={jwt}></Navbar>
       <div className="px-4 sm:px-6 lg:px-8 ">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto"></div>
@@ -67,7 +68,6 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
             <button
               type="button"
               onClick={() => setShowAddCandidateForm(true)}
-
               className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               + Add new candidate
@@ -117,7 +117,6 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
                           {dataToMap.map((person: ITrainee, index: number) => (
-
                             <tr data-cy="trainee-row" key={index}>
                               <td className="flex whitespace-nowrap py-4 pl-4  pr-80 text-sm font-medium text-gray-900 sm:pl-6">
                                 <div className="mr-3">
@@ -145,7 +144,6 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                                 {" "}
                                 <Link
                                   href={`/candidates/${person.id}?edit`}
-
                                   className="text-indigo-600 hover:text-indigo-900"
                                 >
                                   Edit
@@ -164,10 +162,12 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                                   >
                                     New Checkpoint
                                     <span className="sr-only">
-                                      , {person.firstName + " " + person.lastName}
+                                      ,{" "}
+                                      {person.firstName + " " + person.lastName}
                                     </span>
                                   </a>
-                                </td>) : (
+                                </td>
+                              ) : (
                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                   <div className="relative group">
                                     <a
@@ -177,10 +177,12 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                                       data-cy-target={`${person.firstName}`}
                                     >
                                       New Checkpoint
-
                                     </a>
                                     <div className="absolute bottom-0   flex-col items-center hidden mb-6 group-hover:flex">
-                                      <span className="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg">The last checkpoint was created less then 30 days ago</span>
+                                      <span className="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black shadow-lg">
+                                        The last checkpoint was created less
+                                        then 30 days ago
+                                      </span>
                                       <div className="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
                                     </div>
                                   </div>

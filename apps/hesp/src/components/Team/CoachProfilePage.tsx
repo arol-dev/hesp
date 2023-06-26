@@ -2,6 +2,7 @@ import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { IUser } from "../../../types";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { toBase64 } from "../../../lib/helperFuntions/toBase64";
 
 interface CoachProfilePageProps {
   person: IUser;
@@ -23,6 +24,7 @@ function CoachProfilePage({ person, jwt }: CoachProfilePageProps) {
     firstName: person.firstName,
     lastName: person.lastName,
     email: person.email,
+    picture: person.picture,
   });
 
   function handleInputChange(event: any) {
@@ -30,7 +32,9 @@ function CoachProfilePage({ person, jwt }: CoachProfilePageProps) {
     setFormData({ ...formData, [name]: value });
   }
 
-  function handleFileInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleFileInputChange(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
     const file = event.target.files ? event.target.files[0] : null;
 
     if (!file) {
@@ -45,35 +49,34 @@ function CoachProfilePage({ person, jwt }: CoachProfilePageProps) {
     setPicPreview(URL.createObjectURL(file));
   }
 
-  async function handleSubmit(event: any) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const updatedCoach = new FormData();
-    updatedCoach.append("id", formData.id.toString());
-    updatedCoach.append("firstName", formData.firstName);
-    updatedCoach.append("lastName", formData.lastName);
-    updatedCoach.append("email", formData.email);
+    let formDataForFetch = new FormData();
+    formDataForFetch.append("id", formData.id.toString());
+    formDataForFetch.append("firstName", formData.firstName);
+    formDataForFetch.append("lastName", formData.lastName);
+    formDataForFetch.append("email", formData.email);
 
-    // if (selectedPicFile) {
-    //   updatedCoach.append('picture', selectedPicFile);
-    // }
+    if (selectedPicFile) {
+      formDataForFetch.append("picture", selectedPicFile);
+    } else {
+      formDataForFetch.append("picture", formData.picture);
+    }
 
     const response = await fetch("/api/staff/updateCoach", {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
+
+      body: formDataForFetch,
     });
 
     const result = await response.json();
 
     if (response.ok) {
       window.alert("Personal information of the coach updated successfully");
-      // window.location.reload()
       router.push(`/team`);
     } else {
-      console.error("Error deleting coach:", result);
+      console.error("Error updating coach:", result);
     }
   }
 
@@ -92,7 +95,10 @@ function CoachProfilePage({ person, jwt }: CoachProfilePageProps) {
                 better.
               </p>
             </div>
-            <form className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
+            <form
+              onSubmit={handleSubmit}
+              className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2"
+            >
               <div className="px-4 py-6 sm:p-8">
                 <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="col-span-2">
@@ -139,7 +145,6 @@ function CoachProfilePage({ person, jwt }: CoachProfilePageProps) {
                       )}
                     </div>
                   </div>
-
                   <div className="col-span-full">
                     <label
                       htmlFor="email"
@@ -162,7 +167,6 @@ function CoachProfilePage({ person, jwt }: CoachProfilePageProps) {
                       )}
                     </div>
                   </div>
-
                   <div className="col-span-full">
                     <label
                       htmlFor="photo"
@@ -177,7 +181,7 @@ function CoachProfilePage({ person, jwt }: CoachProfilePageProps) {
                         </div>
                       ) : (
                         <img
-                          src={picpreview ?? person.picture}
+                          src={formData.picture ?? person.picture}
                           alt="Profile"
                           className="h-12 w-12 rounded-full object-cover"
                         />
@@ -211,7 +215,6 @@ function CoachProfilePage({ person, jwt }: CoachProfilePageProps) {
                     Cancel
                   </button>
                   <button
-                    onClick={() => handleSubmit(event)}
                     type="submit"
                     className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >

@@ -1,14 +1,18 @@
 import { useState } from "react";
+import { IUser } from "../../types";
+import Image from "next/image";
+import { UserIcon } from "@heroicons/react/24/solid";
+import Link from "next/link";
 
 interface NavbarProps {
   headerText: string;
+  user?: Partial<IUser>;
 }
 
-function Navbar({ headerText }: NavbarProps) {
+function Navbar({ headerText, user }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   async function signOut() {
-    console.log("signing out");
     const response = await fetch("/api/auth/logout", {
       method: "GET",
     });
@@ -33,20 +37,20 @@ function Navbar({ headerText }: NavbarProps) {
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
                     {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
-                    <a
+                    <Link
                       href="/"
                       className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
                       aria-current="page"
                     >
                       HELP Program
-                    </a>
+                    </Link>
 
-                    <a
+                    <Link
                       href="/team"
                       className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
                     >
                       Team
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -66,11 +70,19 @@ function Navbar({ headerText }: NavbarProps) {
                         aria-haspopup="true"
                       >
                         <span className="sr-only">Open user menu</span>
-                        <img
-                          className="h-8 w-8 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                          alt=""
-                        />
+                        {user?.picture ? (
+                          <Image
+                            width={32}
+                            height={32}
+                            className="h-8 w-8 rounded-full"
+                            src={user?.picture || "/user.png"}
+                            alt=""
+                          />
+                        ) : (
+                          <div className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
+                            <UserIcon className="h-4 w-4 text-gray-400" />
+                          </div>
+                        )}
                       </button>
                     </div>
 
@@ -93,7 +105,7 @@ function Navbar({ headerText }: NavbarProps) {
                         tabIndex={-1}
                       >
                         {/* <!-- Active: "bg-gray-100", Not Active: "" --> */}
-                        <a
+                        <Link
                           href="/mentor_profile"
                           className="block px-4 py-2 text-sm text-gray-700"
                           role="menuitem"
@@ -101,7 +113,7 @@ function Navbar({ headerText }: NavbarProps) {
                           id="user-menu-item-0"
                         >
                           Account
-                        </a>
+                        </Link>
                         <div
                           className="block px-4 py-2 text-sm text-gray-700"
                           role="menuitem"
@@ -167,19 +179,19 @@ function Navbar({ headerText }: NavbarProps) {
             <div className="md:hidden" id="mobile-menu">
               <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
                 {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
-                <a
+                <Link
                   href="/"
                   className="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
                   aria-current="page"
                 >
                   HELP Program
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/team"
                   className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
                 >
                   Team
-                </a>
+                </Link>
               </div>
               <div className="border-t border-gray-700 pb-3 pt-4">
                 <div className="flex items-center px-5">
@@ -200,18 +212,18 @@ function Navbar({ headerText }: NavbarProps) {
                   </div>
                 </div>
                 <div className="mt-3 space-y-1 px-2">
-                  <a
+                  <Link
                     href="#"
                     className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                   >
                     Account
-                  </a>
-                  <a
+                  </Link>
+                  <Link
                     href="#"
                     className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                   >
                     Sign out
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

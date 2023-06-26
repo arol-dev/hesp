@@ -10,7 +10,7 @@ if (!secret) {
 }
 
 export const generateJWTToken = (user: User) => {
-  const { id, firstName, lastName, password, role } = user;
+  const { id, firstName, lastName, password, role, picture } = user;
   return jwt.sign(
     {
       id,
@@ -18,6 +18,7 @@ export const generateJWTToken = (user: User) => {
       lastName,
       password,
       role,
+      picture,
     },
     process.env.JWT_SECRET as string,
     {

@@ -27,9 +27,7 @@ export const getServerSideProps: GetServerSideProps<props> = async (
 ) => {
   try {
     const decodedToken = await authenticateAndGetToken(context as AuthContext);
-    const cookies = context.req.headers.cookie;
-
-    if (!cookies) {
+    if (!decodedToken) {
       return {
         redirect: {
           destination: "/login",
@@ -41,22 +39,20 @@ export const getServerSideProps: GetServerSideProps<props> = async (
     const HEs = await prisma.trainee.findMany({
       include: {
         PDCcheckpoint: true,
-        WOLcheckpoint: true
-      }
+        WOLcheckpoint: true,
+      },
     });
-
 
     const user = await prisma.user.findMany({
       include: {
         Trainee: {
           include: {
             PDCcheckpoint: true,
-            WOLcheckpoint: true
-          }
-        }
+            WOLcheckpoint: true,
+          },
+        },
       },
     });
-
 
     return {
       props: {
