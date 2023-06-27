@@ -1,33 +1,57 @@
+const {
+  HousingSituation,
+  UserRole,
+  WorkingSituation,
+} = require("@prisma/client");
+
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcrypt");
+const { faker } = require("@faker-js/faker");
 
 const hashPsw = async (password: string) => await bcrypt.hash(password, 10);
 
 const prisma = new PrismaClient();
 async function main() {
-  const alice = await prisma.user.upsert({
-    where: { email: "alice@prisma.io" },
-    update: {},
-    create: {
-      firstName: "Alice",
-      lastName: "Andrews",
-      role: "STAFF",
-      email: "alice@prisma.io",
-      password: await hashPsw("12345"),
-    },
-  });
-
   const mike = await prisma.user.upsert({
     where: { email: "mike@prisma.io" },
     update: {},
     create: {
       firstName: "Mike",
       lastName: "Wazowski",
-      role: "ADMIN",
+      role: UserRole.ADMIN,
       email: "mike@prisma.io",
       password: await hashPsw("12345"),
+      // picture: faker.image.urlLoremFlickr({ category: "people" }),
+      picture: "/base-profile-pics/mike.jpg",
     },
   });
+  const alice = await prisma.user.upsert({
+    where: { email: "alice@prisma.io" },
+    update: {},
+    create: {
+      firstName: "Alice",
+      lastName: "Andrews",
+      role: UserRole.STAFF,
+      email: "alice@prisma.io",
+      password: await hashPsw("12345"),
+      // picture: faker.image.urlLoremFlickr({ category: "people" }),
+      picture: "/base-profile-pics/alice.jpg",
+    },
+  });
+
+  for (let i = 0; i < 5; i++) {
+    await prisma.user.create({
+      data: {
+        firstName: faker.person.firstName(),
+        lastName: faker.person.lastName(),
+        role: UserRole.STAFF,
+        email: faker.internet.email(),
+        password: await hashPsw("12345"),
+        // picture: faker.image.urlLoremFlickr({ category: "people" }),
+        picture: `/base-profile-pics/coach-${i + 1}.jpg`,
+      },
+    });
+  }
 
   const bob = await prisma.trainee.create({
     data: {
@@ -39,6 +63,8 @@ async function main() {
       about:
         "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
       coachId: Number(`${alice.id}`),
+      // picture: faker.image.urlLoremFlickr({ category: "people" }),
+      picture: `/base-profile-pics/bob.jpg`,
     },
   });
 
@@ -52,6 +78,7 @@ async function main() {
       about:
         "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
       coachId: Number(`${alice.id}`),
+      picture: `/base-profile-pics/john.jpg`,
     },
   });
 
@@ -118,6 +145,93 @@ async function main() {
       SessionNotes: true,
     },
   });
+
+  // Trainees
+  for (let i = 0; i < 10; i++) {
+    const coachId = faker.number.int({ min: 2, max: 7 });
+    const trainee = await prisma.trainee.create({
+      data: {
+        firstName: faker.person.firstName(),
+        lastName: faker.person.lastName(),
+        email: faker.internet.email(),
+        phone: faker.phone.number("+36 6## ### ###"),
+        registerNumber: faker.string.uuid(),
+        about: faker.lorem.paragraph(),
+        // picture: faker.image.urlLoremFlickr({ category: "people" }),
+        picture: `/base-profile-pics/trainee-${i + 1}.jpg`,
+        coachId,
+        TraineeMetaData: {
+          create: {
+            workingSituation: faker.helpers.arrayElement(
+              Object.values(WorkingSituation)
+            ),
+            housingSituation: faker.helpers.arrayElement(
+              Object.values(HousingSituation)
+            ),
+            needWork: faker.datatype.boolean(),
+            needTraining: faker.datatype.boolean(),
+            needHousing: faker.datatype.boolean(),
+            needCommunication: faker.datatype.boolean(),
+            needLegal: faker.datatype.boolean(),
+            needTransportation: faker.datatype.boolean(),
+            needBasicAssistance: faker.datatype.boolean(),
+            needSOS: faker.datatype.boolean(),
+            helpCandidate: faker.datatype.boolean(),
+            filledForms: faker.datatype.boolean(),
+            helpAccepted: faker.datatype.boolean(),
+          },
+        },
+      },
+    });
+
+    // Checkpoints for each trainee
+    for (let j = 0; j < 3; j++) {
+      await prisma.WOLcheckpoint.create({
+        data: {
+          health: faker.number.int({ min: 3, max: 9 }),
+          healthFeel: faker.lorem.sentence(),
+          healthImprove: faker.lorem.sentence(),
+          work: faker.number.int({ min: 3, max: 9 }),
+          workFeel: faker.lorem.sentence(),
+          workImprove: faker.lorem.sentence(),
+          finances: faker.number.int({ min: 3, max: 9 }),
+          financesthFeel: faker.lorem.sentence(),
+          financesthImprove: faker.lorem.sentence(),
+          environment: faker.number.int({ min: 3, max: 9 }),
+          environmentFeel: faker.lorem.sentence(),
+          environmentImprove: faker.lorem.sentence(),
+          love: faker.number.int({ min: 3, max: 9 }),
+          loveFeel: faker.lorem.sentence(),
+          loveImprove: faker.lorem.sentence(),
+          familyFriends: faker.number.int({ min: 3, max: 9 }),
+          familyFriendsFeel: faker.lorem.sentence(),
+          familyFriendsImprove: faker.lorem.sentence(),
+          personalDevelopment: faker.number.int({ min: 3, max: 9 }),
+          personalDevelopmentFeel: faker.lorem.sentence(),
+          personalDevelopmentImprove: faker.lorem.sentence(),
+          fun: faker.number.int({ min: 3, max: 9 }),
+          funFeel: faker.lorem.sentence(),
+          funImprove: faker.lorem.sentence(),
+          traineeId: trainee.id,
+          createdAt: faker.date.recent({ days: 60 }),
+        },
+      });
+
+      await prisma.pDCcheckpoint.create({
+        data: {
+          trust: faker.number.int({ min: 2, max: 5 }),
+          willFollow: faker.number.int({ min: 2, max: 5 }),
+          retention: faker.number.int({ min: 2, max: 5 }),
+          commitment: faker.number.int({ min: 2, max: 5 }),
+          cv: faker.number.int({ min: 2, max: 5 }),
+          readyForInterviews: faker.number.int({ min: 2, max: 5 }),
+          advancement: faker.number.int({ min: 2, max: 5 }),
+          traineeId: trainee.id,
+          createdAt: faker.date.recent({ days: 60 }),
+        },
+      });
+    }
+  }
 }
 main()
   .then(async () => {
