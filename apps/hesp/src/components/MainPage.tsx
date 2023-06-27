@@ -4,7 +4,6 @@ import moment from "moment";
 import Navbar from "./Navbar";
 import { useState } from "react";
 import AddCoach from "./Team/FormAddCoach";
-import Image from "next/image";
 import { ProfilePicture } from "./ProfilePicture";
 
 interface props {

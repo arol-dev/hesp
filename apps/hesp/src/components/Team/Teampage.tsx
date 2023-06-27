@@ -5,6 +5,7 @@ import { IUser } from "../../../types";
 import DeleteCoach from "./DeleteCoach";
 import Navbar from "../Navbar";
 import React from "react";
+import { ProfilePicture } from "../ProfilePicture";
 
 interface TeampageProps {
   coaches: IUser[];
@@ -99,14 +100,7 @@ function Teampage({ coaches, jwt }: TeampageProps) {
                           <tr key={index}>
                             <td className=" flex whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                               <div className="flex-shrink-0 mr-5">
-                                <img
-                                  className="h-10 w-10 rounded-full"
-                                  src={
-                                    coach.picture ||
-                                    "https://www.w3schools.com/howto/img_avatar.png"
-                                  }
-                                  alt=""
-                                />
+                                <ProfilePicture person={coach} />
                               </div>
                               <Link
                                 href={`/team/${coach.id}`}

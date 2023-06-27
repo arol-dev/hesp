@@ -41,7 +41,7 @@ export default function SignupPage() {
         <title>Signup Page</title>
       </Head>
 
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="text-gray-700 flex flex-col items-center justify-center min-h-screen bg-gray-100">
         <div className="w-full max-w-md p-6 bg-white rounded-md shadow-md">
           <h2 className="text-2xl font-bold mb-4">Signup</h2>
 
