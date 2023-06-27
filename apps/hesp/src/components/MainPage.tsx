@@ -4,6 +4,8 @@ import moment from "moment";
 import Navbar from "./Navbar";
 import { useState } from "react";
 import AddCoach from "./Team/FormAddCoach";
+import Image from "next/image";
+import { ProfilePicture } from "./ProfilePicture";
 
 interface props {
   user: IUser[];
@@ -118,22 +120,20 @@ const List: React.FC<props> = ({ user, jwt, Trainees }) => {
                         <tbody className="divide-y divide-gray-200 bg-white">
                           {dataToMap.map((person: ITrainee, index: number) => (
                             <tr data-cy="trainee-row" key={index}>
-                              <td className="flex whitespace-nowrap py-4 pl-4  pr-80 text-sm font-medium text-gray-900 sm:pl-6">
-                                <div className="mr-3">
-                                  <img
-                                    className="h-10 w-10 rounded-full"
-                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                    alt=""
-                                  />
-                                </div>
+                              <td className="flex items-center whitespace-nowrap py-4 pl-4 text-sm font-medium text-gray-900 sm:pl-6">
                                 <Link
                                   href={`/candidates/${person.id}`}
-                                  className="text-gray-900"
+                                  className="text-gray-900 flex w-full"
                                 >
-                                  {person.firstName + " " + person.lastName}
-                                  <p className="whitespace-nowrap  text-sm text-gray-500">
-                                    {person.email}
-                                  </p>
+                                  <div className="mr-3 shrink-0">
+                                    <ProfilePicture person={person} />
+                                  </div>
+                                  <div>
+                                    {person.firstName + " " + person.lastName}
+                                    <p className="whitespace-nowrap  text-sm text-gray-500">
+                                      {person.email}
+                                    </p>
+                                  </div>
                                 </Link>
                               </td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
