@@ -7,7 +7,6 @@ interface AddCoachProps {
 }
 
 interface FormData {
-
   firstName?: string;
   lastName?: string;
   role?: string;
@@ -26,7 +25,6 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
   const teamPage = path.includes("team");
   const formFields = teamPage
     ? {
-
         role: "STAFF",
         email: "",
       }
@@ -41,7 +39,6 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   }
-
 
   async function handleSubmit(e: any) {
     e.preventDefault();
@@ -75,7 +72,7 @@ function AddCoach({ closeForm, showForm }: AddCoachProps) {
               <div className="grid grid-cols-1 gap-x-8 gap-y-10">
                 <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   {teamPage ? (
-                    <div className="sm:col-span-6">
+                    <div className="sm:col-span-6 text-gray-700">
                       <div className="mb-4">
                         <label
                           htmlFor="role"

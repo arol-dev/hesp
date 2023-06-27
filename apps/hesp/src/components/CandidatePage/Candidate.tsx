@@ -26,6 +26,7 @@ function Candidate({ person, jwt, coach }: IPageProps) {
     person?.WOLcheckpoint[person.WOLcheckpoint.length - 1] || null;
 
   const thirtyDaysPassed = () => {
+    if (!lastPD) return true;
     const currentDate = new Date();
     const lastPDDate = new Date(lastPD.createdAt);
 

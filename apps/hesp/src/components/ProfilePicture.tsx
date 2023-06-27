@@ -2,7 +2,11 @@ import Image from "next/image";
 import { ITrainee } from "../../types";
 import { UserIcon } from "@heroicons/react/24/solid";
 
-export function ProfilePicture({ person }: { person: ITrainee }) {
+export function ProfilePicture({
+  person,
+}: {
+  person: { picture?: string; firstName: string; lastName: string };
+}) {
   const className = "h-10 w-10 rounded-full";
   if (!person.picture) {
     return (
