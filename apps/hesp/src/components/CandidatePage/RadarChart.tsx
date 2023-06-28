@@ -118,14 +118,16 @@ function Chart({ person }: ChartProps) {
         },
         scales: {
           r: {
+            min: 0,
+            max: 5,
             pointLabels: {
               font: {
                 size: 20,
               },
             },
             ticks: {
-              min: 1,
-              max: 5,
+              beginAtZero: true,
+
               stepSize: 1,
               showLabelBackdrop: false,
               backdropColor: "rgba(203, 197, 11, 1)",
@@ -158,14 +160,15 @@ function Chart({ person }: ChartProps) {
         },
         scales: {
           r: {
+            min: 0,
+            max: 9,
             pointLabels: {
               font: {
                 size: 20,
               },
             },
             ticks: {
-              min: 1,
-              max: 9,
+              beginAtZero: true,
               stepSize: 1,
               showLabelBackdrop: false,
               backdropColor: "rgba(203, 197, 11, 1)",
@@ -309,14 +312,15 @@ function Chart({ person }: ChartProps) {
         },
         scales: {
           r: {
+            min: 0,
+            max: 5,
             pointLabels: {
               font: {
                 size: 20,
               },
             },
             ticks: {
-              min: 1,
-              max: 5,
+              beginAtZero: true,
               stepSize: 1,
               showLabelBackdrop: false,
               backdropColor: "rgba(203, 197, 11, 1)",
@@ -349,14 +353,16 @@ function Chart({ person }: ChartProps) {
         },
         scales: {
           r: {
+            min: 0,
+            max: 9,
             pointLabels: {
               font: {
                 size: 20,
               },
             },
             ticks: {
-              min: 1,
-              max: 9,
+              beginAtZero: true,
+
               stepSize: 1,
               showLabelBackdrop: false,
               backdropColor: "rgba(203, 197, 11, 1)",
