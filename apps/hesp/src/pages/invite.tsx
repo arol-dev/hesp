@@ -8,7 +8,7 @@ import { IUser } from "../../types";
 import firstUser from "../../lib/constants";
 
 interface IPageProps {
-  user: IUser;
+  user: IUser | null;
   firstUser: boolean;
 }
 
@@ -39,7 +39,7 @@ const InvitePage: React.FC<IPageProps> = ({ user, firstUser }: IPageProps) => {
       </Head>
 
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-        {user.role === "ADMIN" || firstUser ? (
+        {user?.role === "ADMIN" || firstUser ? (
           <div className="w-full max-w-md p-6 bg-white rounded-md shadow-md">
             {firstUser ? (
               <h2 className="m-3">
@@ -144,21 +144,24 @@ const InvitePage: React.FC<IPageProps> = ({ user, firstUser }: IPageProps) => {
 export async function getServerSideProps(context: {
   req: { headers: { host: string; cookie: string } };
 }) {
+  const evaluateAuth = (await firstUser()) === false;
+
   const decodedToken = await authenticateAndGetToken(context);
   const cookies = context.req.headers.cookie;
-
-  if (!cookies || !decodedToken) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
+  if (evaluateAuth) {
+    if (!cookies || !decodedToken) {
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false,
+        },
+      };
+    }
   }
 
   return {
     props: {
-      user: decodedToken,
+      user: decodedToken || null,
       firstUser: await firstUser(),
     },
   };
