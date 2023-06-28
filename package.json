@@ -2,6 +2,7 @@
   "name": "my-turborepo",
   "version": "0.0.0",
   "private": true,
+  "preview": true,
   "workspaces": [
     "apps/*",
     "packages/*"
